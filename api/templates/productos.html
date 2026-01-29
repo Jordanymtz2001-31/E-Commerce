@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% block title %}Productos - Talcahualme{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-dark text-white py-5 mb-5 position-relative overflow-hidden">
+    <div class="container text-center">
+        <!-- Badge "Nueva Colección" -->
+        <div class="d-inline-flex align-items-center bg-primary bg-opacity-20 px-3 py-2 rounded-pill mb-4 mx-auto badge-nueva-coleccion">
+            <span class="w-2 h-2 bg-primary rounded-circle me-2"></span>
+            <small class="fw-bold text-uppercase">Nueva Colección 2026</small>
+        </div>
+        <h1 class="display-3 fw-black mb-4">Viste la Tradición<br><span class="text-warning">Siente la Innovación</span></h1>
+        <p class="lead w-75 mx-auto mb-5 opacity-90">Ropa artesanal hecha a mano con materiales naturales. Cada pieza cuenta una historia única.</p>
+        <a href="#catalogo" class="btn btn-lg btn-warning btn-hover-scale px-5 py-3 fs-5 fw-bold">
+            <span class="material-symbols-outlined me-2">shopping_bag</span>Explorar Colección
+        </a>
+    </div>
+</section>
+
+<!-- Catálogo Section -->
+<div id="catalogo" class="container py-5">
+    <!-- Header con filtros -->
+    <div class="row align-items-end mb-5">
+        <div class="col-md-8">
+            <h1 class="display-4 fw-bold mb-2">Nuestro Catálogo</h1>
+            <p class="text-muted lead">Descubre piezas únicas tejidas con pasión.</p>
+        </div>
+        <div class="col-md-4 text-md-end">
+            <button class="btn btn-outline-secondary me-2 mb-2"><span class="material-symbols-outlined me-1">filter_list</span></button>
+            <button class="btn btn-outline-secondary mb-2"><span class="material-symbols-outlined">grid_view</span></button>
+        </div>
+    </div>
+    
+    <!-- Chips Filtros -->
+    <div class="chips-scroll pb-3 mb-5">
+        <div class="d-flex gap-2">
+            <span class="badge bg-dark text-white px-4 py-2 fw-semibold">Todos</span>
+            {% for categoria in categorias %}
+            <span class="badge bg-light text-dark border border-secondary-subtle px-4 py-2 fw-medium hover-border-primary">
+                {{ categoria.nombreCategoria }}
+            </span>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <!-- Grid Productos -->
+    <div class="row g-4">
+        {% for producto in productos %}
+        <div class="col-xl-3 col-lg-4 col-md-6">
+            <div class="card h-100 card-hover border-0 shadow-sm rounded-4 overflow-hidden position-relative">
+                <!-- Imagen con zoom hover -->
+                <div class="position-relative overflow-hidden imagen-container-fixed">
+                    {% if producto.imagen %}
+                    <img src="{{ producto.imagen.url }}" 
+                         class="card-img-top w-100 h-100 object-fit-cover imagen-zoom-suave"
+                         alt="{{ producto.nombre }}">
+                    {% else %}
+                    <img src="https://via.placeholder.com/400x280?text=Sin+Imagen" 
+                         class="card-img-top w-100 h-100 object-fit-cover">
+                    {% endif %}
+                    
+                    <!-- Badge lana -->
+                    {% if producto.categoria.nombreCategoria == 'Lana' %}
+                    <span class="position-absolute top-3 end-3 badge bg-primary fs-2-xs px-3 py-2 rounded-pill fw-bold">Lana 100%</span>
+                    {% endif %}
+                    
+                    <!-- Badge agotado -->
+                    {% if producto.stock == 0 %}
+                    <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 d-flex align-items-center justify-content-center">
+                        <span class="badge bg-secondary fs-2-xs px-4 py-3 rounded-pill">Agotado</span>
+                    </div>
+                    {% endif %}
+                </div>
+                
+                <!-- Body card -->
+                <div class="card-body d-flex flex-column p-4">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <h5 class="card-title fw-bold mb-0 titulo-card-compacto">{{ producto.nombre }}</h5>
+                        <span class="fs-3 fw-bold text-warning">${{ producto.precio|floatformat:0 }} MXN</span>
+                    </div>
+                    <p class="text-muted flex-grow-1 mb-4 descripcion-clamp">
+                        {{ producto.descripcion }}
+                    </p>
+                    {% if producto.stock > 0 %}
+                    <a href="#" class="btn btn-outline-light border-2 w-100 fw-bold btn-hover-scale mt-auto">
+                        <span class="material-symbols-outlined me-2 fs-5">arrow_forward</span>Detalles
+                    </a>
+                    {% else %}
+                    <button class="btn btn-light text-muted w-100 fw-bold mt-auto" disabled>Sin Stock</button>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+            {% endfor %}
+            <div class="text-center py-5">
+                <h3>😔 No hay productos disponibles</h3>
+                <p class="text-muted">¡Pronto tendremos novedades!</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <!-- Botón "Ver todo" -->
+    <div class="text-center mt-5">
+        <button class="btn btn-outline-secondary btn-lg px-5 py-3 fw-bold rounded-pill">
+            Ver todo el catálogo
+            <span class="material-symbols-outlined ms-2">arrow_downward</span>
+        </button>
+    </div>
+</div>
+{% endblock %}

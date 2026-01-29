@@ -1,0 +1,36 @@
+{% extends 'base.html' %} <!-- Decimos que debajo del navbar vamos a poner el contenido -->
+{% block title %}Tienda{% endblock %} 
+
+{% block content %}
+<div class="container-fluid py-5 flex-grow-1">
+    <div class="row justify-content-center mb-5">
+        <div class="col-12 text-center">
+            <h1 class="display-4 mb-4">¡Bienvenido {{user.username}}!</h1>
+            <p class="lead mb-5">Bienvenido a Talcahualme</p>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8 text-center">
+            <div class="card shadow-lg p-5">
+                <h2 class="mb-4">🚀 Próximamente...</h2>
+                <p class="lead">Aquí aparecerá el contenido principal de tu tienda.</p>
+                <div class="row mt-5">
+                    <div class="col-md-6">
+                        <h4>📋 Planes:</h4>
+                        <ul class="list-unstyled">
+                            <li>✅ Catálogo de productos</li>
+                            <li>✅ Carrito de compras</li>
+                            <li>✅ Sistema de pagos</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <a href="{% url 'productList' %}" class="btn btn-primary btn-lg w-100 mb-3">Ver Productos →</a>
+                        <p class="text-muted">O haz clic en "Productos" arriba</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
