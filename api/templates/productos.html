@@ -6,14 +6,13 @@
 <section class="hero-dark text-white py-5 mb-5 position-relative overflow-hidden">
     <div class="container text-center">
         <!-- Badge "Nueva Colección" -->
-        <div class="d-inline-flex align-items-center bg-primary bg-opacity-20 px-3 py-2 rounded-pill mb-4 mx-auto badge-nueva-coleccion">
-            <span class="w-2 h-2 bg-primary rounded-circle me-2"></span>
-            <small class="fw-bold text-uppercase">Nueva Colección 2026</small>
-        </div>
-        <h1 class="display-3 fw-black mb-4">Viste la Tradición<br><span class="text-warning">Siente la Innovación</span></h1>
+        <span class="etiqueta-nueva">
+            <span class="punto"></span>Nueva Colección 2026
+        </span>
+        <h1 class="display-3 fw-black mb-4">Viste la Tradición<br><span class="texto-inovacion">Siente la Innovación</span></h1>
         <p class="lead w-75 mx-auto mb-5 opacity-90">Ropa artesanal hecha a mano con materiales naturales. Cada pieza cuenta una historia única.</p>
-        <a href="#catalogo" class="btn btn-lg btn-warning btn-hover-scale px-5 py-3 fs-5 fw-bold">
-            <span class="material-symbols-outlined me-2">shopping_bag</span>Explorar Colección
+        <a href="#catalogo" class="btn btn-explorar">
+            <span class="material-symbols-outlined">shopping_bag</span>Explorar Colección
         </a>
     </div>
 </section>
@@ -26,20 +25,21 @@
             <h1 class="display-4 fw-bold mb-2">Nuestro Catálogo</h1>
             <p class="text-muted lead">Descubre piezas únicas tejidas con pasión.</p>
         </div>
-        <div class="col-md-4 text-md-end">
-            <button class="btn btn-outline-secondary me-2 mb-2"><span class="material-symbols-outlined me-1">filter_list</span></button>
-            <button class="btn btn-outline-secondary mb-2"><span class="material-symbols-outlined">grid_view</span></button>
-        </div>
     </div>
     
     <!-- Chips Filtros -->
     <div class="chips-scroll pb-3 mb-5">
-        <div class="d-flex gap-2">
-            <span class="badge bg-dark text-white px-4 py-2 fw-semibold">Todos</span>
-            {% for categoria in categorias %}
-            <span class="badge bg-light text-dark border border-secondary-subtle px-4 py-2 fw-medium hover-border-primary">
+        <h3 class="footer-section mb-3">Categorias</h3>
+        <div class="d-flex gap-2 flex-nowrap"><!-- Colocamos el #catalogo para que nos lleve a la sección de productos (el #catalogo debe estar pegado con la llave } (}#catalogo))--> 
+            <a href=" {% url 'productList' %}#catalogo" class="badge bg-light text-dark border border-secondary-subtle px-4 py-2 fw-medium text-decoration-none rounded-pill chip-filtro
+                    {% if not categoria_seleccionada %}chip-activo{% endif %}">
+                Todos
+            </a>
+            {% for categoria in categorias %}<!-- Colocamos el #Catalogo para que nos lleve a la seccion de productos pero con el id de la categoria -->
+            <a href="{% url 'productList' %}?categoria={{ categoria.id }}#catalogo " class="badge bg-light text-dark border border-secondary-subtle px-4 py-2 fw-medium text-decoration-none rounded-pill chip-filtro 
+                    {% if categoria_seleccionada.id == categoria.id %}chip-activo{% endif %}">
                 {{ categoria.nombreCategoria }}
-            </span>
+            </a>
             {% endfor %}
         </div>
     </div>
@@ -53,8 +53,8 @@
                 <div class="position-relative overflow-hidden imagen-container-fixed">
                     {% if producto.imagen %}
                     <img src="{{ producto.imagen.url }}" 
-                         class="card-img-top w-100 h-100 object-fit-cover imagen-zoom-suave"
-                         alt="{{ producto.nombre }}">
+                        class="card-img-top w-100 h-100 object-fit-cover imagen-zoom-suave"
+                        alt="{{ producto.nombre }}">
                     {% else %}
                     <img src="https://via.placeholder.com/400x280?text=Sin+Imagen" 
                          class="card-img-top w-100 h-100 object-fit-cover">
@@ -77,32 +77,50 @@
                 <div class="card-body d-flex flex-column p-4">
                     <div class="d-flex justify-content-between align-items-start mb-3">
                         <h5 class="card-title fw-bold mb-0 titulo-card-compacto">{{ producto.nombre }}</h5>
-                        <span class="fs-3 fw-bold text-warning">${{ producto.precio|floatformat:0 }} MXN</span>
+                        <span class="span-precio">${{ producto.precio|floatformat:0 }} MXN</span>
                     </div>
                     <p class="text-muted flex-grow-1 mb-4 descripcion-clamp">
                         {{ producto.descripcion }}
                     </p>
-                    {% if producto.stock > 0 %}
-                    <a href="#" class="btn btn-outline-light border-2 w-100 fw-bold btn-hover-scale mt-auto">
-                        <span class="material-symbols-outlined me-2 fs-5">arrow_forward</span>Detalles
+                    {% if producto.stock > 0 %} <!--Implementacion de un modal para mostrar los detalles del producto-->
+                    <a class="btn btn-light text-muted w-100 fw-bold mt-auto modal-trigger"
+                    data-imagen="{{ producto.imagen.url }}"
+                    data-titulo="{{ producto.nombre }}"
+                    data-precio="$ {{ producto.precio }} MXN"
+                    data-categoria="{{ producto.categoria.nombreCategoria }}"
+                    data-stock="{{ producto.stock }}"
+                    data-descripcion="{{ producto.descripcion|truncatewords:20 }}">
+                        Ver Detalles
                     </a>
                     {% else %}
-                    <button class="btn btn-light text-muted w-100 fw-bold mt-auto" disabled>Sin Stock</button>
+                    <button class="btn btn-light text-muted w-100 fw-bold mt-auto modal-trigger" 
+                        data-imagen="{{ producto.imagen.url }}"
+                        data-titulo="{{ producto.nombre }}"
+                        data-precio="$ {{ producto.precio }} MXN"
+                        data-categoria="{{ producto.categoria.nombreCategoria }}"
+                        data-stock="{{ producto.stock }}"
+                        data-descripcion="{{ producto.descripcion|truncatewords:20 }}">
+                    Ver Datelles
+                    </button>
                     {% endif %}
                 </div>
             </div>
         </div>
         {% empty %}
+        <!-- PRODUCTOS VACÍOS - SIN MESSAGES -->
         <div class="col-12">
-            {% for message in messages %}
-            <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
-                {{ message }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
-            {% endfor %}
             <div class="text-center py-5">
-                <h3>😔 No hay productos disponibles</h3>
-                <p class="text-muted">¡Pronto tendremos novedades!</p>
+                <!-- SI NO HAY messages, mensaje genérico -->
+                <div class="alert alert-warning mb-4">
+                    <h3 class="mb-3">No hay productos disponibles</h3>
+                    <p class="text-muted mb-0">¡Pronto tendremos novedades para ti!</p>
+                </div>
+                    
+                <!-- Botón CTA -->
+                <a href="{% url 'tienda' %}" class="btn btn-explorar mt-4">
+                    <span class="material-symbols-outlined me-2">store</span>
+                    Volver a Inicio
+                </a>
             </div>
         </div>
         {% endfor %}

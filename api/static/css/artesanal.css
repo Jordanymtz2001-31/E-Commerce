@@ -1,0 +1,540 @@
+/* ========================================
+   ARTISANAL E-COMMERCE - ESTILOS PRINCIPALES
+   Basado en Stitch design + Bootstrap 5
+======================================== */
+
+/* 1. VARIABLES DE COLOR (igual Stitch) */
+:root {
+    --primary: #ec6d13;
+    --primary-dark: #d55c0b;
+    --bg-light: #f8f7f6;
+    --text-main: #181411;
+    --text-muted: #897261;
+}
+
+/* 2. FUENTE GLOBAL (Plus Jakarta Sans) */
+body {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* 3. HERO BACKGROUND OSCURO */
+.hero-dark {
+    background: linear-gradient(135deg, #221810 0%, #1a120b 100%);
+}
+
+/* 4. EFECTOS HOVER ESCALA (igual Stitch) */
+.btn-hover-scale:hover,
+.card-hover-scale img:hover {
+    transform: scale(1.05) !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 5. CARDS CON SOMBRA HOVER */
+.card-hover {
+    transition: all 0.3s ease;
+    border: none !important;
+}
+.card-hover:hover {
+    box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25) !important;
+    border-color: var(--primary) !important;
+    transform: translateY(-5px);
+}
+
+/* 6. CHIPS SCROLL HORIZONTAL (sin barra) */
+.chips-scroll {
+    overflow-x: auto;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+}
+.chips-scroll::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
+}
+
+/* 7. IMAGEN ZOOM SUAVE */
+.card-img-hover {
+    transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* TRUNCADO TEXTO 2 LÍNEAS - Cards productos */
+.descripcion-clamp {
+    display: -webkit-box;              /* 1. Obligatorio Webkit */
+    -webkit-box-orient: vertical;      /* 2. Obligatorio Webkit */
+    -webkit-line-clamp: 2;             /* 3. Límite 2 líneas (99% browsers) */
+    overflow: hidden;                  /* 4. Oculta exceso */
+    line-height: 1.4;                  /* 5. Altura consistente */
+}
+
+/* Soporte moderno (2025+) - NO reemplaza Webkit */
+@supports (line-clamp: 2) {
+    .descripcion-clamp {
+        display: block;                /* Reset Webkit */
+        line-clamp: 2;                 /* Estándar futuro */
+        -webkit-line-clamp: unset;     /* Desactiva prefijo si soporta estándar */
+    }
+}
+
+/* 9. BADGES POSICIÓN */
+.badge-position {
+    position: absolute;
+    top: 1rem;
+    z-index: 10;
+}
+.badge-top-right { right: 1rem; }
+.badge-top-left { left: 1rem; }
+
+/* 10. EFECTOS BOTONES OUTLINE */
+.btn-outline-hover-primary:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    background-color: rgba(236, 109, 19, 0.1);
+}
+
+/* ESTILOS DE LADO DE PRODUCTOS *------------------------------------------------------------------------------/
+
+/* 1. BADGE NUEVA COLECCIÓN */
+.badge-nueva-coleccion {
+    max-width: 200px;
+}
+
+/* 2. CONTENEDOR IMAGEN */
+.imagen-container-fixed {
+    height: 280px;
+}
+
+/* 3. IMAGEN CON TRANSICIÓN ZOOM */
+.imagen-zoom-suave {
+    transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* 4. TÍTULO CARD COMPACTO */
+.titulo-card-compacto {
+    line-height: 1.2;
+}
+
+/* ZOOM al hacer hover sobre card */
+.card-hover:hover .imagen-zoom-suave {
+    transform: scale(1.05);
+}
+
+/* ========================================
+   BOTONES NAVBAR - EFECTOS ESPECIALES
+======================================== */
+
+/* Efecto de subrayado */
+.btn-nav {
+    background: none;
+    border: none;
+    padding: 15px ; /* Espacio del lado izquierdo */
+    color: #343a40;
+    position: relative;
+    padding-bottom: 15px; /* Espacio para el subrayado */
+}
+.btn-nav::before {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 3px;
+    bottom: 10px;
+    left: 0;
+    background-color: #0d7cec;
+    transition: width 0.3s ease;
+}
+
+.btn-nav:hover::before {
+    width: 100%; /* Line animates to full width on hover */
+}
+
+/* Efecto de para salir */
+.btn-nav-salir {
+    background: none;
+    border: none;
+    padding: 15px ; /* Espacio del lado izquierdo */
+    color: #c91717;
+    position: relative;
+    padding-bottom: 15px; /* Espacio para el subrayado */
+}
+.btn-nav-salir::before {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 3px;
+    bottom: 10px;
+    left: 0;
+    background-color: #e11515;
+    transition: width 0.3s ease;
+}
+
+.btn-nav-salir:hover::before {
+    width: 100%; /* Line animates to full width on hover */
+}
+
+/* Efecto de para entrar */
+.btn-nav-login {
+    background: none;
+    border: none;
+    padding: 15px ; /* Espacio del lado izquierdo */
+    color: #147fcc;
+    position: relative;
+    padding-bottom: 15px; /* Espacio para el subrayado */
+}
+.btn-nav-login::before {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 3px;
+    bottom: 10px;
+    left: 0;
+    background-color: #1596e1;
+    transition: width 0.3s ease;
+}
+
+.btn-nav-login:hover::before {
+    width: 100%; /* Aqui se crea el efecto */
+}
+
+/* Efecto de para Resgitrarse */
+.btn-nav-registro {
+    background-image: linear-gradient(to right, #e99873, #ff6708);
+    color: white;
+    border-radius: 30px;
+    padding: 10px 20px;
+    border: none;
+}
+
+.btn-nav-registro:hover {
+    transform: translateY(-2px); /* Esto para que se mueva hacia arriba */
+} 
+
+/* ========================================
+   ESTILOS DE LA PLANTILLA DE PRODUCTOS
+======================================== */
+
+/* TEXTO HERO NARANJA GRADIENTE */
+.texto-inovacion {
+    background: linear-gradient(135deg, #ec6d13 0%, #f4a261 50%, #e76f51 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 900 !important;
+    position: relative;
+}
+
+.texto-inovacion::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: inherit;
+    -webkit-mask: inherit;
+    mask: inherit;
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+}
+
+/* ETIQUETA NUEVA COLECCIÓN - 1 SOLA CLASE */
+.etiqueta-nueva {
+    display: inline-flex !important;
+    align-items: center;
+    background: rgba(231, 96, 12, 0.15) !important; /* Naranja suave */
+    padding: 8px 16px !important;
+    border-radius: 50px !important;
+    margin: 0 auto 1.5rem !important;
+    font-size: 0.875rem;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px;
+    color: var(--primary) !important;
+    border: 1px solid rgba(236, 109, 19, 0.3);
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(193, 157, 138, 0.2);
+}
+
+.etiqueta-nueva:hover {
+    background: rgba(236, 109, 19, 0.25) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(236, 109, 19, 0.3);
+}
+
+.etiqueta-nueva .punto {
+    width: 8px !important;
+    height: 8px !important;
+    background: var(--primary) !important;
+    border-radius: 50% !important;
+    margin-right: 8px !important;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* BOTÓN EXPLORAR COLECCIÓN - HERO PRINCIPAL */
+.btn-explorar {
+    /* Base sólida */
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #ec6d13 0%, #f4a261 50%, #e76f51 100%) !important;
+    color: white !important;
+    border: none !important;
+    padding: 18px 36px !important;
+    font-size: 1.125rem !important;
+    font-weight: 700 !important;
+    text-decoration: none !important;
+    border-radius: 50px !important;
+    box-shadow: 
+        0 10px 30px rgba(236, 109, 19, 0.4),
+        0 4px 12px rgba(0, 0, 0, 0.1) !important;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1) !important;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    min-height: 64px;
+}
+
+/* MAGIC SHINE EFFECT */
+.btn-explorar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+    );
+    transition: left 0.6s ease;
+}
+
+.btn-explorar:hover::before {
+    left: 100%;
+}
+
+/* HOVER PERFECTO */
+.btn-explorar:hover {
+    transform: translateY(-4px) scale(1.05) !important;
+    box-shadow: 
+        0 20px 40px rgba(236, 109, 19, 0.6),
+        0 8px 20px rgba(0, 0, 0, 0.2) !important;
+    background: linear-gradient(135deg, #d55c0b 0%, #ec6d13 50%, #f48c06 100%) !important;
+}
+
+/* ICONO ANIMADO */
+.btn-explorar .material-symbols-outlined {
+    font-size: 1.5rem !important;
+    font-variation-settings: 'wght' 400 !important;
+    transition: all 0.3s ease !important;
+}
+
+.btn-explorar:hover .material-symbols-outlined {
+    transform: scale(1.1) rotate(10deg);
+}
+
+/* FOCUS sin bordes feos */
+.btn-explorar:focus,
+.btn-explorar:active {
+    box-shadow: 
+        0 20px 40px rgba(236, 109, 19, 0.6),
+        0 8px 20px rgba(0, 0, 0, 0.2) !important;
+    outline: none !important;
+}
+
+/* FILTRO ACTIVO */
+.chip-activo {
+    background: linear-gradient(135deg, #ec6d13, #f4a261) !important;
+    color: white !important;
+    border: none !important;
+    box-shadow: 0 4px 12px rgba(236,109,19,0.4);
+    transform: translateY(-2px);
+}
+
+.chip-filtro {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.chip-filtro:hover:not(.chip-activo) {
+    background: rgba(236,109,19,0.1) !important;
+    border-color: #ec6d13 !important;
+    color: #ec6d13 !important;
+}
+
+/* Animación al cambiar filtros */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.row.g-4 > div {
+    animation: fadeIn 0.6s ease forwards;
+}
+
+/*ESTILO DEL SPAN DEL PRECIO*/
+.span-precio {
+    font-size: clamp(1.2rem, 1vw, 1.75rem) ; /* Responsive */
+    font-weight: 600 !important;
+    color: #2659b8 !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* ========================================
+   FOOTER ARTISANAL - Responsive + Dark Mode
+======================================== */
+.footer-artisanal {
+    background: #ffffff !important;
+    border-top: 1px solid #e5e0dc !important;
+    padding: 4rem 0 2rem 0 !important;
+}
+
+/* Dark mode (si tienes toggle) */
+@media (prefers-color-scheme: dark) {
+    .footer-artisanal {
+        background: #1a120b !important;
+        border-top-color: #3a2e26 !important;
+        color: #ffffff !important;
+    }
+    .footer-artisanal .text-muted { color: #a8a29e !important; }
+}
+
+.footer-section h3 {
+    font-weight: 700 !important;
+    font-size: 1.125rem !important;
+    margin-bottom: 1.5rem !important;
+    color: #1f2937 !important;
+}
+
+@media (prefers-color-scheme: dark) {
+    .footer-section h3 { color: #ffffff !important; }
+}
+
+.footer-link {
+    color: #6b7280 !important;
+    text-decoration: none !important;
+    font-size: 0.875rem !important;
+    display: block !important;
+    padding: 0.25rem 0 !important;
+    transition: all 0.3s ease !important;
+}
+
+.footer-link .bi {
+    width: 16px !important;
+    height: 16px !important;
+    margin-right: 0.5rem !important;
+}
+
+.footer-link:hover {
+    color: var(--primary) !important; /* Tu naranja */
+    transform: translateX(4px) !important;
+}
+
+.footer-brand {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.75rem !important;
+    margin-bottom: 1.5rem !important;
+}
+
+.footer-brand-icon {
+    font-size: 2.5rem !important;
+    color: var(--primary) !important; /* Naranja */
+}
+
+.footer-description {
+    color: #6b7280 !important;
+    font-size: 0.875rem !important;
+    line-height: 1.6 !important;
+}
+
+@media (prefers-color-scheme: dark) {
+    .footer-description { color: #a8a29e !important; }
+}
+
+/* ========================================
+   MODAL DETALLES PRODUCTO - Fullscreen
+======================================== */
+
+/* MODAL - FUERZA TOTAL */
+.modal-dialog {
+    max-width: 1000px !important;
+    width: calc(100vw - 40px) !important;
+    margin: 2vh auto !important;
+    max-height: 90vh !important;
+}
+
+.modal-content {
+    height: 80vh !important;
+    border-radius: 20px !important;
+    overflow: hidden !important;
+    display: flex !important;
+    flex-direction: row !important;
+    background: white !important;
+    border: none !important;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.3) !important;
+}
+
+.producto-imagen {
+    width: 55% !important;
+    height: 100% !important;
+    flex-shrink: 0 !important;
+    background: #f8f7f6 !important;
+    overflow: hidden !important;
+    position: relative !important;
+}
+
+#modalImagen {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    display: block !important;
+}
+
+.producto-detalles {
+    width: 45% !important;
+    padding: 2rem !important;
+    overflow-y: auto !important;
+    background: white !important;
+}
+
+/* MÓVIL */
+@media (max-width: 768px) {
+    .modal-content {
+        flex-direction: column !important;
+    }
+    .producto-imagen {
+        width: 100% !important;
+        height: 50vh !important;
+    }
+}
+
+/* ========================================
+   ESTILLO PARA EL STOCK
+======================================== */
+.stock-status {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+}
+
+#modalStockIcon {
+    width: 8px !important;
+    height: 8px !important;
+    border-radius: 50% !important;
+    animation: pulse 2s infinite !important;
+}
+
+
+
+
+
+
+
+
+
+
+

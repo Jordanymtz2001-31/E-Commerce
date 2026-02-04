@@ -1,6 +1,6 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from .forms import RegistroForm
-from .models import Cliente, Producto
+from .models import Categoria, Cliente, Producto
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 
@@ -53,12 +53,41 @@ def logout_view(request):
 def tienda_view(request):
     return render(request, 'tienda.html', {}) 
 
+#Metodo para mostrar los productos junto con las categorias
 def productos_view(request):
     productos = Producto.objects.all() # Obtenemos todos los productos
+    categorias = Categoria.objects.all() # Obtenemos todas las categorias
+    
+    # Detecta categoría desde URL param (opcional)
+    categoria_id = request.GET.get('categoria')
+    if categoria_id:
+        categoria = get_object_or_404(Categoria, id=categoria_id)
+        productos = productos.filter(categoria=categoria)
+        categoria_seleccionada = categoria
+    else:
+        categoria_seleccionada = None
+    
+    context = {
+        'productos': productos,
+        'categorias': categorias,
+        'categoria_seleccionada': categoria_seleccionada
+    }
+    return render(request, 'productos.html', context)
 
-    #Validamos si la lista de productos esta vacia
-    if not productos:
-        messages.error(request, '😔 No hay productos disponibles')
-    #Y si no esta vacia mostramos los productos    
-    return render(request, 'productos.html', {'productos': productos})
+#Metodo para mostrar productos por categoria
+def productos_por_categoria(request, categoria_id):
+    #El get_object_or_404 nos permite obtener un objeto por su id
+    categoria_seleccionada  = get_object_or_404(Categoria, id=categoria_id) # Obtenemos la categoria por id
+    productos = Producto.objects.filter(categoria=categoria) # Obtenemos los productos por categoria mediante el id
+    categoria = Categoria.objects.all() # Obtenemos todas las categorias
+
+    context = {
+        'productos': productos, #PASAMOS LOS PRODUCTOS PARA QUE SE VEAN
+        'categoria': categoria, #PASAMOS LA CATEGORIA PARA QUE SE VEAN
+        'categoria_seleccionada' : categoria_seleccionada # PARA RESALTAR EL BOTON ACTIVO
+    }
+
+    #Y si no esta vacia mostramos los productos
+    return render(request, 'productos.html', context)
+
     

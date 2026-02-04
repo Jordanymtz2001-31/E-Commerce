@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'api',
     'widget_tweaks' # Libreria súper útil para estilizar formularios Django con Bootstrap sin escribir HTML manual
+    
 ]
 
 MIDDLEWARE = [
