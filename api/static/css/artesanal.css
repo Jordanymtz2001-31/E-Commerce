@@ -528,6 +528,11 @@ body {
     animation: pulse 2s infinite !important;
 }
 
+/* Badges visibles en tema claro */
+#modalTallas { background-color: #e3f2fd !important; color: #1976d2 !important; }
+#modalMateriales { background-color: #f3e5f5 !important; color: #7b1fa2 !important; }
+#modalCuidados { background-color: #fff3e0 !important; color: #f57c00 !important; }
+
 
 
 

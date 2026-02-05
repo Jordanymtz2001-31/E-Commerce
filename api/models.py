@@ -79,6 +79,7 @@ class Producto(models.Model):
 
     def __str__(self):
         return self.nombre
+    
 #Creamos un modelo para el Stock de las tallas disponibles
 class StockTalla(models.Model):
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE) # Le pasamos la llave foranea de Producto para que se relacionen
@@ -113,3 +114,4 @@ class Cliente(models.Model):
 
     def __str__(self):
         return str(self.usuario.username)
+

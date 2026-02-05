@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     
 ]
 
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField' # Esto es para evitar un error
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

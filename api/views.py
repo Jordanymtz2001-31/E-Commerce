@@ -1,8 +1,9 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from .forms import RegistroForm
-from .models import Categoria, Cliente, Producto
+from .models import Categoria, Cliente, Producto, Resena
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 # Metodo de registro
 def registro_view(request): # request = peticion
@@ -20,7 +21,7 @@ def registro_view(request): # request = peticion
                 )
             
             messages.success(request, 'Usuario registrado correctamente!') # Mensaje de exito
-            return redirect('dashboard') # Redireccionamos al login
+            return redirect('tienda') # Redireccionamos al login
     else:
         form = RegistroForm() # Si el formulario no es valido lo volvemos a inicializar
     return render(request, 'registro.html', {'form': form})
@@ -36,6 +37,11 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user is not None: # Si el usuario existe
             login(request, user) # Iniciamos sesion
+
+            # 👇 DEBUG: confirma que funciona
+            print(f"LOGIN EXITOSO: {user.username} - ID: {user.id}")
+            print(f"request.user.is_authenticated: {request.user.is_authenticated}")
+
             return redirect('tienda') # Redireccionamos al dashboard
         else: 
             messages.error(request, 'Credenciales incorrectas.') # Mensaje de error
@@ -90,4 +96,29 @@ def productos_por_categoria(request, categoria_id):
     #Y si no esta vacia mostramos los productos
     return render(request, 'productos.html', context)
 
+
+
+#Metodo para crear una reseña
+@login_required
+def crear_resena(request, pk):
+    producto = get_object_or_404(Producto, pk=pk)
     
+    if request.method == 'POST':
+        try:
+            cliente = Cliente.objects.get(usuario=request.user)
+            estrellas = int(request.POST.get('estrellas', 5))
+            comentario = request.POST.get('comentario', '').strip()
+            
+            Resena.objects.create(
+                producto=producto,
+                usuario=cliente,
+                estrellas=estrellas,
+                comentario=comentario
+            )
+            messages.success(request, '¡Gracias por tu reseña!')
+        except Cliente.DoesNotExist:
+            messages.error(request, 'Error: No tienes un perfil de cliente completo.')
+        except ValueError:
+            messages.error(request, 'Error en los datos enviados.')
+    
+    return redirect('productList')

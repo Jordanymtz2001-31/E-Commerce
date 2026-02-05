@@ -61,12 +61,15 @@
                     {% endif %}
                     
                     <!-- Badge lana -->
-                    {% if producto.categoria.nombreCategoria == 'Lana' %}
-                    <span class="position-absolute top-3 end-3 badge bg-primary fs-2-xs px-3 py-2 rounded-pill fw-bold">Lana 100%</span>
+                    {% if producto.categoria.all|length > 0 %}
+                        {% for cat in producto.categoria.all%}
+                            {% if cat.nombreCategoria == 'Lana' %}
+                                <span class="position-absolute top-3 end-3 badge bg-primary fs-2-xs px-3 py-2 rounded-pill fw-bold">Lana 100%</span>
+                            {% endif %}
+                        {% endfor %}
                     {% endif %}
-                    
                     <!-- Badge agotado -->
-                    {% if producto.stock == 0 %}
+                    {% if producto.stockProducto == 0 %}
                     <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 d-flex align-items-center justify-content-center">
                         <span class="badge bg-secondary fs-2-xs px-4 py-3 rounded-pill">Agotado</span>
                     </div>
@@ -82,25 +85,33 @@
                     <p class="text-muted flex-grow-1 mb-4 descripcion-clamp">
                         {{ producto.descripcion }}
                     </p>
-                    {% if producto.stock > 0 %} <!--Implementacion de un modal para mostrar los detalles del producto-->
+                    {% if producto.stockProducto > 0 %} <!--Implementacion de un modal para mostrar los detalles del producto-->
                     <a class="btn btn-light text-muted w-100 fw-bold mt-auto modal-trigger"
-                    data-imagen="{{ producto.imagen.url }}"
+                    data-imagen="{% if producto.imagen %}{{ producto.imagen.url }}{% else %}https://via.placeholder.com/400x280?text=Sin+Imagen{% endif %}"
                     data-titulo="{{ producto.nombre }}"
-                    data-precio="$ {{ producto.precio }} MXN"
-                    data-categoria="{{ producto.categoria.nombreCategoria }}"
-                    data-stock="{{ producto.stock }}"
+                    data-precio="$ {{ producto.precio|floatformat:0 }} MXN"
+                    data-categoria="{% for cat in producto.categoria.all %}{{ cat.nombreCategoria }}{% if not forloop.last %}, {% endif %}{% endfor %}"
+                    data-tallas="{% for t in producto.tallaDisponible.all %}{{ t.nombreTalla }}{% if not forloop.last %}, {% endif %}{% endfor %}"
+                    data-materiales="{% for m in producto.tipoMateria.all %}{{ m.nombreTipoMateria }}{% if not forloop.last %}, {% endif %}{% endfor %}"
+                    data-cuidados="{% for c in producto.instruccionesCuidado.all %}{{ c.nombre }}{% if not forloop.last %} | {% endif %}{% endfor %}"
+                    data-stock="{{ producto.stock_disponible }}"
+                    data-producto-id="{{ producto.id }}"
                     data-descripcion="{{ producto.descripcion|truncatewords:20 }}">
                         Ver Detalles
                     </a>
                     {% else %}
                     <button class="btn btn-light text-muted w-100 fw-bold mt-auto modal-trigger" 
-                        data-imagen="{{ producto.imagen.url }}"
-                        data-titulo="{{ producto.nombre }}"
-                        data-precio="$ {{ producto.precio }} MXN"
-                        data-categoria="{{ producto.categoria.nombreCategoria }}"
-                        data-stock="{{ producto.stock }}"
-                        data-descripcion="{{ producto.descripcion|truncatewords:20 }}">
-                    Ver Datelles
+                    data-imagen="{% if producto.imagen %}{{ producto.imagen.url }}{% else %}https://via.placeholder.com/400x280?text=Sin+Imagen{% endif %}"
+                    data-titulo="{{ producto.nombre }}"
+                    data-precio="$ {{ producto.precio|floatformat:0 }} MXN"
+                    data-categoria="{% for cat in producto.categoria.all %}{{ cat.nombreCategoria }}{% if not forloop.last %}, {% endif %}{% endfor %}"
+                    data-tallas="{% for t in producto.tallaDisponible.all %}{{ t.nombreTalla }}{% if not forloop.last %}, {% endif %}{% endfor %}"
+                    data-materiales="{% for m in producto.tipoMateria.all %}{{ m.nombreTipoMateria }}{% if not forloop.last %}, {% endif %}{% endfor %}"
+                    data-cuidados="{% for c in producto.instruccionesCuidado.all %}{{ c.nombre }}{% if not forloop.last %} | {% endif %}{% endfor %}"
+                    data-stock="{{ producto.stock_disponible }}"
+                    data-producto-id="{{ producto.id }}"
+                    data-descripcion="{{ producto.descripcion|truncatewords:20 }}">
+                        Ver Detalles
                     </button>
                     {% endif %}
                 </div>
