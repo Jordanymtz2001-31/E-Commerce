@@ -1,36 +1,120 @@
-{% extends 'base.html' %} <!-- Decimos que debajo del navbar vamos a poner el contenido -->
-{% block title %}Tienda{% endblock %} 
+{% extends 'base.html' %}
+
+{% block title %}Talcahualme - Nuestra Historia{% endblock %}
 
 {% block content %}
-<div class="container-fluid py-5 flex-grow-1">
-    <div class="row justify-content-center mb-5">
-        <div class="col-12 text-center">
-            <h1 class="display-4 mb-4">¡Bienvenido {{user.username}}!</h1>
-            <p class="lead mb-5">Bienvenido a Talcahualme</p>
+<!-- Hero Section del HTML artesanal (adaptado a Bootstrap) -->
+<section class="py-5">
+    <div class="container">
+        <div class="row align-items-center g-5">
+            <!-- Hero Image -->
+            <div class="col-lg-6">
+                <div class="position-relative">
+                    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2bhMFTn52HYCVMjoKU3qRiMatPJTKEmR3Z6xgywO5TYmUxvZL1Mpf-c4PndnMD7BsdT9hXS6W2vGCrGeYehZZg-zXcCIxUCH6WuM_wg_BzEqCRih6En6-9dAVADw0B_Hy3pt_xFC9qbNtZG4lDCvA8tY-R3zkf39Ded_USsn_hzlCbZkPC3RXsroywmgkGizHwbmIl7-FDG2FmDGdGNgHVGOf8eA_DQtq3vVr8-FzyRm32CWV7Ic8sgqqE_5Z4rE7YaUulvaWPKpy" 
+                         alt="Artesanos tejiendo" class="img-fluid rounded-4 shadow-lg w-100" style="aspect-ratio: 4/5;">
+                </div>
+            </div>
+            <!-- Hero Content -->
+            <div class="col-lg-6 text-center text-lg-start">
+                <span class="badge badge-artesanal">Desde 2023</span>
+                <!-- Título -->
+                <h1 class="display-3 fw-black mb-4 titulo-hero">Tejiendo Historia...</h1>
+                <p class="lead text-muted fs-5">
+                    "En un mundo de moda rápida, elegimos el camino lento. Preservando técnicas ancestrales, 
+                    honrando las manos que crean, y tejiendo historias en prendas que duran toda la vida."
+                </p>
+                <div class="d-flex flex-column flex-lg-row gap-3 mt-4">
+                <a href="#proceso" class="btn btn-artesanal btn-lg px-5 py-3 shadow-lg">
+                    Leer Nuestra Historia
+                </a>
+                <a href="{% url 'productList' %}" class="btn btn-artesanal-outline btn-lg px-5 py-3 fw-bold">
+                    Ver Colección
+                </a>
+                </div>
+            </div>
         </div>
     </div>
+</section>
 
-    <div class="row justify-content-center">
-        <div class="col-lg-8 text-center">
-            <div class="card shadow-lg p-5">
-                <h2 class="mb-4">🚀 Próximamente...</h2>
-                <p class="lead">Aquí aparecerá el contenido principal de tu tienda.</p>
-                <div class="row mt-5">
-                    <div class="col-md-6">
-                        <h4>📋 Planes:</h4>
-                        <ul class="list-unstyled">
-                            <li>✅ Catálogo de productos</li>
-                            <li>✅ Carrito de compras</li>
-                            <li>✅ Sistema de pagos</li>
-                        </ul>
+<!-- Process Headline -->
+<section class="py-5 bg-white">
+    <div class="container text-center">
+        <h2 class="display-5 fw-bold mb-4">El Viaje de un Hilo</h2>
+        <p class="lead text-muted fs-4">De las altas montañas hasta tu armario, cada paso es un testimonio de paciencia y habilidad.</p>
+    </div>
+</section>
+
+<!-- Timeline Section (adaptada a Bootstrap) -->
+<section id="proceso" class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <!-- Step 1 -->
+                <div class="row align-items-center mb-5 timeline-step">
+                    <div class="col-auto">
+                        <div class="timeline-icon">
+                            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBriHQQqcpMHbRhVVarVQkn3ojt7HL8gRJRsN0vLbIX7TE5iKnSqC--B5H_x0DhAvaWP91Gz2iXh2Gpn0vQAZmbtLWYReBEWIA2Mi9NBxXplnjuVcbyb7mTZxra8ZKnCURn0wGalbwjedVp1TmE1KiwxGVBBdxkzRWSJ_Jz6Afm549gu3GrYRguWfQHMYJq5Vqj9hHfw_MZOtrFcPV1LbBZFsrfC4zgNWdDnXYqj5FIBeGJ4mDeAEgX50EL1NO7DPJiKLMUPK1zDwSz" 
+                                alt="Lana cruda" class="rounded-circle w-100 h-100 object-fit-cover" style="width: 56px; height: 56px;">
+                        </div>
                     </div>
-                    <div class="col-md-6">
-                        <a href="{% url 'productList' %}" class="btn btn-primary btn-lg w-100 mb-3">Ver Productos →</a>
-                        <p class="text-muted">O haz clic en "Productos" arriba</p>
+                    <div class="col">
+                        <h3 class="h3 fw-bold mb-2">La Materia Prima</h3>
+                        <p class="text-muted lead">Sourced directamente de pastores independientes en las alturas. Nuestras fibras de alpaca y algodón orgánico son seleccionadas a mano por su longitud y suavidad.</p>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="row align-items-center mb-5 timeline-step">
+                    <div class="col-auto">
+                        <div class="timeline-icon">
+                            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAFcIrQa0Zl4xR18o4miJuJkqXFfhNI76tXFwTavEEWbY8NUmIoOUA44mzj4IDZZ-TLqkjNR9QKtvPusAGen8u4UFc443FD6ZYEV024ax0u2ueTh3xKkavTy25Omx6wCiOwRFtgaIztKXKD7jAejFFYtY7yztvdota9aXtnXSORC2-wXpE_X0SA8aRT8vclLmyuKXJSLMlmghctTigX9N0sXlqbChpf4DYgUHynzmmNK7fpRYtxCiGssfrIeE4FNiktp2IgkVq5hk-N" 
+                                 alt="Tintes naturales" class="rounded-circle w-100 h-100 object-fit-cover" style="width: 56px; height: 56px;">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <h3 class="h3 fw-bold mb-2">El Tinte</h3>
+                        <p class="text-muted lead">Decimos no a químicos tóxicos. Nuestra paleta vibrante nace de la naturaleza —hojas, raíces, insectos y minerales— creando colores que envejecen con gracia.</p>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="row align-items-start timeline-step">
+                    <div class="col-auto">
+                        <div class="timeline-icon">
+                            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuADpBOD1hBEelag-0H0s3mIXdMGenAWRwiqdVA33L4jGwl-NYUNdA2RQAJP7IAlaJBJUu-f9NXhQEQNPqSkFcB6rxjV7Bgb5Rtn2u-tqgrm7_hm546zS2WltYznfY8Nix7_sW7OKqmeUL62Ja2ixATMmwRg7c18uvIXVFlNPTCGqT1RC9z1YluDl0cXkrIs3S3BLboKEwT2Bsq6W7dVOfj74sHWAv9FQ4LMhCyIzVgiCs2GjLLIzVOyxClEuQRgbMSiXtnrOF7c_Syh" 
+                                 alt="Telar tradicional" class="rounded-circle w-100 h-100 object-fit-cover" style="width: 56px; height: 56px;">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <h3 class="h3 fw-bold mb-2">El Tejido</h3>
+                        <p class="text-muted lead">El tiempo es nuestro ingrediente más valioso. En telares tradicionales de cintura, nuestros artesanos tejen símbolos y patrones complejos de memoria.</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</section>
+
+<!-- Misión -->
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <div class="mision-card bg-white border rounded-4 p-5 shadow-lg">
+                    <i class="bi bi-heart-fill display-1 mision-icon"></i>
+                    <h2 class="display-5 fw-black mb-4">Nuestra Misión</h2>
+                    <p class="lead mb-4">
+                        "Más que ropa, una comunidad. Nos dedicamos a salarios justos, mantener vivas las tradiciones y prácticas sostenibles que honran la tierra y al artesano."
+                    </p>
+                    <p class="text-muted fs-5 mb-4">
+                        Cada compra apoya directamente programas educativos para los hijos de nuestros artesanos en México.
+                    </p>
+                    <a href="#catalogo" class="btn btn-artesanal btn-lg px-5 py-3 fw-bold shadow-lg">
+                        Conoce Nuestro Impacto
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}

@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
 
             const stock = parseInt(this.dataset.stock) || 0;
-            const productoId = this.dataset.productoId;
 
             // Datos básicos
             document.getElementById('modalImagen').src = this.dataset.imagen;
@@ -33,29 +32,53 @@ document.addEventListener('DOMContentLoaded', function() {
                 stockText.className = 'text-danger fw-medium small';
             }
 
+            const productoId = this.dataset.productoId; //Obtenemos el id del producto para que se pueda cargar el modal con su producto
             // Aqui obteneremos el id del producto que se clickeo
             document.getElementById('modalProductoId').value = productoId;
-
             // Aqui hacemos la accion del formulario de resena con el id del producto para guardar la resena
             document.getElementById('formResena').action = `/producto/${productoId}/resena/`;
 
-            // 👇 LOGIN CHECK (esto SÍ funciona en JS)
+            // Creamos variables constantes para pasarle los modales de resena y login
             const formResena = document.getElementById('formResena');
             const loginRequerido = document.getElementById('loginRequerido');
 
-            // Y cambia el if por esto temporalmente:
+            // Mostrar el formulario de resena si el usuario esta logueado
             if (window.USER_LOGGED_IN === true || window.USER_LOGGED_IN === 'true') {
                 console.log('MOSTRANDO formulario');
-                document.getElementById('formResena').style.display = 'block';
-                document.getElementById('loginRequerido').style.display = 'none';
+                formResena.style.display = 'block'; // Mostramos el formulario
+                loginRequerido.style.display = 'none'; // No mostramos el mensaje
+                // De los contrario no lo mostramos
             } else {
                 console.log('MOSTRANDO mensaje login');
-                document.getElementById('formResena').style.display = 'none';
-                document.getElementById('loginRequerido').style.display = 'block';
+                formResena.style.display = 'none'; // No mostramos el formulario
+                loginRequerido.style.display = 'block'; // Mostramos el mensaje que necesita loguearse
             }
 
+            console.log('ANTES modal - action:', formResena.action);
+            formResena.action = `/producto/${productoId}/resena/`;
+            console.log('DESPUÉS set - action:', formResena.action);
+            console.log('FINAL - action:', formResena.action);
 
             new bootstrap.Modal(document.getElementById('modalProducto')).show();
         });
     });
+
+    // ✅ UX MÍNIMA: Solo loading state
+    const formResena = document.getElementById('formResena');
+    if (formResena) {
+        console.log('productoId:', document.querySelector('.modal-trigger').dataset.productoId);
+console.log('Form action:', document.getElementById('formResena').action);
+
+        formResena.addEventListener('submit', function(e) {
+            const btn = document.getElementById('btnResena');
+            btn.disabled = true;
+            btn.innerHTML = `
+                <span class="spinner-border spinner-border-sm me-2" role="status"></span>
+                Publicando...
+            `;
+            // ✅ DJANGO PROCESA - sin e.preventDefault()
+        });
+    }
 });
+
+

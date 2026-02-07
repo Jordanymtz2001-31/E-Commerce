@@ -34,7 +34,7 @@
                     <img src="/media/logo/logo.jpg" alt="Logo" width="40" height="40" class="me-2 rounded-3">
                     Talcahualme
                 </a>
-                <a href="{% url 'tienda' %}"  class="btn btn-nav ">Nosotros</a>
+                <a href="{% url 'tienda' %}"  class="btn btn-nav active">Nosotros</a>
                 <a href="{% url 'productList' %}" class="btn btn-nav ">Productos</a>
             </div>
             
@@ -53,6 +53,19 @@
             </div>
         </div>
     </nav>
+
+    <!-- Mensajes Django por parte del Formulario de la reseña de producto -->
+    {% if messages %}
+    <div class="position-fixed top-0 start-50 translate-middle-x p-3 w-75 z-index-3" style="z-index: 1060;">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
     
     <!-- Contenido principal -->
     <main class="flex-grow-1">
@@ -77,7 +90,7 @@
                 <!-- Columna Comprar -->
                 <div class="col-lg-3 col-md-6 col-12">
                     <h3 class="footer-section">Comprar</h3>
-                   <!--Aqui mostramos solo las categorias--> 
+                    <!--Aqui mostramos solo las categorias--> 
                     {% for categoria in categorias %}<!-- Colocamos el #Catalogo para que nos lleve a la seccion de productos pero con el id de la categoria -->
                     <a href="{% url 'productList' %}?categoria={{ categoria.id }}#catalogo " class="footer-link
                             {% if categoria_seleccionada.id == categoria.id %}{% endif %}">
@@ -90,7 +103,7 @@
                 <div class="col-lg-3 col-md-6 col-12">
                     <h3 class="footer-section">Empresa</h3>
                     <ul class="list-unstyled">
-                        <li><a href="{% url 'tienda' %}" class="footer-link">Sobre Nosotros</a></li>
+                        <li><a href="{% url 'tienda' %}" class="footer-link">Nosotros</a></li>
                         <li><a href="#" class="footer-link">Artesanos</a></li>
                     </ul>
                 </div>
@@ -169,43 +182,50 @@
                     <p id="modalDescripcion" class="text-muted mb-4"></p>
                     <!-- FORMULARIO DE RESEÑA -->
                     <hr>
-                    <h5>Deja tu opinión</h5>
+                    <!-- RESEÑAS SIMPLE (sin CSS extra) -->
+                    <div class="reseñas-section">
+                        <h6 class="mb-3 fw-bold text-dark">
+                            <i class="bi bi-star-fill text-warning me-2"></i>
+                            ¿Qué te parece este producto?
+                        </h6>
 
-                    <!-- Mensaje si no está logueado -->
-                    <div id="loginRequerido" class="alert alert-warning" style="display: none;">
-                        <i class="bi bi-exclamation-triangle me-2"></i>
-                        Para dejar una reseña necesitas <a href="{% url 'login' %}" class="alert-link">iniciar sesión</a>.
+                        <!-- Mensaje login requerido -->
+                        <div id="loginRequerido" class="alert alert-warning d-none mb-3">
+                            <i class="bi bi-exclamation-triangle me-2"></i>
+                            Inicia sesión para dejar tu reseña <a href="{% url 'login' %}" class="alert-link">aquí</a>.
+                        </div>
+
+                        <!-- Formulario reseña -->
+                        <form id="formResena" method="post" style="display: none;">
+                            {% csrf_token %}
+                            <input type="hidden" id="modalProductoId" name="producto_id" value="">
+                            
+                            <div class="mb-3">
+                                <select name="estrellas" class="form-select" required>
+                                    <option value="">Selecciona...</option>
+                                    <option value="5">★ ★ ★ ★ ★ Excelente</option>
+                                    <option value="4">★ ★ ★ ★ ☆ Muy bueno</option>
+                                    <option value="3">★ ★ ★ ☆ ☆ Bueno</option>
+                                    <option value="2">★ ★ ☆ ☆ ☆ Regular</option>
+                                    <option value="1">★ ☆ ☆ ☆ ☆ Mejorar</option>
+                                </select>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">💬 Tu opinión</label>
+                                <textarea name="comentario" class="form-control" rows="4" 
+                                placeholder="Comparte tu experiencia con este producto..."
+                                        maxlength="500"></textarea>
+                                <div class="form-text fst-italic">Máximo 500 caracteres (opcional)</div>
+                            </div>
+                            
+                            <button type="submit" id="btnResena" class="btn btn-primary w-100 fw-semibold">
+                                <i class="bi bi-star-fill me-2"></i>
+                                Publicar reseña
+                            </button>
+                        </form>
                     </div>
-
-                    <!-- Formulario de reseña (solo si está logueado) -->
-                    <form id="formResena" method="post" action="" style="display: none;">
-                        {% csrf_token %}
-                        <input type="hidden" id="modalProductoId" name="producto_id" value="">
-                        
-                        <div class="mb-3">
-                            <label class="form-label">Calificación:</label>
-                            <select name="estrellas" class="form-select">
-                                <option value="5">★ ★ ★ ★ ★ (5)</option>
-                                <option value="4">★ ★ ★ ★ ☆ (4)</option>
-                                <option value="3">★ ★ ★ ☆ ☆ (3)</option>
-                                <option value="2">★ ★ ☆ ☆ ☆ (2)</option>
-                                <option value="1">★ ☆ ☆ ☆ ☆ (1)</option>
-                            </select>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label class="form-label">Comentario:</label>
-                            <textarea id="modalComentario" name="comentario" class="form-control" rows="3" 
-                                    placeholder="¿Qué te parece este producto?"></textarea>
-                        </div>
-                        
-                        <button type="submit" class="btn btn-primary">
-                            <i class="bi bi-star-fill me-2"></i>Publicar reseña
-                        </button>
-                    </form>
-
-
-                    <div class="mt-auto">
+                    <!--<div class="mt-auto">
                         <div class="d-flex gap-3 mb-4">
                             <div class="cantidad-control flex-grow-1">
                                 <button class="btn-cantidad">-</button>
@@ -217,7 +237,7 @@
                                 Añadir al carrito
                             </button>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>

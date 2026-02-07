@@ -1,6 +1,12 @@
 from django.db import models
 from django.db import models
 from django.contrib.auth.models import User
+from django.dispatch import receiver
+from django.forms import ValidationError
+from django.db.models import Sum 
+from django.db.models.signals import post_save
+from django.db import transaction
+
 
 #Creamos nuestros modelos
 
@@ -70,7 +76,7 @@ class Producto(models.Model):
     #Metodo para obtener el stock disponible, en donde se suma el stock de todas las tallas 
     @property
     def stock_disponible(self):
-        return sum(stock.talla_stock for stock in self.stocktalla_set.all())
+        return self.stockProducto
     
     #Metodo para que nos diga si tiene stock
     @property
@@ -90,8 +96,19 @@ class StockTalla(models.Model):
         unique_together = ('producto', 'talla') #Aqui decimos que la combinacion de producto y talla debe ser unica
 
     def __str__(self):
-        return f"{self.producto} - {self.talla}" # Aqui decimos que se muestre el producto y la talla
-    
+        return f"{self.producto.nombre} - {self.talla.nombreTalla}"
+
+    #Metodo para que cada ves que guarde StockTalla, se agregue la talla al producto
+    def save(self, *args, **kwargs):
+            super().save(*args, **kwargs)
+            # Si tiene stock, agregar talla a tallaDisponible
+            if self.talla_stock > 0:
+                self.producto.tallaDisponible.add(self.talla)
+            else:
+                # Si ya no tiene stock, puedes decidir si la quitas:
+                # self.producto.tallaDisponible.remove(self.talla)
+                pass
+
 #Creamos el modelo para las reseñas
 class Resena(models.Model):
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)

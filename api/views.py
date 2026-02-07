@@ -21,7 +21,7 @@ def registro_view(request): # request = peticion
                 )
             
             messages.success(request, 'Usuario registrado correctamente!') # Mensaje de exito
-            return redirect('tienda') # Redireccionamos al login
+            return redirect('login') # Redireccionamos al login
     else:
         form = RegistroForm() # Si el formulario no es valido lo volvemos a inicializar
     return render(request, 'registro.html', {'form': form})
@@ -38,7 +38,7 @@ def login_view(request):
         if user is not None: # Si el usuario existe
             login(request, user) # Iniciamos sesion
 
-            # 👇 DEBUG: confirma que funciona
+            # DEBUG: confirma que funciona
             print(f"LOGIN EXITOSO: {user.username} - ID: {user.id}")
             print(f"request.user.is_authenticated: {request.user.is_authenticated}")
 
@@ -57,7 +57,12 @@ def logout_view(request):
 
 #Metodo para mostrar la tienda sin acceso
 def tienda_view(request):
-    return render(request, 'tienda.html', {}) 
+    categorias = Categoria.objects.all() # Obtenemos todas las categorias 
+
+    contex = {
+        'categorias': categorias  #Lo metemos a la variables
+    }
+    return render(request, 'tienda.html', contex) # Y aqui lo renderizamos junto con las categorias 
 
 #Metodo para mostrar los productos junto con las categorias
 def productos_view(request):
@@ -93,13 +98,12 @@ def productos_por_categoria(request, categoria_id):
         'categoria_seleccionada' : categoria_seleccionada # PARA RESALTAR EL BOTON ACTIVO
     }
 
-    #Y si no esta vacia mostramos los productos
+    #Y si no esta vacia mostramos los productos 
     return render(request, 'productos.html', context)
 
 
-
 #Metodo para crear una reseña
-@login_required
+@login_required #Decorador para indicar que solo se puede acceder a la vista si el usuario esta logueado
 def crear_resena(request, pk):
     producto = get_object_or_404(Producto, pk=pk)
     
@@ -116,9 +120,7 @@ def crear_resena(request, pk):
                 comentario=comentario
             )
             messages.success(request, '¡Gracias por tu reseña!')
-        except Cliente.DoesNotExist:
-            messages.error(request, 'Error: No tienes un perfil de cliente completo.')
         except ValueError:
-            messages.error(request, 'Error en los datos enviados.')
+            messages.error(request, 'Error en los datos enviados. Intentalo de nuevo')
     
     return redirect('productList')
