@@ -14,3 +14,6 @@ class RegistroForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'email', 'password1', 'password2', 'telefono', 'direccion']
+
+    #Aqui me falta agregar estilos a los campos para que se se pasen al html o al formulario
+    #Para que solo en el html solo ientrada sobre este formulario junto con sus estilos

@@ -29,6 +29,8 @@
                 {% csrf_token %}
                 {{form.non_field_errors}}
                 
+                <!-- Aqui no estoy hacinedo uso del formulario para que iteremos sobre los campos del formulario-->
+
                 <!-- Username -->
                 <div class="mb-4">
                     <label for="id_username" class="form-label-register">Usuario</label>
@@ -52,6 +54,32 @@
                     </div>
                     {% if form.email.errors %}
                         <div class="text-danger small mt-2">{{form.email.errors}}</div>
+                    {% endif %}
+                </div>
+                
+                <!-- Telefono -->
+                <div class="mb-4">
+                    <label for="id_telefono" class="form-label-register">Teléfono</label>
+                    <div class="input-group-register">
+                        <i class="bi bi-telephone"></i>
+                        <input type="number" name="telefono" class="form-control-register" 
+                            id="id_telefono" placeholder="Ingresa tu teléfono" required>
+                    </div>
+                    {% if form.telefono.errors %}
+                        <div class="text-danger small mt-2">{{form.telefono.errors}}</div>
+                    {% endif %}
+                </div>
+
+                <!-- Direccion -->
+                <div class="mb-4">
+                    <label for="id_direccion" class="form-label-register">Dirección</label>
+                    <div class="input-group-register">
+                        <i class="bi bi-geo-alt"></i>
+                        <textarea name="direccion" class="form-control-register" 
+                            id="id_direccion" placeholder="Ingresa tu dirección" required></textarea>
+                    </div>
+                    {% if form.direccion.errors %}
+                        <div class="text-danger small mt-2">{{form.direccion.errors}}</div>
                     {% endif %}
                 </div>
                 

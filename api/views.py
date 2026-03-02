@@ -8,23 +8,23 @@ from django.contrib.auth.decorators import login_required
 # Metodo de registro
 def registro_view(request): # request = peticion
     if request.method == 'POST': # Si la peticion es POST entonces
-        #Inicializamos el formulario con todos los valores de los input
-        form = RegistroForm(request.POST)
-        if form.is_valid(): #Validamos si los datos son correctos
-            user = form.save() #Guardamos en la bd
+        #Obtenemos los datos del formulario que el usuario ingreso en la plantilla
+        formulario = RegistroForm(request.POST)
+        if formulario.is_valid(): #Validamos si los datos son correctos
+            user = formulario.save() #Guardamos en la bd
 
             #Creamos el cliente el cual el objeto del cliente se relaciona con el usuario 
             Cliente.objects.create(
                 usuario = user,
-                telefono = form.cleaned_data['telefono'],
-                direccion = form.cleaned_data['direccion']
+                telefono = formulario.cleaned_data['telefono'],
+                direccion = formulario.cleaned_data['direccion']
                 )
             
             messages.success(request, 'Usuario registrado correctamente!') # Mensaje de exito
             return redirect('login') # Redireccionamos al login
     else:
-        form = RegistroForm() # Si el formulario no es valido lo volvemos a inicializar
-    return render(request, 'registro.html', {'form': form})
+        formulario = RegistroForm() # Si el formulario no es valido lo volvemos a inicializar
+    return render(request, 'registro.html', {'form': formulario})
         
 #Metodo para entrar al sistema
 def login_view(request):
@@ -42,6 +42,7 @@ def login_view(request):
             print(f"LOGIN EXITOSO: {user.username} - ID: {user.id}")
             print(f"request.user.is_authenticated: {request.user.is_authenticated}")
 
+            messages.success(request, 'Inicio de sesion exitoso!')
             return redirect('tienda') # Redireccionamos al dashboard
         else: 
             messages.error(request, 'Credenciales incorrectas.') # Mensaje de error
@@ -59,10 +60,7 @@ def logout_view(request):
 def tienda_view(request):
     categorias = Categoria.objects.all() # Obtenemos todas las categorias 
 
-    contex = {
-        'categorias': categorias  #Lo metemos a la variables
-    }
-    return render(request, 'tienda.html', contex) # Y aqui lo renderizamos junto con las categorias 
+    return render(request, 'tienda.html', {'categorias': categorias}) # Y aqui lo renderizamos junto con las categorias 
 
 #Metodo para mostrar los productos junto con las categorias
 def productos_view(request):
