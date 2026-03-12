@@ -1,0 +1,22 @@
+# Entorno virtual
+env/
+venv/
+
+# Archivos de Entorno
+.env
+.env.development
+.env.production
+
+# Base de datos
+
+# Archivos compilados
+__pycache__/
+*.pyc
+*.pyo
+
+# Archivos estaticos recolectados
+/staticfiles/
+
+# Claves o certificados
+*.key
+*.pem
