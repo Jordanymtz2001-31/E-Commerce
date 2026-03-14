@@ -24,8 +24,13 @@ urlpatterns = [
     path('', include('api.urls'))
 ] 
 
-#SOLO DESARROLLO - Automático y seguro de carga de archivos
-#Es decir que si estamos en modo desarrollo entonces se cargan los archivos estaticos
-if settings.DEBUG: #← ¡ES SEGURIDAD! No lo quites nunca 
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS[0]) # Configuracion de archivos estaticos (carga de archivos css y js)
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) # Configuracion de las imagenes, Aqui se cargan las imagenes
+if settings.DEBUG:
+    # Sirve archivos estáticos y media en desarrollo
+    if hasattr(settings, 'STATICFILES_DIRS') and settings.STATICFILES_DIRS:
+        urlpatterns += static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS[0])
+    else:
+        urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+else:
+    # En producción solo sirve estáticos (media lo debe servir el servidor web)
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

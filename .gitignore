@@ -8,6 +8,7 @@ venv/
 .env.production
 
 # Base de datos
+.sqlite3
 
 # Archivos compilados
 __pycache__/

@@ -16,7 +16,9 @@ IS_PRODUCTION = os.environ.get('DJANGO_PRODUCTION') == '1'
 # Cargar variables de entorno
 # ----------------------------------------------------
 # Cargar el archivo de entorno correspondiente dependiendo del entorno o caso, asi podemos estar en desarrollo o en produccion 
-ENV_FILE = Path(__file__).resolve().parent.parent.parent / ('.env.production' if IS_PRODUCTION else '.env.development')
+ENV_FILE = Path(__file__).resolve().parent.parent / ('.env.production' if IS_PRODUCTION else '.env.development')
+# Mostrar qué archivo .env se está cargando para depuración
+print(f"[Django settings] Cargando variables de entorno desde: {ENV_FILE}")
 load_dotenv(ENV_FILE) # Cargar el archivo de entorno
 
 # ----------------------------------------------------
@@ -24,9 +26,15 @@ load_dotenv(ENV_FILE) # Cargar el archivo de entorno
 # ----------------------------------------------------
 SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = os.getenv('DEBUG', 'False') == 'True' 
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(',')
+# ESTO NO EXPLOTA NUNCA
+allowed_hosts_str = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1')
+ALLOWED_HOSTS = [host.strip() for host in allowed_hosts_str.split(',')]
 
-
+# Validación para variables de base de datos obligatorias
+if not os.getenv('DB_ENGINE'):
+    raise Exception("La variable de entorno DB_ENGINE no está definida. Debe ser 'django.db.backends.mysql', 'django.db.backends.sqlite3', etc.")
+if not os.getenv('DB_NAME'):
+    raise Exception("La variable de entorno DB_NAME no está definida. Debe ser el nombre de la base de datos o el archivo para sqlite3.")
 
 # ----------------------------------------------------
 # Aplicaciones instaladas
@@ -47,6 +55,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField' # Esto es para evitar un er
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware', #WhiteNoise se integra con Django
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -142,6 +151,12 @@ STATIC_ROOT = BASE_DIR / 'staticfiles' # Carpeta para archivos estaticos para pr
 # Configuracion para subir archivos
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+STORAGES = {
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 
 # Logging para producción
 #Sirve para guardar errores y advertencias en un archivo (django.log). asi puedo verlos en produccion

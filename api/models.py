@@ -24,6 +24,9 @@ class Categoria(models.Model):
     def __str__(self):
         return self.nombreCategoria
 
+    class Meta:
+        db_table = 'categorias'
+
 #Creamos el modelo para las tallas, ya que un producto tiene varias tallas
 class Talla(models.Model):
     TALLA = [
@@ -38,6 +41,9 @@ class Talla(models.Model):
     def __str__(self):
         return self.nombreTalla
     
+    class Meta:
+        db_table = 'tallas'
+    
 #Creamos un modelo para el Tipo de Materia, ya que un producto puede ser de Algodon o Lana
 class TipoMateria(models.Model):
     TIPO_MATERIA = [
@@ -49,12 +55,18 @@ class TipoMateria(models.Model):
     def __str__(self):
         return self.nombreTipoMateria
     
+    class Meta:
+        db_table = 'tipos_materia'
+
 #Creamos un modelo para las instrucciones de Cuida del Producto
 class InstruccionesCuidado(models.Model):
     nombre = models.CharField(max_length=50)
 
     def __str__(self):
         return self.nombre
+    
+    class Meta:
+        db_table = 'instrucciones_cuidado'
     
 class Producto(models.Model):
     nombre = models.CharField(max_length=50, null=False, blank=False) #Decimos que no puede estar vacio
@@ -86,6 +98,9 @@ class Producto(models.Model):
     def __str__(self):
         return self.nombre
     
+    class Meta:
+        db_table = 'productos'
+    
 #Creamos un modelo para el Stock de las tallas disponibles
 class StockTalla(models.Model):
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE) # Le pasamos la llave foranea de Producto para que se relacionen
@@ -94,6 +109,7 @@ class StockTalla(models.Model):
 
     class Meta: # Aqui decimos que la combinacion de producto y talla debe ser unica, ya que sino hay dos productos con el mismo nombre y con otra talla, pero el nombre se repite
         unique_together = ('producto', 'talla') #Aqui decimos que la combinacion de producto y talla debe ser unica
+        db_table = 'stock_tallas'
 
     def __str__(self):
         return f"{self.producto.nombre} - {self.talla.nombreTalla}"
@@ -119,6 +135,7 @@ class Resena(models.Model):
 
     class Meta: # Cada vez que obtengas un queryset de Resena, por defecto vendrá ordenado por fecha descendente (de la más nueva a la más antigua)
         ordering = ['-fecha']
+        db_table = 'resenas'
 
     def __str__(self):
         return f"{self.producto} - {self.usuario}"
@@ -132,3 +149,5 @@ class Cliente(models.Model):
     def __str__(self):
         return str(self.usuario.username)
 
+    class Meta:
+        db_table = 'clientes'
