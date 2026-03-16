@@ -37,6 +37,12 @@ if not os.getenv('DB_ENGINE'):
 if not os.getenv('DB_NAME'):
     raise Exception("La variable de entorno DB_NAME no está definida. Debe ser el nombre de la base de datos o el archivo para sqlite3.")
 
+# CSRF para producción (Seenode)
+CSRF_TRUSTED_ORIGINS = [
+    'https://web-kzazb695kh3b.up-de-fra1-k8s-1.apps.run-on-seenode.com',
+    'http://web-kzazb695kh3b.up-de-fra1-k8s-1.apps.run-on-seenode.com',
+]
+
 # ----------------------------------------------------
 # Aplicaciones instaladas
 # ----------------------------------------------------
