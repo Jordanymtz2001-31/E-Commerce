@@ -24,14 +24,6 @@ urlpatterns = [
     path('', include('api.urls'))
 ] 
 
-if settings.DEBUG:
-    # Sirve archivos estáticos y media en desarrollo
-    if hasattr(settings, 'STATICFILES_DIRS') and settings.STATICFILES_DIRS:
-        urlpatterns += static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS[0])
-    else:
-        urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-else:
-    # En producción solo sirve estáticos (media lo debe servir el servidor web)
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# SIEMPRE sirve static + media (desarrollo Y producción)
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
