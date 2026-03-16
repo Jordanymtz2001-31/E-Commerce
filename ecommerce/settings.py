@@ -17,7 +17,7 @@ IS_PRODUCTION = os.environ.get('DJANGO_PRODUCTION') == '1'
 # ----------------------------------------------------
 # Cargar el archivo de entorno correspondiente dependiendo del entorno o caso, asi podemos estar en desarrollo o en produccion 
 if not IS_PRODUCTION:
-    ENV_FILE = Path(__file__).resolve().parent.parent / ('.env.production' if IS_PRODUCTION else '.env.development')
+    ENV_FILE = Path(__file__).resolve().parent.parent / '.env.development'
     # Mostrar qué archivo .env se está cargando para depuración
     print(f"[Django settings] Cargando variables de entorno desde: {ENV_FILE}")
     load_dotenv(ENV_FILE) # Cargar el archivo de entorno
