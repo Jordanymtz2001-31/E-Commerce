@@ -22,18 +22,11 @@ if not IS_PRODUCTION:
     print(f"[Django settings] Cargando variables de entorno desde: {ENV_FILE}")
     load_dotenv(ENV_FILE) # Cargar el archivo de entorno
 
-#Creacion de un superusuario para produccion temporal
-if IS_PRODUCTION:
-    from django.contrib.auth import get_user_model
-    User = get_user_model()
-    if not User.objects.filter(username='admin').exists():
-        User.objects.create_superuser(username='admin', password='admin123')
-
 # ----------------------------------------------------
 # Seguridad y depuración, les pasamos los valores de entorno
 # ----------------------------------------------------
 SECRET_KEY = os.getenv('SECRET_KEY')
-DEBUG = os.getenv('DEBUG', 'False') == 'True' 
+DEBUG = os.getenv('DEBUG', 'False') == 'True'   
 # ESTO NO EXPLOTA NUNCA
 allowed_hosts_str = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1')
 ALLOWED_HOSTS = [host.strip() for host in allowed_hosts_str.split(',')]

@@ -227,3 +227,5 @@ Traceback (most recent call last):
     )
 django.core.files.storage.handler.InvalidStorageError: Could not find config for 'default' in settings.STORAGES.
 "GET /productList/ HTTP/1.1" 500 221848
+Forbidden (CSRF token from POST incorrect.): /admin/login/
+"POST /admin/login/?next=/admin/ HTTP/1.1" 403 2503
