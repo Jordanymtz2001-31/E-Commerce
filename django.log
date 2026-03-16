@@ -20,3 +20,210 @@ Not Found: /media/logo/logo.jpg
 "GET /media/logo/logo.jpg HTTP/1.1" 404 4270
 Not Found: /media/logo/logo.jpg
 "GET /media/logo/logo.jpg HTTP/1.1" 404 4270
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 4415
+Internal Server Error: /admin/api/producto/add/
+Traceback (most recent call last):
+  File "D:\JORDANY_GM\Proyectos\E-commerce\venv\Lib\site-packages\django\core\files\storage\handler.py", line 26, in __getitem__
+    return self._storages[alias]
+           ~~~~~~~~~~~~~~^^^^^^^
+KeyError: 'default'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\JORDANY_GM\Proyectos\E-commerce\venv\Lib\site-packages\django\core\files\storage\handler.py", line 29, in __getitem__
+    params = self.backends[alias]
+             ~~~~~~~~~~~~~^^^^^^^
+KeyError: 'default'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\JORDANY_GM\Proyectos\E-commerce\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\JORDANY_GM\Proyectos\E-commerce\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\JORDANY_GM\Proyectos\E-commerce\venv\Lib\site-packages\django\contrib\admin\options.py", line 710, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\JORDANY_GM\Proyectos\E-commerce\venv\Lib\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "D:\JORDANY_GM\Proyectos\E-commerce\venv\Lib\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "D:\JORDANY_GM\Proyectos\E-commerce\venv\Lib\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "D:\JORDANY_GM\Proyectos\E-commerce\venv\Lib\site-packages\django\contrib\admin\sites.py", line 247, in inner
+    return view(request, *args, **kwargs)
+  File "D:\JORDANY_GM\Proyectos\E-commerce\venv\Lib\site-packages\django\contrib\admin\options.py", line 1942, in add_view
+    return self.changeform_view(request, None, form_url, extra_context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\JORDANY_GM\Proyectos\E-commerce\venv\Lib\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "D:\JORDANY_GM\Proyectos\E-commerce\venv\Lib\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "D:\JORDANY_GM\Proyectos\E-commerce\venv\Lib\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "D:\JORDANY_GM\Proyectos\E-commerce\venv\Lib\site-packages\django\contrib\admin\options.py", line 1801, in changeform_view
+    return self._changeform_view(request, object_id, form_url, extra_context)
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\JORDANY_GM\Proyectos\E-commerce\venv\Lib\site-packages\django\contrib\admin\options.py", line 1852, in _changeform_view
+    self.save_model(request, new_object, form, not add)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\JORDANY_GM\Proyectos\E-commerce\venv\Lib\site-packages\django\contrib\admin\options.py", line 1272, in save_model
+    obj.save()
+    ~~~~~~~~^^
+  File "D:\JORDANY_GM\Proyectos\E-commerce\venv\Lib\site-packages\django\db\models\base.py", line 874, in save
+    self.save_base(
+    ~~~~~~~~~~~~~~^
+        using=using,
+        ^^^^^^^^^^^^
+    ...<2 lines>...
+        update_fields=update_fields,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\JORDANY_GM\Proyectos\E-commerce\venv\Lib\site-packages\django\db\models\base.py", line 966, in save_base
+    updated = self._save_table(
+        raw,
+    ...<4 lines>...
+        update_fields,
+    )
+  File "D:\JORDANY_GM\Proyectos\E-commerce\venv\Lib\site-packages\django\db\models\base.py", line 1156, in _save_table
+    getattr(self, field.attname) if raw else field.pre_save(self, False)
+                                             ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\JORDANY_GM\Proyectos\E-commerce\venv\Lib\site-packages\django\db\models\fields\files.py", line 338, in pre_save
+    file.save(file.name, file.file, save=False)
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\JORDANY_GM\Proyectos\E-commerce\venv\Lib\site-packages\django\db\models\fields\files.py", line 97, in save
+    name = self.field.generate_filename(self.instance, name)
+  File "D:\JORDANY_GM\Proyectos\E-commerce\venv\Lib\site-packages\django\db\models\fields\files.py", line 358, in generate_filename
+    return self.storage.generate_filename(filename)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\JORDANY_GM\Proyectos\E-commerce\venv\Lib\site-packages\django\utils\functional.py", line 251, in inner
+    self._setup()
+    ~~~~~~~~~~~^^
+  File "D:\JORDANY_GM\Proyectos\E-commerce\venv\Lib\site-packages\django\core\files\storage\__init__.py", line 23, in _setup
+    self._wrapped = storages[DEFAULT_STORAGE_ALIAS]
+                    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\JORDANY_GM\Proyectos\E-commerce\venv\Lib\site-packages\django\core\files\storage\handler.py", line 31, in __getitem__
+    raise InvalidStorageError(
+        f"Could not find config for '{alias}' in settings.STORAGES."
+    )
+django.core.files.storage.handler.InvalidStorageError: Could not find config for 'default' in settings.STORAGES.
+"POST /admin/api/producto/add/ HTTP/1.1" 500 187557
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 4526
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 4526
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 4415
+Internal Server Error: /productList/
+Traceback (most recent call last):
+  File "D:\JORDANY_GM\Proyectos\E-commerce\venv\Lib\site-packages\django\template\base.py", line 964, in _resolve_lookup
+    raise TypeError
+TypeError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\JORDANY_GM\Proyectos\E-commerce\venv\Lib\site-packages\django\core\files\storage\handler.py", line 26, in __getitem__
+    return self._storages[alias]
+           ~~~~~~~~~~~~~~^^^^^^^
+KeyError: 'default'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\JORDANY_GM\Proyectos\E-commerce\venv\Lib\site-packages\django\core\files\storage\handler.py", line 29, in __getitem__
+    params = self.backends[alias]
+             ~~~~~~~~~~~~~^^^^^^^
+KeyError: 'default'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\JORDANY_GM\Proyectos\E-commerce\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\JORDANY_GM\Proyectos\E-commerce\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\JORDANY_GM\Proyectos\E-commerce\api\views.py", line 84, in productos_view
+    return render(request, 'productos.html', context)
+  File "D:\JORDANY_GM\Proyectos\E-commerce\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "D:\JORDANY_GM\Proyectos\E-commerce\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "D:\JORDANY_GM\Proyectos\E-commerce\venv\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\JORDANY_GM\Proyectos\E-commerce\venv\Lib\site-packages\django\template\base.py", line 174, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "D:\JORDANY_GM\Proyectos\E-commerce\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\JORDANY_GM\Proyectos\E-commerce\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\JORDANY_GM\Proyectos\E-commerce\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "D:\JORDANY_GM\Proyectos\E-commerce\venv\Lib\site-packages\django\template\loader_tags.py", line 160, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\JORDANY_GM\Proyectos\E-commerce\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\JORDANY_GM\Proyectos\E-commerce\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\JORDANY_GM\Proyectos\E-commerce\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "D:\JORDANY_GM\Proyectos\E-commerce\venv\Lib\site-packages\django\template\loader_tags.py", line 66, in render
+    result = block.nodelist.render(context)
+  File "D:\JORDANY_GM\Proyectos\E-commerce\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\JORDANY_GM\Proyectos\E-commerce\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "D:\JORDANY_GM\Proyectos\E-commerce\venv\Lib\site-packages\django\template\defaulttags.py", line 249, in render
+    nodelist.append(node.render_annotated(context))
+                    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\JORDANY_GM\Proyectos\E-commerce\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "D:\JORDANY_GM\Proyectos\E-commerce\venv\Lib\site-packages\django\template\defaulttags.py", line 333, in render
+    return nodelist.render(context)
+           ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\JORDANY_GM\Proyectos\E-commerce\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\JORDANY_GM\Proyectos\E-commerce\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "D:\JORDANY_GM\Proyectos\E-commerce\venv\Lib\site-packages\django\template\base.py", line 1150, in render
+    output = self.filter_expression.resolve(context)
+  File "D:\JORDANY_GM\Proyectos\E-commerce\venv\Lib\site-packages\django\template\base.py", line 788, in resolve
+    obj = self.var.resolve(context)
+  File "D:\JORDANY_GM\Proyectos\E-commerce\venv\Lib\site-packages\django\template\base.py", line 928, in resolve
+    value = self._resolve_lookup(context)
+  File "D:\JORDANY_GM\Proyectos\E-commerce\venv\Lib\site-packages\django\template\base.py", line 976, in _resolve_lookup
+    current = getattr(current, bit)
+  File "D:\JORDANY_GM\Proyectos\E-commerce\venv\Lib\site-packages\django\db\models\fields\files.py", line 69, in url
+    return self.storage.url(self.name)
+           ^^^^^^^^^^^^^^^^
+  File "D:\JORDANY_GM\Proyectos\E-commerce\venv\Lib\site-packages\django\utils\functional.py", line 251, in inner
+    self._setup()
+    ~~~~~~~~~~~^^
+  File "D:\JORDANY_GM\Proyectos\E-commerce\venv\Lib\site-packages\django\core\files\storage\__init__.py", line 23, in _setup
+    self._wrapped = storages[DEFAULT_STORAGE_ALIAS]
+                    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\JORDANY_GM\Proyectos\E-commerce\venv\Lib\site-packages\django\core\files\storage\handler.py", line 31, in __getitem__
+    raise InvalidStorageError(
+        f"Could not find config for '{alias}' in settings.STORAGES."
+    )
+django.core.files.storage.handler.InvalidStorageError: Could not find config for 'default' in settings.STORAGES.
+"GET /productList/ HTTP/1.1" 500 221848

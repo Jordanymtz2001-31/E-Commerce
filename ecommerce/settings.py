@@ -16,10 +16,11 @@ IS_PRODUCTION = os.environ.get('DJANGO_PRODUCTION') == '1'
 # Cargar variables de entorno
 # ----------------------------------------------------
 # Cargar el archivo de entorno correspondiente dependiendo del entorno o caso, asi podemos estar en desarrollo o en produccion 
-ENV_FILE = Path(__file__).resolve().parent.parent / ('.env.production' if IS_PRODUCTION else '.env.development')
-# Mostrar qué archivo .env se está cargando para depuración
-print(f"[Django settings] Cargando variables de entorno desde: {ENV_FILE}")
-load_dotenv(ENV_FILE) # Cargar el archivo de entorno
+if not IS_PRODUCTION:
+    ENV_FILE = Path(__file__).resolve().parent.parent / ('.env.production' if IS_PRODUCTION else '.env.development')
+    # Mostrar qué archivo .env se está cargando para depuración
+    print(f"[Django settings] Cargando variables de entorno desde: {ENV_FILE}")
+    load_dotenv(ENV_FILE) # Cargar el archivo de entorno
 
 # ----------------------------------------------------
 # Seguridad y depuración, les pasamos los valores de entorno
@@ -152,7 +153,17 @@ STATIC_ROOT = BASE_DIR / 'staticfiles' # Carpeta para archivos estaticos para pr
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
+
 STORAGES = {
+    # Configuración para archivos estaticos para produccion
+    # El default es para que carge las imagenes que uno sube al sistema
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+        "OPTIONS": {
+            "location": MEDIA_ROOT,
+        },
+    },
+    # Configuración para archivos estaticos para produccion, STATIC (CSS/JS/imagenes del proyecto)
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
