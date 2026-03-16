@@ -66,8 +66,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // ✅ UX MÍNIMA: Solo loading state
     const formResena = document.getElementById('formResena');
     if (formResena) {
-        console.log('productoId:', document.querySelector('.modal-trigger').dataset.productoId);
-console.log('Form action:', document.getElementById('formResena').action);
+       // console.log('productoId:', document.querySelector('.modal-trigger').dataset.productoId);
+//console.log('Form action:', document.getElementById('formResena').action);
 
         formResena.addEventListener('submit', function(e) {
             const btn = document.getElementById('btnResena');
