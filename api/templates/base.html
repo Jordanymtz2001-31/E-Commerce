@@ -31,7 +31,8 @@
             <!-- Logo + Links izquierda -->
             <div class="d-flex align-items-center">
                 <a class="navbar-brand me-3 fw-bold fs-4" href="{% url 'tienda' %}">
-                    <img src="/media/logo/logo.jpg" alt="Logo" width="40" height="40" class="me-2 rounded-3">
+                    <!-- <img src="/static/img/logo.jpg" alt="Logo" width="40" height="40" class="me-2 rounded-3"> -->
+                    <img src="{% static 'img/logo.jpg' %}" alt="Logo" width="40" height="40" class="me-2 rounded-3">
                     Talcahualme
                 </a>
                 <a href="{% url 'tienda' %}"  class="btn btn-nav active">Nosotros</a>

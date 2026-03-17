@@ -229,3 +229,9 @@ django.core.files.storage.handler.InvalidStorageError: Could not find config for
 "GET /productList/ HTTP/1.1" 500 221848
 Forbidden (CSRF token from POST incorrect.): /admin/login/
 "POST /admin/login/?next=/admin/ HTTP/1.1" 403 2503
+Not Found: /media/logo/logo.jpg
+"GET /media/logo/logo.jpg HTTP/1.1" 404 3088
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 2848
+Not Found: /media/logo/logo.jpg
+"GET /media/logo/logo.jpg HTTP/1.1" 404 3088
