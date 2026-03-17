@@ -21,7 +21,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('api.urls'))
+    path('talcahualme/', include('api.urls'))
 ] 
 
 # SIEMPRE sirve static + media (desarrollo Y producción)
