@@ -18,10 +18,12 @@ from django.contrib import admin
 from django.urls import include, path
 from django.conf import settings
 from django.conf.urls.static import static
+from django.views.generic import RedirectView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('talcahualme/', include('api.urls'))
+    path('talcahualme/', include('api.urls')),
+    path('', RedirectView.as_view(url='talcahualme/', permanent=True)),
 ] 
 
 # SIEMPRE sirve static + media (desarrollo Y producción)
