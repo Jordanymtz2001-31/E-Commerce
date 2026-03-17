@@ -156,24 +156,42 @@ STATIC_ROOT = BASE_DIR / 'staticfiles' # Carpeta para archivos estaticos para pr
                                         # Con py manage.py collectstatic se crean los archivos estaticos
 
 # Configuracion para subir archivos
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
-
-
-STORAGES = {
-    # Configuración para archivos estaticos para produccion
-    # El default es para que carge las imagenes que uno sube al sistema
-    "default": {
-        "BACKEND": "django.core.files.storage.FileSystemStorage",
-        "OPTIONS": {
-            "location": MEDIA_ROOT,
+if IS_PRODUCTION:
+    # Producción → Cloudflare R2
+    MEDIA_URL = f"https://{os.environ.get('R2_PUBLIC_URL')}/"
+    STORAGES = {
+        "default": {
+            "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
+            "OPTIONS": {
+                "access_key": os.environ.get("R2_ACCESS_KEY_ID"),
+                "secret_key": os.environ.get("R2_SECRET_ACCESS_KEY"),
+                "bucket_name": os.environ.get("R2_BUCKET_NAME"),
+                "endpoint_url": os.environ.get("R2_ENDPOINT_URL"),
+                "region_name": "auto",
+                "default_acl": "public-read",
+                "querystring_auth": False,
+                "custom_domain": os.environ.get("R2_PUBLIC_URL"),
+            },
         },
-    },
-    # Configuración para archivos estaticos para produccion, STATIC (CSS/JS/imagenes del proyecto)
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-    },
-}
+        "staticfiles": {
+            "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+        },
+    }
+else:
+    # Desarrollo → archivos locales
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = BASE_DIR / 'media'
+    STORAGES = {
+        "default": {
+            "BACKEND": "django.core.files.storage.FileSystemStorage",
+            "OPTIONS": {
+                "location": MEDIA_ROOT,
+            },
+        },
+        "staticfiles": {
+            "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+        },
+    }
 
 # Logging para producción
 #Sirve para guardar errores y advertencias en un archivo (django.log). asi puedo verlos en produccion
