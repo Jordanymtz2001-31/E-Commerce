@@ -79,7 +79,7 @@
                 <!-- Logo + Descripción -->
                 <div class="col-lg-3 col-md-6 col-12">
                     <div class="footer-brand">
-                        <img src="/media/logo/logo.jpg" alt="Logo" width="40" height="40" class="me-7 rounded-3">
+                        <img src={% static 'img/logo.jpg' %} alt="Logo" width="40" height="40" class="me-7 rounded-3">
                     Talcahualme
                     </div>
                     <p class="footer-description mt-3">
@@ -191,7 +191,7 @@
                         </h6>
 
                         <!-- Mensaje login requerido -->
-                        <div id="loginRequerido" class="alert alert-warning d-none mb-3">
+                        <div id="loginRequerido" class="alert alert-warning mb-3" style="display: none;">
                             <i class="bi bi-exclamation-triangle me-2"></i>
                             Inicia sesión para dejar tu reseña <a href="{% url 'login' %}" class="alert-link">aquí</a>.
                         </div>

@@ -17,6 +17,59 @@ body {
     font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
+/* 2.5 NAVBAR RESPONSIVE */
+.navbar {
+    padding: 0.75rem 0 !important;
+}
+
+.navbar .container {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    flex-wrap: wrap !important;
+    gap: 1rem !important;
+}
+
+/* Responsive navbar - Tablet */
+@media (max-width: 768px) {
+    .navbar .container {
+        padding: 0 0.5rem !important;
+    }
+    
+    .navbar-brand {
+        font-size: 1.1rem !important;
+        margin-right: 0.5rem !important;
+    }
+    
+    .navbar-brand img {
+        width: 32px !important;
+        height: 32px !important;
+    }
+}
+
+/* Responsive navbar - Mobile */
+@media (max-width: 576px) {
+    .navbar .container {
+        padding: 0.5rem 0.5rem !important;
+        gap: 0.5rem !important;
+    }
+    
+    .navbar-brand {
+        font-size: 0.95rem !important;
+        margin-right: 0.25rem !important;
+    }
+    
+    .navbar-brand img {
+        width: 28px !important;
+        height: 28px !important;
+        margin-right: 0.25rem !important;
+    }
+    
+    .navbar .d-flex > span {
+        display: none !important;
+    }
+}
+
 /* 3. HERO BACKGROUND OSCURO */
 .hero-dark {
     background: linear-gradient(135deg, #221810 0%, #1a120b 100%);
@@ -124,10 +177,12 @@ body {
 .btn-nav {
     background: none;
     border: none;
-    padding: 15px ; /* Espacio del lado izquierdo */
+    padding: 15px;
     color: #343a40;
     position: relative;
-    padding-bottom: 15px; /* Espacio para el subrayado */
+    padding-bottom: 15px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
 }
 .btn-nav::before {
     content: '';
@@ -141,17 +196,44 @@ body {
 }
 
 .btn-nav:hover::before {
-    width: 100%; /* Line animates to full width on hover */
+    width: 100%;
+}
+
+/* Responsive navbar - Tablet */
+@media (max-width: 768px) {
+    .btn-nav {
+        padding: 10px 8px;
+        font-size: 0.875rem;
+        padding-bottom: 8px;
+    }
+    .btn-nav::before {
+        bottom: 6px;
+    }
+}
+
+/* Responsive navbar - Mobile */
+@media (max-width: 576px) {
+    .btn-nav {
+        padding: 8px 4px;
+        font-size: 0.75rem;
+        padding-bottom: 6px;
+    }
+    .btn-nav::before {
+        bottom: 4px;
+        height: 2px;
+    }
 }
 
 /* Efecto de para salir */
 .btn-nav-salir {
     background: none;
     border: none;
-    padding: 15px ; /* Espacio del lado izquierdo */
+    padding: 15px;
     color: #c91717;
     position: relative;
-    padding-bottom: 15px; /* Espacio para el subrayado */
+    padding-bottom: 15px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
 }
 .btn-nav-salir::before {
     content: '';
@@ -165,17 +247,37 @@ body {
 }
 
 .btn-nav-salir:hover::before {
-    width: 100%; /* Line animates to full width on hover */
+    width: 100%;
+}
+
+/* Responsive navbar - Tablet */
+@media (max-width: 768px) {
+    .btn-nav-salir {
+        padding: 10px 8px;
+        font-size: 0.875rem;
+        padding-bottom: 8px;
+    }
+}
+
+/* Responsive navbar - Mobile */
+@media (max-width: 576px) {
+    .btn-nav-salir {
+        padding: 8px 4px;
+        font-size: 0.75rem;
+        padding-bottom: 6px;
+    }
 }
 
 /* Efecto de para entrar */
 .btn-nav-login {
     background: none;
     border: none;
-    padding: 15px ; /* Espacio del lado izquierdo */
+    padding: 15px;
     color: #147fcc;
     position: relative;
-    padding-bottom: 15px; /* Espacio para el subrayado */
+    padding-bottom: 15px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
 }
 .btn-nav-login::before {
     content: '';
@@ -189,7 +291,25 @@ body {
 }
 
 .btn-nav-login:hover::before {
-    width: 100%; /* Aqui se crea el efecto */
+    width: 100%;
+}
+
+/* Responsive navbar - Tablet */
+@media (max-width: 768px) {
+    .btn-nav-login {
+        padding: 10px 8px;
+        font-size: 0.875rem;
+        padding-bottom: 8px;
+    }
+}
+
+/* Responsive navbar - Mobile */
+@media (max-width: 576px) {
+    .btn-nav-login {
+        padding: 8px 4px;
+        font-size: 0.75rem;
+        padding-bottom: 6px;
+    }
 }
 
 /* Efecto de para Resgitrarse */
@@ -199,10 +319,30 @@ body {
     border-radius: 30px;
     padding: 10px 20px;
     border: none;
+    font-size: 1rem;
+    transition: all 0.3s ease;
 }
 
 .btn-nav-registro:hover {
-    transform: translateY(-2px); /* Esto para que se mueva hacia arriba */
+    transform: translateY(-2px);
+}
+
+/* Responsive navbar - Tablet */
+@media (max-width: 768px) {
+    .btn-nav-registro {
+        padding: 8px 12px;
+        font-size: 0.875rem;
+        border-radius: 20px;
+    }
+}
+
+/* Responsive navbar - Mobile */
+@media (max-width: 576px) {
+    .btn-nav-registro {
+        padding: 6px 10px;
+        font-size: 0.75rem;
+        border-radius: 15px;
+    }
 } 
 
 /* ========================================
@@ -377,10 +517,23 @@ body {
 
 /*ESTILO DEL SPAN DEL PRECIO*/
 .span-precio {
-    font-size: clamp(1.2rem, 1vw, 1.75rem) ; /* Responsive */
+    font-size: clamp(1.2rem, 1vw, 1.75rem);
     font-weight: 600 !important;
     color: #2659b8 !important;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Responsive precio en modal */
+@media (max-width: 768px) {
+    .span-precio {
+        font-size: clamp(1rem, 2vw, 1.5rem) !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .span-precio {
+        font-size: 1.1rem !important;
+    }
 }
 
 /* ========================================
@@ -494,6 +647,50 @@ body {
     display: block !important;
 }
 
+/* Detalles contenedor responsive */
+.producto-detalles h2,
+.producto-detalles h3,
+.producto-detalles p {
+    margin-bottom: 1rem !important;
+}
+
+.detalles-chips {
+    margin-bottom: 1.5rem !important;
+}
+
+.chip-categoria {
+    display: inline-block;
+    background: #ec6d13;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+/* Responsive detalles */
+@media (max-width: 768px) {
+    .producto-detalles > p {
+        font-size: 0.925rem !important;
+    }
+    
+    .detalles-chips {
+        margin-bottom: 1rem !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .producto-detalles > p,
+    .producto-detalles > div > p {
+        font-size: 0.875rem !important;
+    }
+    
+    .chip-categoria {
+        font-size: 0.75rem !important;
+        padding: 0.4rem 0.8rem;
+    }
+}
+
 .producto-detalles {
     width: 45% !important;
     padding: 2rem !important;
@@ -501,14 +698,87 @@ body {
     background: white !important;
 }
 
-/* MÓVIL */
-@media (max-width: 768px) {
+/* TABLET */
+@media (max-width: 992px) {
+    .modal-dialog {
+        max-width: 90vw !important;
+    }
+    .producto-imagen {
+        width: 50% !important;
+    }
+    .producto-detalles {
+        width: 50% !important;
+        padding: 1.5rem !important;
+    }
+}
+
+/* MÓVIL - Landscape */
+@media (max-width: 768px) and (orientation: landscape) {
+    .modal-dialog {
+        max-height: 95vh !important;
+    }
     .modal-content {
+        height: 90vh !important;
+    }
+    .producto-imagen {
+        width: 45% !important;
+        height: 100% !important;
+    }
+    .producto-detalles {
+        width: 55% !important;
+        padding: 1.25rem !important;
+    }
+}
+
+/* MÓVIL - Portrait */
+@media (max-width: 768px) {
+    .modal-dialog {
+        max-width: 100vw !important;
+        max-height: 100vh !important;
+    }
+    .modal-content {
+        height: auto !important;
+        max-height: 95vh !important;
         flex-direction: column !important;
     }
     .producto-imagen {
         width: 100% !important;
-        height: 50vh !important;
+        height: 45vh !important;
+        min-height: 300px !important;
+    }
+    .producto-detalles {
+        width: 100% !important;
+        padding: 1.25rem !important;
+        max-height: 55vh !important;
+    }
+}
+
+/* MÓVIL PEQUEÑO */
+@media (max-width: 480px) {
+    .modal-dialog {
+        max-width: 98vw !important;
+        max-height: 98vh !important;
+        margin: 1vh auto !important;
+    }
+    .modal-content {
+        max-width: 98vw !important;
+        max-height: 98vh !important;
+    }
+    .producto-imagen {
+        width: 100% !important;
+        max-width: 98vw !important;
+        max-height: 98vh !important;
+    }
+    .producto-detalles {
+        width: 100% !important;
+        padding: 1rem !important;
+        max-height: 58vh !important;
+    }
+    .producto-detalles p {
+        font-size: 0.875rem !important;
+    }
+    .producto-detalles h2 {
+        font-size: 1.25rem !important;
     }
 }
 
@@ -533,6 +803,25 @@ body {
 #modalMateriales { background-color: #f3e5f5 !important; color: #7b1fa2 !important; }
 #modalCuidados { background-color: #fff3e0 !important; color: #f57c00 !important; }
 
+/* Badge responsive */
+@media (max-width: 768px) {
+    #modalTallas,
+    #modalMateriales,
+    #modalCuidados {
+        font-size: 0.8rem !important;
+        padding: 0.35rem 0.65rem !important;
+    }
+}
+
+@media (max-width: 480px) {
+    #modalTallas,
+    #modalMateriales,
+    #modalCuidados {
+        font-size: 0.75rem !important;
+        padding: 0.3rem 0.6rem !important;
+    }
+}
+
 /* Sección reseñas en modal */
 .resenas-section {
     background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
@@ -547,6 +836,33 @@ body {
     font-weight: 700;
     margin-bottom: 16px;
     font-size: 1.25rem;
+}
+
+/* Responsive reseñas */
+@media (max-width: 768px) {
+    .resenas-section {
+        padding: 1rem;
+        border-radius: 12px;
+        margin-top: 1rem;
+    }
+    
+    .resenas-title {
+        font-size: 1rem;
+        margin-bottom: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .resenas-section {
+        padding: 0.75rem;
+        border-radius: 10px;
+        margin-top: 0.75rem;
+    }
+    
+    .resenas-title {
+        font-size: 0.9rem;
+        margin-bottom: 0.75rem;
+    }
 }
 
 

@@ -44,12 +44,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Mostrar el formulario de resena si el usuario esta logueado
             if (window.USER_LOGGED_IN === true || window.USER_LOGGED_IN === 'true') {
-                console.log('MOSTRANDO formulario');
+                console.log('MOSTRANDO formulario - Usuario logueado');
                 formResena.style.display = 'block'; // Mostramos el formulario
                 loginRequerido.style.display = 'none'; // No mostramos el mensaje
-                // De los contrario no lo mostramos
             } else {
-                console.log('MOSTRANDO mensaje login');
+                console.log('MOSTRANDO mensaje login - Usuario NO logueado');
                 formResena.style.display = 'none'; // No mostramos el formulario
                 loginRequerido.style.display = 'block'; // Mostramos el mensaje que necesita loguearse
             }
