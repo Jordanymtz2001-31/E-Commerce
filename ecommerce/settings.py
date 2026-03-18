@@ -174,7 +174,7 @@ if IS_PRODUCTION:
                 "custom_domain": os.environ.get("R2_PUBLIC_URL"),
             },
         },
-        "staticfiles": {
+        "staticfiles": { #Comprime archivos, Agrega hash al nombre main.abc123.css, No valida referencias — si falta algo simplemente no lo carga pero no explota
             "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
         },
     }
@@ -189,7 +189,7 @@ else:
                 "location": MEDIA_ROOT,
             },
         },
-        "staticfiles": {
+        "staticfiles": { #Comprime archivos, Agrega hash al nombre main.abc123.css, Valida que todos los archivos referenciados existan (muy exigente)
             "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
         },
     }

@@ -1,113 +1,126 @@
 {% extends 'base.html' %}
-{% load static %} <!-- Para que cargen los recursos Static --> 
+{% load static %}
 {% block title %}Registro{% endblock %}
 
 {% block content %}
+<div class="registro-wrapper">
 
-    <div class="register-hero">
-        <div class="card register-card">
-            <h2 class="register-title">Registro</h2>
-            
-            {% if messages %}
-            {% for message in messages %}
-            <div class="alert alert-{{message.tags}} alert-dismissible fade show rounded-3 mb-4" role="alert">
-                {{message}}
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
-            {% endfor %}
-            {% endif %}
-            
-            <form method="post" novalidate>
-                {% csrf_token %}
-                {{form.non_field_errors}}
-                
-                <!-- Aqui no estoy hacinedo uso del formulario para que iteremos sobre los campos del formulario-->
-
-                <!-- Username -->
-                <div class="mb-4">
-                    <label for="id_username" class="form-label-register">Usuario</label>
-                    <div class="input-group-register">
-                        <i class="bi bi-person"></i>
-                        <input type="text" name="username" class="form-control-register" 
-                            id="id_username" placeholder="Ingresa tu usuario" required>
-                    </div>
-                    {% if form.username.errors %}
-                        <div class="text-danger small mt-2">{{form.username.errors}}</div>
-                    {% endif %}
-                </div>
-                
-                <!-- Email -->
-                <div class="mb-4">
-                    <label for="id_email" class="form-label-register">Correo electrónico</label>
-                    <div class="input-group-register">
-                        <i class="bi bi-envelope"></i>
-                        <input type="email" name="email" class="form-control-register" 
-                            id="id_email" placeholder="tu@email.com" required>
-                    </div>
-                    {% if form.email.errors %}
-                        <div class="text-danger small mt-2">{{form.email.errors}}</div>
-                    {% endif %}
-                </div>
-                
-                <!-- Telefono -->
-                <div class="mb-4">
-                    <label for="id_telefono" class="form-label-register">Teléfono</label>
-                    <div class="input-group-register">
-                        <i class="bi bi-telephone"></i>
-                        <input type="number" name="telefono" class="form-control-register" 
-                            id="id_telefono" placeholder="Ingresa tu teléfono" required>
-                    </div>
-                    {% if form.telefono.errors %}
-                        <div class="text-danger small mt-2">{{form.telefono.errors}}</div>
-                    {% endif %}
-                </div>
-
-                <!-- Direccion -->
-                <div class="mb-4">
-                    <label for="id_direccion" class="form-label-register">Dirección</label>
-                    <div class="input-group-register">
-                        <i class="bi bi-geo-alt"></i>
-                        <textarea name="direccion" class="form-control-register" 
-                            id="id_direccion" placeholder="Ingresa tu dirección" required></textarea>
-                    </div>
-                    {% if form.direccion.errors %}
-                        <div class="text-danger small mt-2">{{form.direccion.errors}}</div>
-                    {% endif %}
-                </div>
-                
-                <!-- Password1 -->
-                <div class="mb-4">
-                    <label for="id_password1" class="form-label-register">Contraseña</label>
-                    <div class="input-group-register">
-                        <i class="bi bi-lock"></i>
-                        <input type="password" name="password1" class="form-control-register" 
-                            id="id_password1" placeholder="Crea una contraseña" required>
-                    </div>
-                    {% if form.password1.errors %}
-                        <div class="text-danger small mt-2">{{form.password1.errors}}</div>
-                    {% endif %}
-                </div>
-                
-                <!-- Password2 -->
-                <div class="mb-4">
-                    <label for="id_password2" class="form-label-register">Confirmar contraseña</label>
-                    <div class="input-group-register">
-                        <i class="bi bi-lock-fill"></i>
-                        <input type="password" name="password2" class="form-control-register" 
-                            id="id_password2" placeholder="Confirma tu contraseña" required>
-                    </div>
-                    {% if form.password2.errors %}
-                        <div class="text-danger small mt-2">{{form.password2.errors}}</div>
-                    {% endif %}
-                </div>
-                
-                <button class="btn btn-register w-100" type="submit">Registrarse</button>
-            </form>
-            
-            <div class="text-center register-divider">
-                <small class="text-muted">¿Ya tienes cuenta?</small><br>
-                <a href="{% url 'login' %}" class="register-link">Inicia sesión</a>
-            </div>
-        </div>
+  <!-- Lado izquierdo: imagen hero -->
+  <div class="registro-hero">
+    <div class="registro-hero-content">
+      <p class="registro-marca">TALCAHUALME</p>
+      <h2 class="registro-titulo">Viste la Tradición,<br>Siente la Innovación</h2>
+      <p class="registro-subtitulo">Ropa artesanal hecha a mano con materiales naturales. Cada pieza cuenta una historia única.</p>
+      <div class="registro-badges">
+        <span class="registro-badge">Artesanal</span>
+        <span class="registro-badge">Ético</span>
+        <span class="registro-badge">Sostenible</span>
+      </div>
     </div>
+  </div>
+
+  <!-- Lado derecho: formulario -->
+  <div class="registro-form-col">
+    <div class="registro-form-inner">
+
+      <h3 class="registro-form-titulo">Crear cuenta</h3>
+      <p class="registro-form-subtitulo">Completa tus datos para empezar.</p>
+
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags }} alert-dismissible fade show rounded-3 mb-3" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          </div>
+        {% endfor %}
+      {% endif %}
+
+      <form method="post" novalidate>
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+
+        <!-- Usuario -->
+        <div class="mb-3">
+          <label for="id_username" class="form-label">Usuario</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-person"></i></span>
+            <input type="text" name="username" class="form-control" id="id_username" placeholder="Ingresa tu usuario" required>
+          </div>
+          {% if form.username.errors %}
+            <div class="text-danger small mt-1">{{ form.username.errors }}</div>
+          {% endif %}
+        </div>
+
+        <!-- Email -->
+        <div class="mb-3">
+          <label for="id_email" class="form-label">Correo electrónico</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+            <input type="email" name="email" class="form-control" id="id_email" placeholder="tu@email.com" required>
+          </div>
+          {% if form.email.errors %}
+            <div class="text-danger small mt-1">{{ form.email.errors }}</div>
+          {% endif %}
+        </div>
+
+        <!-- Teléfono -->
+        <div class="mb-3">
+          <label for="id_telefono" class="form-label">Teléfono</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-telephone"></i></span>
+            <input type="number" name="telefono" class="form-control" id="id_telefono" placeholder="Ingresa tu teléfono" required>
+          </div>
+          {% if form.telefono.errors %}
+            <div class="text-danger small mt-1">{{ form.telefono.errors }}</div>
+          {% endif %}
+        </div>
+
+        <!-- Dirección -->
+        <div class="mb-3">
+          <label for="id_direccion" class="form-label">Dirección</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-geo-alt"></i></span>
+            <textarea name="direccion" class="form-control" id="id_direccion" placeholder="Ingresa tu dirección" rows="2" required></textarea>
+          </div>
+          {% if form.direccion.errors %}
+            <div class="text-danger small mt-1">{{ form.direccion.errors }}</div>
+          {% endif %}
+        </div>
+
+        <!-- Contraseñas -->
+        <div class="row g-2 mb-3">
+          <div class="col-6">
+            <label for="id_password1" class="form-label">Contraseña</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-lock"></i></span>
+              <input type="password" name="password1" class="form-control" id="id_password1" placeholder="••••••••" required>
+            </div>
+            {% if form.password1.errors %}
+              <div class="text-danger small mt-1">{{ form.password1.errors }}</div>
+            {% endif %}
+          </div>
+          <div class="col-6">
+            <label for="id_password2" class="form-label">Confirmar</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+              <input type="password" name="password2" class="form-control" id="id_password2" placeholder="••••••••" required>
+            </div>
+            {% if form.password2.errors %}
+              <div class="text-danger small mt-1">{{ form.password2.errors }}</div>
+            {% endif %}
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-registro w-100 mb-3">Registrarse</button>
+
+      </form>
+
+      <p class="text-center text-muted small mb-0">
+        ¿Ya tienes cuenta? <a href="{% url 'login' %}" class="registro-link">Inicia sesión</a>
+      </p>
+
+    </div>
+  </div>
+
+</div>
 {% endblock %}

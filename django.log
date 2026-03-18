@@ -535,3 +535,24 @@ django.template.exceptions.TemplateSyntaxError: Template: D:\JORDANY_GM\Proyecto
 "GET /talcahualme/login/ HTTP/1.1" 500 194295
 Not Found: /favicon.ico
 "GET /favicon.ico HTTP/1.1" 404 2848
+"GET /static/css/%7B%%20static%20'img/hero-bg.jpg'%20%%7D HTTP/1.1" 404 2073
+"GET /static/css/%7B%%20static%20'img/registro_logo.jpg'%20%%7D HTTP/1.1" 404 2091
+"GET /static/css/%7B%%20static%20'img/registro_logo.jpg'%20%%7D HTTP/1.1" 404 2091
+"GET /static/css/%7B%%20static%20'/img/registro_logo.jpg'%20%%7D HTTP/1.1" 404 2094
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+"GET /static/css/%7B%%20static%20'img/registro.jpg'%20%%7D HTTP/1.1" 404 2076
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 2848
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
