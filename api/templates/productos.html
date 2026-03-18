@@ -95,7 +95,7 @@
                     data-materiales="{% for m in producto.tipoMateria.all %}{{ m.nombreTipoMateria }}{% if not forloop.last %}, {% endif %}{% endfor %}"
                     data-cuidados="{% for c in producto.instruccionesCuidado.all %}{{ c.nombre }}{% if not forloop.last %} | {% endif %}{% endfor %}"
                     data-stock="{{ producto.stock_disponible }}"
-                    data-producto-id="{{ producto.id }}"
+                    data-stock-tallas="[{% for s in producto.stock_por_talla %}{'talla':'{{ s.talla }}','stock':{{ s.stock }}}{% if not forloop.last %},{% endif %}{% endfor %}]"
                     data-descripcion="{{ producto.descripcion|truncatewords:20 }}">
                         Ver Detalles
                     </a>
@@ -109,7 +109,7 @@
                     data-materiales="{% for m in producto.tipoMateria.all %}{{ m.nombreTipoMateria }}{% if not forloop.last %}, {% endif %}{% endfor %}"
                     data-cuidados="{% for c in producto.instruccionesCuidado.all %}{{ c.nombre }}{% if not forloop.last %} | {% endif %}{% endfor %}"
                     data-stock="{{ producto.stock_disponible }}"
-                    data-producto-id="{{ producto.id }}"
+                    data-stock-tallas="[{% for s in producto.stock_por_talla %}{'talla':'{{ s.talla }}','stock':{{ s.stock }}}{% if not forloop.last %},{% endif %}{% endfor %}]"
                     data-descripcion="{{ producto.descripcion|truncatewords:20 }}">
                         Ver Detalles
                     </button>

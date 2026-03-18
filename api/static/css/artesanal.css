@@ -1,24 +1,57 @@
-/* ========================================
-   ARTISANAL E-COMMERCE - ESTILOS PRINCIPALES
-   Basado en Stitch design + Bootstrap 5
-======================================== */
+/* ╔════════════════════════════════════════════════════════════════════════════╗
+   ║             ARTISANAL E-COMMERCE - ESTILOS PRINCIPALES                    ║
+   ║                     Basado en Stitch + Bootstrap 5                         ║
+   ║                                                                            ║
+   ║  ESTRUCTURA:                                                              ║
+   ║  1. VARIABLES DE COLOR Y TAMAÑOS                                          ║
+   ║  2. ESTILOS GLOBALES                                                      ║
+   ║  3. NAVBAR (Responsivo)                                                   ║
+   ║  4. COMPONENTES (Cards, Badges, Botones)                                  ║
+   ║  5. MODAL (Producto)                                                      ║
+   ║  6. FOOTER                                                                ║
+   ║  7. PÁGINAS (Tienda, Login, Registro)                                     ║
+   ║  8. RESPONSIVE (Media queries)                                            ║
+   ╚════════════════════════════════════════════════════════════════════════════╝ */
 
-/* 1. VARIABLES DE COLOR (igual Stitch) */
+/* ──────────────────────────────────────────────────────────────────────────── */
+/* § 1. VARIABLES DE COLOR Y TAMAÑOS                                           */
+/* ──────────────────────────────────────────────────────────────────────────── */
+
 :root {
     --primary: #ec6d13;
     --primary-dark: #d55c0b;
     --bg-light: #f8f7f6;
     --text-main: #181411;
     --text-muted: #897261;
+    
+    /* Gradientes reutilizables (Fase 2) */
+    --gradient-primary: linear-gradient(135deg, var(--primary), #f4a261);
+    --gradient-primary-strong: linear-gradient(135deg, #ec6d13 0%, #f4a261 50%, #e76f51 100%);
+    --gradient-dark: linear-gradient(135deg, #221810 0%, #1a120b 100%);
+    
+    /* Sombras reutilizables (Fase 2) */
+    --shadow-sm: 0 4px 12px rgba(236, 109, 19, 0.3);
+    --shadow-md: 0 10px 30px rgba(236, 109, 19, 0.3);
+    --shadow-lg: 0 25px 50px -12px rgba(236, 109, 19, 0.15);
+    --shadow-xl: 0 20px 40px rgba(236, 109, 19, 0.5);
+    
+    /* Shine effect reutilizable (Fase 2) */
+    --shine-gradient: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
 }
 
-/* 2. FUENTE GLOBAL (Plus Jakarta Sans) */
+/* ──────────────────────────────────────────────────────────────────────────── */
+/* § 2. ESTILOS GLOBALES (Body, Fuentes, Reset)                               */
+/* ──────────────────────────────────────────────────────────────────────────── */
+
 html, body {
     font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
     overflow-x: hidden; /* Evitar scroll horizontal */
     max-width: 100%;
 
-/* 2.5 NAVBAR RESPONSIVE */
+/* ──────────────────────────────────────────────────────────────────────────── */
+/* § 3. NAVBAR + BOTONES NAVEGACIÓN (Desktop, Tablet, Mobile)                 */
+/* ──────────────────────────────────────────────────────────────────────────── */
+
 .navbar {
     padding: 0.75rem 0 !important;
 }
@@ -71,45 +104,42 @@ html, body {
     }
 }
 
-/* 3. HERO BACKGROUND OSCURO */
+/* ──────────────────────────────────────────────────────────────────────────── */
+/* § 4. COMPONENTES GENERALES (Cards, Efectos Hover, Badges)                  */
+/* ──────────────────────────────────────────────────────────────────────────── */
+
+/* Hero background */
 .hero-dark {
-    background: linear-gradient(135deg, #221810 0%, #1a120b 100%);
+    background: var(--gradient-dark);
 }
 
-/* 4. EFECTOS HOVER ESCALA (igual Stitch) */
-.btn-hover-scale:hover,
-.card-hover-scale img:hover {
-    transform: scale(1.05) !important;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
+/* ELIMINADO (Fase 1): .btn-hover-scale, .card-hover-scale - No usado en HTML */
 
-/* 5. CARDS CON SOMBRA HOVER */
+/* Cards con hover */
 .card-hover {
     transition: all 0.3s ease;
     border: none !important;
 }
 .card-hover:hover {
-    box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25) !important;
+    box-shadow: var(--shadow-lg) !important;
     border-color: var(--primary) !important;
     transform: translateY(-5px);
 }
 
-/* 6. CHIPS SCROLL HORIZONTAL (sin barra) */
+/* Chips scroll (ocultado en todos los navegadores) */
 .chips-scroll {
     overflow-x: auto;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE/Edge */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }
-.chips-scroll::-webkit-scrollbar {
-    display: none; /* Chrome/Safari */
-}
+.chips-scroll::-webkit-scrollbar { display: none; }
 
-/* 7. IMAGEN ZOOM SUAVE */
+/* Imagen con zoom hover */
 .card-img-hover {
     transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-/* TRUNCADO TEXTO 2 LÍNEAS - Cards productos */
+/* Truncado de texto (line-clamp) */
 .descripcion-clamp {
     display: -webkit-box;              /* 1. Obligatorio Webkit */
     -webkit-box-orient: vertical;      /* 2. Obligatorio Webkit */
@@ -127,105 +157,33 @@ html, body {
     }
 }
 
-/* 9. BADGES POSICIÓN */
-.badge-position {
-    position: absolute;
-    top: 1rem;
-    z-index: 10;
-}
-.badge-top-right { right: 1rem; }
-.badge-top-left { left: 1rem; }
+/* ELIMINADO (Fase 1): .badge-position, .badge-top-*, .btn-outline-hover-primary - No usado */
 
-/* 10. EFECTOS BOTONES OUTLINE */
-.btn-outline-hover-primary:hover {
-    border-color: var(--primary);
-    color: var(--primary);
-    background-color: rgba(236, 109, 19, 0.1);
-}
+/* ──────────────────────────────────────────────────────────────────────────── */
+/* § 5. PRODUCTOS - CARDS Y FILTROS------------------------------------------------------------------------------/*
+/* ELIMINADO (Fase 1): .badge-nueva-coleccion - Reemplazado por .etiqueta-nueva */
 
-/* ESTILOS DE LADO DE PRODUCTOS *------------------------------------------------------------------------------/
-
-/* 1. BADGE NUEVA COLECCIÓN */
-.badge-nueva-coleccion {
-    max-width: 200px;
-}
-
-/* 2. CONTENEDOR IMAGEN */
+/* Contenedor imagen producto */
 .imagen-container-fixed {
     height: 280px;
 }
 
-/* 3. IMAGEN CON TRANSICIÓN ZOOM */
-.imagen-zoom-suave {
+/* Imagen con zoom suave */
     transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-/* 4. TÍTULO CARD COMPACTO */
+/* Título card compacto */
 .titulo-card-compacto {
     line-height: 1.2;
 }
 
-/* ZOOM al hacer hover sobre card */
-.card-hover:hover .imagen-zoom-suave {
-    transform: scale(1.05);
-}
+/* ELIMINADO (Fase 1): .btn-cantidad, .cantidad-control, .btn-agregar-carrito - Comentado en HTML, no se usa */\n
 
-/* ========================================
-   BOTONES NAVBAR - EFECTOS ESPECIALES
-======================================== */
+/* ──────────────────────────────────────────────────────────────────────────── */
+/* § 6. BOTONES DE ACCIÓN (Navbar, Generales)                                */
+/* ──────────────────────────────────────────────────────────────────────────── */
 
-/* Efecto de subrayado */
-.btn-nav {
-    background: none;
-    border: none;
-    padding: 15px;
-    color: #343a40;
-    position: relative;
-    padding-bottom: 15px;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-}
-.btn-nav::before {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 3px;
-    bottom: 10px;
-    left: 0;
-    background-color: #0d7cec;
-    transition: width 0.3s ease;
-}
-
-.btn-nav:hover::before {
-    width: 100%;
-}
-
-/* Responsive navbar - Tablet */
-@media (max-width: 768px) {
-    .btn-nav {
-        padding: 10px 8px;
-        font-size: 0.875rem;
-        padding-bottom: 8px;
-    }
-    .btn-nav::before {
-        bottom: 6px;
-    }
-}
-
-/* Responsive navbar - Mobile */
-@media (max-width: 576px) {
-    .btn-nav {
-        padding: 8px 4px;
-        font-size: 0.75rem;
-        padding-bottom: 6px;
-    }
-    .btn-nav::before {
-        bottom: 4px;
-        height: 2px;
-    }
-}
-
-/* Efecto de para salir */
+/* Botón navbar - salir (rojo) */
 .btn-nav-salir {
     background: none;
     border: none;
@@ -269,7 +227,7 @@ html, body {
     }
 }
 
-/* Efecto de para entrar */
+/* Botón navbar - login-Nosotros-Productos (azul) */
 .btn-nav-login {
     background: none;
     border: none;
@@ -313,7 +271,7 @@ html, body {
     }
 }
 
-/* Efecto de para Resgitrarse */
+/* Botón navbar - registro (gradiente naranja) */
 .btn-nav-registro {
     background-image: linear-gradient(to right, #e99873, #ff6708);
     color: white;
@@ -346,11 +304,11 @@ html, body {
     }
 } 
 
-/* ========================================
-   ESTILOS DE LA PLANTILLA DE PRODUCTOS
-======================================== */
+/* ──────────────────────────────────────────────────────────────────────────── */
+/* § 7. PÁGINA PRODUCTOS - HERO Y FILTROS                                     */
+/* ──────────────────────────────────────────────────────────────────────────── */
 
-/* TEXTO HERO NARANJA GRADIENTE */
+/* Texto con gradiente narrativo */
 .texto-inovacion {
     background: linear-gradient(135deg, #ec6d13 0%, #f4a261 50%, #e76f51 100%);
     -webkit-background-clip: text;
@@ -374,8 +332,8 @@ html, body {
     mask-composite: exclude;
 }
 
-/* ETIQUETA NUEVA COLECCIÓN - 1 SOLA CLASE */
-.etiqueta-nueva {
+/* Etiqueta nueva colección (con animación pulse) */
+.etiqueta-nueva { 
     display: inline-flex !important;
     align-items: center;
     background: rgba(231, 96, 12, 0.15) !important; /* Naranja suave */
@@ -412,7 +370,7 @@ html, body {
     50% { opacity: 0.5; }
 }
 
-/* BOTÓN EXPLORAR COLECCIÓN - HERO PRINCIPAL */
+/* Botón principal explorar (shine effect) */
 .btn-explorar {
     /* Base sólida */
     display: inline-flex !important;
@@ -437,7 +395,7 @@ html, body {
     min-height: 64px;
 }
 
-/* MAGIC SHINE EFFECT */
+/* Shine effect */
 .btn-explorar::before {
     content: '';
     position: absolute;
@@ -445,12 +403,7 @@ html, body {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 255, 255, 0.3),
-        transparent
-    );
+    background: var(--shine-gradient);
     transition: left 0.6s ease;
 }
 
@@ -461,13 +414,11 @@ html, body {
 /* HOVER PERFECTO */
 .btn-explorar:hover {
     transform: translateY(-4px) scale(1.05) !important;
-    box-shadow: 
-        0 20px 40px rgba(236, 109, 19, 0.6),
-        0 8px 20px rgba(0, 0, 0, 0.2) !important;
-    background: linear-gradient(135deg, #d55c0b 0%, #ec6d13 50%, #f48c06 100%) !important;
+    box-shadow: var(--shadow-lg) !important;
+    background: var(--gradient-primary) !important;
 }
 
-/* ICONO ANIMADO */
+/* Icono con hover animation, se mueve un poco en el eje Y */
 .btn-explorar .material-symbols-outlined {
     font-size: 1.5rem !important;
     font-variation-settings: 'wght' 400 !important;
@@ -478,8 +429,7 @@ html, body {
     transform: scale(1.1) rotate(10deg);
 }
 
-/* FOCUS sin bordes feos */
-.btn-explorar:focus,
+/* Focus state */
 .btn-explorar:active {
     box-shadow: 
         0 20px 40px rgba(236, 109, 19, 0.6),
@@ -487,7 +437,7 @@ html, body {
     outline: none !important;
 }
 
-/* FILTRO ACTIVO */
+/* Chip de filtro activo */
 .chip-activo {
     background: linear-gradient(135deg, #ec6d13, #f4a261) !important;
     color: white !important;
@@ -516,7 +466,7 @@ html, body {
     animation: fadeIn 0.6s ease forwards;
 }
 
-/*ESTILO DEL SPAN DEL PRECIO*/
+/* Precio en cards y modal */
 .span-precio {
     font-size: clamp(1.2rem, 1vw, 1.75rem);
     font-weight: 600 !important;
@@ -537,9 +487,10 @@ html, body {
     }
 }
 
-/* ========================================
-   FOOTER ARTISANAL - Responsive + Dark Mode
-======================================== */
+/* ──────────────────────────────────────────────────────────────────────────── */
+/* § 8. FOOTER                                                                 */
+/* ──────────────────────────────────────────────────────────────────────────── */
+
 .footer-artisanal {
     background: #ffffff !important;
     border-top: 1px solid #e5e0dc !important;
@@ -609,11 +560,10 @@ html, body {
     .footer-description { color: #a8a29e !important; }
 }
 
-/* ========================================
-   MODAL DETALLES PRODUCTO - Fullscreen
-======================================== */
+/* ──────────────────────────────────────────────────────────────────────────── */
+/* § 9. MODAL - DETALLES DE PRODUCTO                                          */
+/* ──────────────────────────────────────────────────────────────────────────── */
 
-/* MODAL - FUERZA TOTAL */
 .modal-dialog {
     max-width: 1000px !important;
     width: calc(100vw - 40px) !important;
@@ -652,7 +602,7 @@ html, body {
 .producto-detalles h2,
 .producto-detalles h3,
 .producto-detalles p {
-    margin-bottom: 1rem !important;
+    margin-bottom: 1rem;
 }
 
 .detalles-chips {
@@ -823,7 +773,7 @@ html, body {
     }
 }
 
-/* Sección reseñas en modal */
+/* Sección reseñas/reviews en modal */
 .resenas-section {
     background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
     border-radius: 16px;
@@ -867,11 +817,11 @@ html, body {
 }
 
 
-/* ========================================
-   TIENDA PRINCIPAL - DISEÑO ARTESANAL
-======================================== */
+/* ──────────────────────────────────────────────────────────────────────────── */
+/* § 10. PÁGINA TIENDA - HERO, TIMELINE, MISIÓN                               */
+/* ──────────────────────────────────────────────────────────────────────────── */
 
-/* 1. HERO SECTION - FONDO Y EFECTOS */
+/* Hero section con gradiente 
 .hero-section {
     background: linear-gradient(135deg, var(--bg-light) 0%, #fdfbf8 100%);
     position: relative;
@@ -889,8 +839,9 @@ html, body {
                 radial-gradient(circle at 80% 20%, rgba(236,109,19,0.03) 0%, transparent 50%);
     pointer-events: none;
 }
+*/
 
-/* 2. BADGE "DESDE 2023" - POSICIÓN Y ESTILO */
+/* Badge de año (flotante) */
 .badge-artesanal {
     background: linear-gradient(135deg, var(--primary), #f4a261) !important;
     color: white !important;
@@ -899,7 +850,7 @@ html, body {
     font-weight: 700 !important;
     text-transform: uppercase !important;
     letter-spacing: 1px !important;
-    box-shadow: 0 4px 15px rgba(236,109,19,0.3);
+    box-shadow: var(--shadow-md) !important;
     position: relative;
     top: -2px; /* Baja un poquito */
     display: inline-flex !important;
@@ -919,7 +870,7 @@ html, body {
     50% { transform: translateY(-3px); }
 }
 
-/* 3. TÍTULOS HERO - GRADIENTE NARANJA */
+/* Título hero con gradiente y underline */
 .titulo-hero {
     background: linear-gradient(135deg, var(--primary) 0%, #f4a261 50%, var(--primary-dark) 100%);
     -webkit-background-clip: text;
@@ -940,7 +891,7 @@ html, body {
     border-radius: 2px;
 }
 
-/* 4. TIMELINE - CÍRCULOS Y LÍNEAS */
+/* Timeline pasos (con conectores verticales) */
 .timeline-step {
     position: relative;
     padding-left: 3rem;
@@ -981,7 +932,7 @@ html, body {
     transform: scale(1.1) !important;
 }
 
-/* LÍNEA CONECTORA */
+/* Línea conectora entre timeline items */
 .timeline-step:not(:last-child)::after {
     content: '';
     position: absolute;
@@ -993,7 +944,7 @@ html, body {
     border-radius: 2px;
 }
 
-/* 5. SECCIÓN MISIÓN - ESTILO ESPECIAL */
+/* Tarjeta de misión (card especial con icono) */
 .mision-card {
     background: linear-gradient(135deg, #ffffff 0%, #fdfbf8 100%) !important;
     border: 1px solid rgba(236,109,19,0.1) !important;
@@ -1030,7 +981,7 @@ html, body {
     50% { transform: scale(1.05); }
 }
 
-/* 6. BOTONES ARTESANALES */
+/* Botones de acción principales */
 .btn-artesanal {
     background: linear-gradient(135deg, var(--primary), #f4a261) !important;
     border: none !important;
@@ -1053,7 +1004,7 @@ html, body {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    background: var(--shine-gradient);
     transition: left 0.6s ease;
 }
 
@@ -1063,8 +1014,8 @@ html, body {
 
 .btn-artesanal:hover {
     transform: translateY(-3px) scale(1.05) !important;
-    box-shadow: 0 15px 40px rgba(236,109,19,0.4) !important;
-    background: linear-gradient(135deg, var(--primary-dark), var(--primary)) !important;
+    box-shadow: var(--shadow-xl) !important;
+    background: var(--gradient-primary) !important;
 }
 
 .btn-artesanal-outline {
@@ -1079,521 +1030,35 @@ html, body {
     transform: translateY(-3px) !important;
 }
 
-/* 7. RESPONSIVE */
-@media (max-width: 768px) {
-    .timeline-step {
-        padding-left: 2rem !important;
-    }
+/* ──────────────────────────────────────────────────────────────────────────── */
+/* § 11. PÁGINA LOGIN                                                          */
+/* ──────────────────────────────────────────────────────────────────────────── */
+
+/* Login split-screen layout con hero */
+.timeline-step {
+    padding-left: 2rem !important;
+}
     
-    .timeline-icon {
-        width: 50px !important;
-        height: 50px !important;
-    }
+.timeline-icon {
+    width: 50px !important;
+    height: 50px !important;
+}
     
-    .timeline-icon img {
-        width: 42px !important;
-        height: 42px !important;
-    }
+.timeline-icon img {
+    width: 42px !important;
+    height: 42px !important;
 }
 
-/* ========================================
-   ESTILO PARA LOGIN 
-======================================== */
-
-/* LOGIN ARTESANAL - Estilos completos */
-:root {
+/* (Colores varían según versión split-screen) */ 
+:root {  
     --primary: #ec6d13;
     --primary-dark: #d55c0b;
     --bg-light: #f8f7f6;
 }
 
-body {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    background: linear-gradient(135deg, var(--bg-light) 0%, #fdfbf8 100%);
-    min-height: 100vh;
-}
-
-.login-hero {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-}
-
-.login-hero::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: radial-gradient(circle at 20% 80%, rgba(236,109,19,0.05) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(236,109,19,0.03) 0%, transparent 50%);
-}
-
-.login-card {
-    background: linear-gradient(135deg, #ffffff 0%, #fdfbf8 100%);
-    border: 1px solid rgba(236,109,19,0.1);
-    border-radius: 24px;
-    padding: 3rem;
-    box-shadow: 0 25px 50px -12px rgba(236,109,19,0.15);
-    position: relative;
-    max-width: 420px;
-    width: 100%;
-    backdrop-filter: blur(10px);
-    animation: slideUp 0.6s ease-out;
-}
-
-.login-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, var(--primary), #f4a261, var(--primary));
-    border-radius: 24px 24px 0 0;
-}
-
-.login-logo {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    margin-bottom: 2rem;
-}
-
-.login-logo-icon {
-    font-size: 2.5rem;
-    background: linear-gradient(135deg, var(--primary), #f4a261);
-    width: 64px;
-    height: 64px;
-    border-radius: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 10px 30px rgba(236,109,19,0.3);
-    color: white;
-}
-
-.login-title {
-    font-weight: 800;
-    font-size: clamp(1.75rem, 4vw, 2.25rem);
-    background: linear-gradient(135deg, var(--primary) 0%, #35a4ed 50%, var(--primary-dark) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin: 0;
-    text-align: center;
-}
-
-.form-control-login {
-    border: 2px solid rgba(236,109,19,0.2);
-    border-radius: 16px;
-    padding: 1rem 1.25rem;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-    background: rgba(255,255,255,0.9);
-    backdrop-filter: blur(10px);
-}
-
-.form-control-login:focus {
-    border-color: var(--primary);
-    box-shadow: 0 0 0 0.25rem rgba(236,109,19,0.15);
-    background: white;
-    transform: translateY(-2px);
-}
-
-.form-label-login {
-    font-weight: 600;
-    color: #2061ca;
-    margin-bottom: 0.75rem;
-    font-size: 0.95rem;
-}
-
-.btn-login {
-    background: linear-gradient(135deg, var(--primary), #f4a261) !important;
-    border: none !important;
-    color: white !important;
-    padding: 1.25rem !important;
-    font-weight: 700 !important;
-    text-transform: uppercase !important;
-    letter-spacing: 0.5px !important;
-    border-radius: 16px !important;
-    box-shadow: 0 10px 30px rgba(236,109,19,0.4) !important;
-    transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1) !important;
-    position: relative;
-    overflow: hidden;
-    font-size: 1.05rem;
-}
-
-.btn-login::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-    transition: left 0.6s ease;
-}
-
-.btn-login:hover::before {
-    left: 100%;
-}
-
-.btn-login:hover {
-    transform: translateY(-4px) scale(1.02) !important;
-    box-shadow: 0 20px 40px rgba(236,109,19,0.5) !important;
-}
-
-.login-link {
-    color: var(--primary) !important;
-    font-weight: 600;
-    text-decoration: none;
-    transition: all 0.3s ease;
-}
-
-.login-link:hover {
-    text-decoration: underline;
-    color: var(--primary-dark) !important;
-}
-
-@keyframes slideUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@media (max-width: 576px) {
-    .login-card {
-        margin: 1rem;
-        padding: 2rem 1.5rem;
-    }
-}
-
-/* ========================================
-   REGISTRO - ESTILOS NUEVOS (reutiliza login)
-======================================== */
-
-/* Hero container */
-.register-hero {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-}
-
-.register-hero::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: radial-gradient(circle at 20% 80%, rgba(236,109,19,0.05) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(236,109,19,0.03) 0%, transparent 50%);
-}
-
-/* Card principal */
-.register-card {
-    background: linear-gradient(135deg, #ffffff 0%, #fdfbf8 100%);
-    border: 1px solid rgba(236,109,19,0.1);
-    border-radius: 24px;
-    padding: 3rem;
-    box-shadow: 0 25px 50px -12px rgba(236,109,19,0.15);
-    position: relative;
-    max-width: 450px;
-    width: 100%;
-    backdrop-filter: blur(10px);
-    animation: slideUp 0.6s ease-out;
-}
-
-.register-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, var(--primary), #f4a261, var(--primary));
-    border-radius: 24px 24px 0 0;
-}
-
-/* Logo */
-.register-logo {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    margin-bottom: 2rem;
-}
-
-.register-logo-icon {
-    font-size: 2.5rem;
-    background: linear-gradient(135deg, var(--primary), #f4a261);
-    width: 64px;
-    height: 64px;
-    border-radius: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 10px 30px rgba(236,109,19,0.3);
-    color: white;
-}
-
-/* Inputs con iconos */
-.input-group-register {
-    position: relative;
-}
-
-.input-group-register i {
-    position: absolute;
-    left: 1.25rem;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #897261;
-    font-size: 1.25rem;
-    z-index: 5;
-    pointer-events: none;
-}
-
-.input-group-register .form-control-register {
-    padding-left: 3.5rem;
-}
-
-/* Labels */
-.form-label-register {
-    font-weight: 600;
-    color: #181411;
-    margin-bottom: 0.75rem;
-    font-size: 0.95rem;
-}
-
-/* Responsive */
-@media (max-width: 576px) {
-    .register-card {
-        margin: 1rem;
-        padding: 2rem 1.5rem;
-    }
-}
-
-/* ========================================
-   REGISTRO - ESTILOS COMPLEMENTARIOS
-======================================== */
-
-/* Hero del registro */
-.register-hero {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    background: linear-gradient(135deg, var(--bg-light) 0%, #fdfbf8 100%);
-}
-
-.register-hero::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: radial-gradient(circle at 20% 80%, rgba(236,109,19,0.05) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(236,109,19,0.03) 0%, transparent 50%);
-}
-
-/* Card de registro */
-.register-card {
-    background: linear-gradient(135deg, #ffffff 0%, #fdfbf8 100%);
-    border: 1px solid rgba(236,109,19,0.1);
-    border-radius: 24px;
-    padding: 3rem;
-    box-shadow: 0 25px 50px -12px rgba(236,109,19,0.15);
-    position: relative;
-    max-width: 450px;
-    width: 100%;
-    backdrop-filter: blur(10px);
-    animation: slideUp 0.6s ease-out;
-}
-
-.register-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, var(--primary), #f4a261, var(--primary));
-    border-radius: 24px 24px 0 0;
-}
-
-/* Título del registro */
-.register-title {
-    font-weight: 800;
-    font-size: clamp(1.75rem, 4vw, 2.25rem);
-    background: linear-gradient(135deg, var(--primary) 0%, #35a4ed 50%, var(--primary-dark) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 2rem;
-    text-align: center;
-}
-
-/* Labels del formulario */
-.form-label-register {
-    font-weight: 600;
-    color: #2061ca;
-    margin-bottom: 0.75rem;
-    font-size: 0.95rem;
-}
-
-/* Input group con íconos */
-.input-group-register {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
-
-/* Ícono dentro del input */
-.input-group-register .bi {
-    position: absolute;
-    left: 1.25rem;
-    font-size: 1.25rem;
-    z-index: 5;
-    pointer-events: none;
-    color: #897261;
-    transition: color 0.3s ease;
-}
-
-/* Ícono de validación (derecha) */
-.input-group-register .bi-check-circle {
-    left: auto;
-    right: 1.25rem;
-    color: #28a745;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.input-group-register.is-valid .bi-check-circle {
-    opacity: 1;
-}
-
-/* Input de registro */
-.form-control-register {
-    border: 2px solid rgba(236,109,19,0.2);
-    border-radius: 16px;
-    padding: 1rem 3.5rem 1rem 3.5rem; /* Espacio para íconos */
-    font-size: 1rem;
-    transition: all 0.3s ease;
-    background: rgba(255,255,255,0.9);
-    backdrop-filter: blur(10px);
-    width: 100%;
-}
-
-.form-control-register:focus {
-    border-color: var(--primary);
-    box-shadow: 0 0 0 0.25rem rgba(236,109,19,0.15);
-    background: white;
-    transform: translateY(-2px);
-    outline: none;
-}
-
-.form-control-register:focus + .bi {
-    color: var(--primary);
-}
-
-/* Errores de validación */
-.text-danger.small {
-    font-size: 0.85rem;
-    margin-top: 0.5rem;
-    display: block;
-    animation: shake 0.3s ease;
-}
-
-@keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-5px); }
-    75% { transform: translateX(5px); }
-}
-
-/* Botón de registro */
-.btn-register {
-    background: linear-gradient(135deg, var(--primary), #f4a261) !important;
-    border: none !important;
-    color: white !important;
-    padding: 1.25rem !important;
-    font-weight: 700 !important;
-    text-transform: uppercase !important;
-    letter-spacing: 0.5px !important;
-    border-radius: 16px !important;
-    box-shadow: 0 10px 30px rgba(236,109,19,0.4) !important;
-    transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1) !important;
-    position: relative;
-    overflow: hidden;
-    font-size: 1.05rem;
-}
-
-.btn-register::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-    transition: left 0.6s ease;
-}
-
-.btn-register:hover::before {
-    left: 100%;
-}
-
-.btn-register:hover {
-    transform: translateY(-4px) scale(1.02) !important;
-    box-shadow: 0 20px 40px rgba(236,109,19,0.5) !important;
-}
-
-/* Link de "ya tienes cuenta" */
-.register-link {
-    color: var(--primary) !important;
-    font-weight: 600;
-    text-decoration: none;
-    transition: all 0.3s ease;
-}
-
-.register-link:hover {
-    text-decoration: underline;
-    color: var(--primary-dark) !important;
-}
-
-/* Divisor superior */
-.register-divider {
-    border-top: 1px solid rgba(236,109,19,0.15);
-    margin-top: 1.5rem;
-    padding-top: 1.5rem;
-}
-
-/* Responsive */
-@media (max-width: 576px) {
-    .register-card {
-        margin: 1rem;
-        padding: 2rem 1.5rem;
-    }
-    
-    .form-control-register {
-        padding: 0.875rem 3rem 0.875rem 3rem;
-        font-size: 0.95rem;
-    }
-}
+/* ──────────────────────────────────────────────────────────────────────────── */
+/* § 12. PÁGINA REGISTRO                                                       */
+/* ──────────────────────────────────────────────────────────────────────────── */
 
 /* ========================================
    REGISTRO CLIENTES - NUEVOS ESTILOS
@@ -1854,5 +1319,4 @@ body {
     flex: none;
     padding: 2rem;
   }
-}
 }

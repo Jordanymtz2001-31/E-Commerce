@@ -36,18 +36,15 @@
                     <img src="{% static 'img/logo.jpg' %}" alt="Logo" width="40" height="40" class="me-2 rounded-3">
                     Talcahualme
                 </a>
-                <a href="{% url 'tienda' %}"  class="btn btn-nav active">Nosotros</a>
-                <a href="{% url 'productList' %}" class="btn btn-nav ">Productos</a>
+                <a href="{% url 'tienda' %}"  class="btn btn-nav-login">Nosotros</a>
+                <a href="{% url 'productList' %}" class="btn btn-nav-login ">Productos</a>
             </div>
             
             <!-- Usuario derecha -->
             <div class="d-flex align-items-center">
                 {% if user.is_authenticated %}
-                    <span class="me-3 fw-bold text-muted">¡Hola {{ user.username }}!</span>
-                    <form action="{% url 'logout' %}" method="post" class="d-inline me-2">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-nav-salir ">Salir</button>
-                    </form>
+                    <span class="me-3 fw-bold text-muted">¡Hola {{ user.username }}!</span>                      
+                    <a href="{% url 'logout' %}" type="submit" class="btn btn-nav-salir">Salir </a>
                 {% else %}
                     <a href="{% url 'login' %}" class="btn btn-nav-login">Iniciar Sesion</a>
                     <a href="{% url 'registro' %}" class="btn btn-nav-registro">Nueva Cuenta</a>
@@ -173,7 +170,7 @@
                             <span>4.9 (12)</span>
                         </div>
                     </div>
-                    <p class="mb-2"><strong>Tallas:</strong> <span id="modalTallas" class="badge bg-info text-dark ms-1"></span></p>
+                    <p class="mb-2"><strong>Tallas:</strong> <span id="modalTallas"></span></p>
                     <p class="mb-2"><strong>Material:</strong> <span id="modalMateriales" class="badge bg-warning text-dark ms-1"></span></p>
                     <p class="mb-2"><strong>Cuidado:</strong> <span id="modalCuidados" class="badge bg-success text-white ms-1"></span></p>
                     <!-- Stock Status, se manejara con JS -->
@@ -221,7 +218,7 @@
                                 <div class="form-text fst-italic">Máximo 500 caracteres (opcional)</div>
                             </div>
                             
-                            <button type="submit" id="btnResena" class="btn btn-primary w-100 fw-semibold">
+                            <button type="submit" id="btnResena" class="btn btn-registro w-100 mb-3">
                                 <i class="bi bi-star-fill me-2"></i>
                                 Publicar reseña
                             </button>

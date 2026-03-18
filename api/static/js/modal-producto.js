@@ -11,13 +11,32 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('modalPrecio').textContent = this.dataset.precio;
             document.getElementById('modalCategoria').textContent = this.dataset.categoria || 'Sin categoría';
             
-            // NUEVOS DATOS - ESTO ES LO QUE FALTABA
-            document.getElementById('modalTallas').textContent = this.dataset.tallas || 'N/A';
+            // NUEVOS DATOS
+            //document.getElementById('modalTallas').textContent = this.dataset.tallas || 'N/A';
             document.getElementById('modalMateriales').textContent = this.dataset.materiales || 'N/A';
             document.getElementById('modalCuidados').textContent = this.dataset.cuidados || 'N/A';
-            
             document.getElementById('modalDescripcion').textContent = this.dataset.descripcion || '';
 
+            // Tallas
+            let stockTallas = [];
+            try {
+                const raw = this.dataset.stockTallas || '[]';
+                stockTallas = JSON.parse(raw.replace(/'/g, '"'));
+            } catch(e) {
+                console.error('Error parseando stock tallas:', e, this.dataset.stockTallas);
+            }
+
+            const modalTallas = document.getElementById('modalTallas');
+            if (stockTallas.length > 0) {
+                modalTallas.innerHTML = stockTallas.map(item => {
+                    return `<span class="badge bg-info text-dark me-1">
+                                ${item.talla} 
+                                <span class="badge bg-dark ms-1">${item.stock}</span>
+                            </span>`;
+                }).join('');
+            } else {
+                modalTallas.textContent = 'N/A';
+            }
 
             // Stock
             const stockIcon = document.getElementById('modalStockIcon');

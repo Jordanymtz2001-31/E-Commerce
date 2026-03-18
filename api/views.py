@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from .forms import RegistroForm
-from .models import Categoria, Cliente, Producto, Resena
+from .models import Categoria, Cliente, Producto, Resena, StockTalla
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -83,6 +83,18 @@ def productos_view(request):
         categoria_seleccionada = categoria
     else:
         categoria_seleccionada = None
+
+    #Agregando stock por tallas a cada producto
+    for producto in productos:
+        #Aqui filtramos por los productos que tengan stock y los relacionamos con la talla
+        stock = StockTalla.objects.filter(producto=producto, talla_stock__gt=0).select_related('talla')
+        producto.stock_por_talla  = [ #Creamos un diccionario llamado stock_por_talla
+            {
+                'talla': s.talla.nombreTalla,
+                'stock': s.talla_stock
+            }
+            for s in stock # Obtenemos el stock por talla
+        ]
     
     context = {
         'productos': productos,
