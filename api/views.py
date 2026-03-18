@@ -7,6 +7,10 @@ from django.contrib.auth.decorators import login_required
 
 # Metodo de registro
 def registro_view(request): # request = peticion
+
+    #Carcamos las categorias para mostras en el footer
+    categorias = Categoria.objects.all()
+
     if request.method == 'POST': # Si la peticion es POST entonces
         #Obtenemos los datos del formulario que el usuario ingreso en la plantilla
         formulario = RegistroForm(request.POST)
@@ -24,10 +28,14 @@ def registro_view(request): # request = peticion
             return redirect('login') # Redireccionamos al login
     else:
         formulario = RegistroForm() # Si el formulario no es valido lo volvemos a inicializar
-    return render(request, 'registro.html', {'form': formulario})
+    return render(request, 'registro.html', {'form': formulario, 'categorias': categorias})
         
 #Metodo para entrar al sistema
 def login_view(request):
+
+    #Carcamos las categorias para mostras en el footer
+    categorias = Categoria.objects.all()
+
     if request.method == 'POST':
         #Obtenemos los valores desde el formulario
         username = request.POST['username']
@@ -47,7 +55,7 @@ def login_view(request):
         else: 
             messages.error(request, 'Credenciales incorrectas.') # Mensaje de error
 
-    return render(request, 'login.html') # Si no es POST entonces renderizamos el login
+    return render(request, 'login.html', {'categorias': categorias}) # Si no es POST entonces renderizamos el login
 
 #Metodo para salir de la sesion
 def logout_view(request):

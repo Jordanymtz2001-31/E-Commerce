@@ -1,0 +1,5 @@
+/* Tamaño del logo en el login de admin */
+.login-logo img {
+    max-width: 120px !important;
+    height: auto !important;
+}

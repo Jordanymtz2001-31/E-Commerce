@@ -47,6 +47,7 @@ CSRF_TRUSTED_ORIGINS = [
 # Aplicaciones instaladas
 # ----------------------------------------------------
 INSTALLED_APPS = [
+    'jazzmin', # Aplicación de administración de Django Jazzmin
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -139,7 +140,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es-mx' # Español-México
 
 TIME_ZONE = 'UTC'
 
@@ -212,5 +213,77 @@ LOGGING = {
             'propagate': True,
         },
     },
+}
+
+# ----------------------------------------------------
+# Configuracion del panel de administración (Jazzmin)
+# ----------------------------------------------------
+JAZZMIN_SETTINGS = {
+    "site_title": "Talcahualme Admin",
+    "site_header": "Talcahualme",
+    "site_brand": "Talcahualme",
+    "site_logo": "img/logo.jpg",  # ruta relativa a tu carpeta static/
+    "site_logo_classes": "img-circle",
+    "custom_css": "css/admin_custom.css", # ruta relativa a tu carpeta static/css/ para que obtenga los estilos personalizados
+    "login_logo": "img/logo.jpg", 
+    "login_logo_dark": "img/logo.jpg",
+    "welcome_sign": "Bienvenido al panel de administración",
+    "copyright": "Talcahualme 2026",
+    "search_model": [],
+
+    # Iconos para tus modelos (usa iconos de Font Awesome)
+    "icons": {
+        "auth": "fas fa-users-cog",
+        "auth.user": "fas fa-user",
+        "auth.Group": "fas fa-users",
+    },
+
+    # Ocultar ciertos modelos si quieres
+    # "hide_models": [],
+
+    "show_ui_builder": False,  # Cambia a True si quieres un editor visual de tema
+}
+
+JAZZMIN_UI_TWEAKS = {
+    "navbar_small_text": False,      # texto pequeño en la barra de navegación superior
+    "footer_small_text": False,      # texto pequeño en el footer
+    "body_small_text": False,        # texto pequeño en el contenido general
+    "brand_small_text": False,       # texto pequeño en el nombre/logo del sidebar
+    "brand_colour": False,
+    "accent": "accent-primary",
+    "navbar": "navbar-dark",
+    "no_navbar_border": False,      # True = quita la línea borde inferior del navbar
+    "navbar_fixed": True,           # navbar fijo al hacer scroll
+    "layout_boxed": False,          # True = contenido centrado con márgenes laterales
+                                    # False = contenido a full ancho    
+    "footer_fixed": False,          # True = footer siempre visible abajo
+                                    # False = footer solo al llegar al final
+    "sidebar_fixed": True,                  # True = sidebar fijo al hacer scroll
+    "sidebar": "sidebar-dark-primary",      # color del sidebar
+                                            # opciones: "sidebar-dark-primary", 
+                                            #           "sidebar-dark-success",
+                                            #           "sidebar-light-primary", etc.
+
+    "sidebar_nav_small_text": False,        # texto pequeño en los links del sidebar
+    "sidebar_disable_expand": False,        # True = desactiva los submenús expandibles
+    "sidebar_nav_child_indent": False,      # True = indentar los items hijos del menú
+    "sidebar_nav_compact_style": False,     # True = estilo compacto, menos padding
+    "sidebar_nav_legacy_style": False,      # True = estilo antiguo de AdminLTE
+    "sidebar_nav_flat_style": False,        # True = sin iconos de flecha en submenús
+    "theme": "default",             # tema de Bootstrap para el admin
+                                    # opciones: "default", "cerulean", "cosmo", "flatly",
+                                    #           "journal", "litera", "lumen", "lux",
+                                    #           "materia", "minty", "pulse", "sandstone",
+                                    #           "simplex", "slate", "solar", "spacelab",
+                                    #           "superhero", "united", "yeti"
+    "default_theme_mode": "light",  # opciones: "light", "dark", "auto"
+    "button_classes": {
+        "primary": "btn-primary",       # botones principales (Guardar, etc.)
+        "secondary": "btn-secondary",   # botones secundarios
+        "info": "btn-info",             # botones informativos
+        "warning": "btn-warning",       # botones de advertencia
+        "danger": "btn-danger",         # botones de eliminar
+        "success": "btn-success",       # botones de éxito
+    }
 }
 
