@@ -1,9 +1,10 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from .forms import RegistroForm
-from .models import Categoria, Cliente, Producto, Resena, StockTalla
+from .models import Categoria, Cliente, Producto, Resena, StockTalla, PuntoVenta, Evento, FotoEvento, ImagenProducto
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.utils import timezone  # Importamos timezone para obtener la fecha actual
 
 # Metodo de registro
 def registro_view(request): # request = peticion
@@ -47,8 +48,8 @@ def login_view(request):
             login(request, user) # Iniciamos sesion
 
             # DEBUG: confirma que funciona
-            print(f"LOGIN EXITOSO: {user.username} - ID: {user.id}")
-            print(f"request.user.is_authenticated: {request.user.is_authenticated}")
+            #print(f"LOGIN EXITOSO: {user.username} - ID: {user.id}")
+            #print(f"request.user.is_authenticated: {request.user.is_authenticated}")
 
             messages.success(request, 'Inicio de sesion exitoso!')
             return redirect('tienda') # Redireccionamos al dashboard
@@ -72,10 +73,16 @@ def tienda_view(request):
 
 #Metodo para mostrar los productos junto con las categorias
 def productos_view(request):
-    productos = Producto.objects.all() # Obtenemos todos los productos
-    categorias = Categoria.objects.all() # Obtenemos todas las categorias
+    productos = Producto.objects.prefetch_related( #El prefetch_related nos permite obtener los objetos relacionados
+        'imagenes', 
+        'categoria', 
+        'tallaDisponible', 
+        'tipoMateria', 
+        'instruccionesCuidado',
+        'stocktalla_set__talla'
+    )
+    categorias = Categoria.objects.all()
     
-    # Detecta categoría desde URL param (opcional)
     categoria_id = request.GET.get('categoria')
     if categoria_id:
         categoria = get_object_or_404(Categoria, id=categoria_id)
@@ -84,16 +91,11 @@ def productos_view(request):
     else:
         categoria_seleccionada = None
 
-    #Agregando stock por tallas a cada producto
     for producto in productos:
-        #Aqui filtramos por los productos que tengan stock y los relacionamos con la talla
-        stock = StockTalla.objects.filter(producto=producto, talla_stock__gt=0).select_related('talla')
-        producto.stock_por_talla  = [ #Creamos un diccionario llamado stock_por_talla
-            {
-                'talla': s.talla.nombreTalla,
-                'stock': s.talla_stock
-            }
-            for s in stock # Obtenemos el stock por talla
+        stock = producto.stocktalla_set.filter(talla_stock__gt=0)
+        producto.stock_por_talla = [
+            {'talla': s.talla.nombreTalla, 'stock': s.talla_stock}
+            for s in stock
         ]
     
     context = {
@@ -107,7 +109,7 @@ def productos_view(request):
 def productos_por_categoria(request, categoria_id):
     #El get_object_or_404 nos permite obtener un objeto por su id
     categoria_seleccionada  = get_object_or_404(Categoria, id=categoria_id) # Obtenemos la categoria por id
-    productos = Producto.objects.filter(categoria=categoria) # Obtenemos los productos por categoria mediante el id
+    productos = Producto.objects.prefetch_related('imagenes', 'categoria', 'tallaDisponible', 'tipoMateria', 'instruccionesCuidado').all()
     categoria = Categoria.objects.all() # Obtenemos todas las categorias
 
     context = {
@@ -116,19 +118,21 @@ def productos_por_categoria(request, categoria_id):
         'categoria_seleccionada' : categoria_seleccionada # PARA RESALTAR EL BOTON ACTIVO
     }
 
-    #Y si no esta vacia mostramos los productos 
     return render(request, 'productos.html', context)
 
 
 #Metodo para crear una reseña
-@login_required #Decorador para indicar que solo se puede acceder a la vista si el usuario esta logueado
+@login_required
 def crear_resena(request, pk):
     producto = get_object_or_404(Producto, pk=pk)
     
     if request.method == 'POST':
         try:
-            cliente = Cliente.objects.get(usuario=request.user)
+            #cliente = Cliente.objects.get(usuario=request.user) # Obtenemos el cliente
+            cliente = get_object_or_404(Cliente, usuario=request.user) # Obtenemos el cliente por su id, pero para el admin se puede usar el get_object_or_404
             estrellas = int(request.POST.get('estrellas', 5))
+            if estrellas < 1 or estrellas > 5:
+                raise ValueError("Estrellas fuera de rango")
             comentario = request.POST.get('comentario', '').strip()
             
             Resena.objects.create(
@@ -138,7 +142,32 @@ def crear_resena(request, pk):
                 comentario=comentario
             )
             messages.success(request, '¡Gracias por tu reseña!')
-        except ValueError:
+        except (ValueError, Cliente.DoesNotExist):
             messages.error(request, 'Error en los datos enviados. Intentalo de nuevo')
     
     return redirect('productList')
+
+#Metodo para mostrar los puntos de venta
+def punto_venta_view(request):
+    categoria = Categoria.objects.all() # Obtenemos todas las categorias
+    puntos_venta = PuntoVenta.objects.filter(activo=True) # Obtenemos todos los puntos de venta activos
+    context = {
+        'categorias': categoria,
+        'puntos_venta': puntos_venta,
+    }
+    return render(request, 'puntos_venta.html', context)
+
+#Metodo para mostrar los eventos
+def eventos_view(request):
+    categorias = Categoria.objects.all() # Obtenemos todas las categorias
+
+    hoy = timezone.now().date() # Obtenemos la fecha actual
+    proximos = Evento.objects.filter(activo=True, fecha__gte=hoy).prefetch_related('fotos', 'colaboradores').order_by('fecha') # Obtenemos los eventos proximos que esten activos 
+    pasados = Evento.objects.filter(activo=True, fecha__lt=hoy).prefetch_related('fotos', 'colaboradores').order_by('-fecha') # Obtenemos los eventos pasados que esten activos
+
+    context = {
+        'categorias': categorias,
+        'proximos': proximos,
+        'pasados': pasados,
+    }
+    return render(request, 'eventos.html', context)

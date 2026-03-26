@@ -8,16 +8,52 @@ venv/
 .env.production
 
 # Base de datos
-.sqlite3
+*.sqlite3
 
-# Archivos compilados
+# Archivos compilados Python
 __pycache__/
 *.pyc
 *.pyo
+*.pyd
+.pytest_cache/
 
-# Archivos estaticos recolectados
+# Archivos estaticos y media
 /staticfiles/
+/media/
+/static/
 
-# Claves o certificados
+# Logs
+django.log
+*.log
+
+# Configuración IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Secrets y certificados
 *.key
 *.pem
+credentials.json
+
+# Documentación adicional (opcional)
+/*.md
+!/README.md
+
+# Testing
+.pytest_cache/
+htmlcov/
+.coverage
+*.egg-info/
+
+# Skills y agentes
+.agents/
+skills-lock.json
+
+# Tests externos
+testsprite_tests/

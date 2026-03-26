@@ -38,6 +38,8 @@
                 </a>
                 <a href="{% url 'tienda' %}"  class="btn btn-nav-login">Nosotros</a>
                 <a href="{% url 'productList' %}" class="btn btn-nav-login ">Productos</a>
+                <a href="{% url 'punto_venta' %}" class="btn btn-nav-login ">Puntos de Venta</a>
+                <a href="{% url 'eventos' %}" class="btn btn-nav-login ">Eventos</a>
             </div>
             
             <!-- Usuario derecha -->
@@ -150,9 +152,21 @@
     <div class="modal fade" id="modalProducto" tabindex="-1">
         <div class="modal-dialog modal-xl modal-dialog-centered">
             <div class="modal-content">
-                <!-- Imagen -->
-                <div class="producto-imagen" style="width: 55% !important; height: 100%; background: red;">
-                    <img id="modalImagen" src="" alt="Producto">
+                <!-- Imagen / Carousel -->
+                <div class="producto-imagen" style="width: 55% !important; height: 100%;">
+                    <div id="carouselProducto" class="carousel slide h-100" data-bs-ride="false">
+                        <div class="carousel-inner h-100" id="modalCarouselInner">
+                            <!-- Se llena con JS -->
+                        </div>
+                        <button class="carousel-control-prev" id="carouselPrev" type="button" data-bs-target="#carouselProducto" data-bs-slide="prev" style="display:none;">
+                            <span class="carousel-control-prev-icon"></span>
+                        </button>
+                        <button class="carousel-control-next" id="carouselNext" type="button" data-bs-target="#carouselProducto" data-bs-slide="next" style="display:none;">
+                            <span class="carousel-control-next-icon"></span>
+                        </button>
+                        <!-- Indicadores -->
+                        <div class="carousel-indicators" id="carouselIndicadores" style="display:none;"></div>
+                    </div>
                 </div>
                 <!-- Detalles -->
                 <div class="producto-detalles">

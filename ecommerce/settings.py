@@ -26,6 +26,9 @@ if not IS_PRODUCTION:
 # Seguridad y depuración, les pasamos los valores de entorno
 # ----------------------------------------------------
 SECRET_KEY = os.getenv('SECRET_KEY')
+if not SECRET_KEY:
+    raise Exception("La variable de entorno SECRET_KEY no está definida.")
+
 DEBUG = os.getenv('DEBUG', 'False') == 'True'   
 # ESTO NO EXPLOTA NUNCA
 allowed_hosts_str = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1')
@@ -37,11 +40,8 @@ if not os.getenv('DB_ENGINE'):
 if not os.getenv('DB_NAME'):
     raise Exception("La variable de entorno DB_NAME no está definida. Debe ser el nombre de la base de datos o el archivo para sqlite3.")
 
-# CSRF para producción (Seenode)
-CSRF_TRUSTED_ORIGINS = [
-    'https://web-kzazb695kh3b.up-de-fra1-k8s-1.apps.run-on-seenode.com',
-    'http://web-kzazb695kh3b.up-de-fra1-k8s-1.apps.run-on-seenode.com',
-]
+csrf_origins = os.getenv('CSRF_TRUSTED_ORIGINS', '')
+CSRF_TRUSTED_ORIGINS = [origin.strip() for origin in csrf_origins.split(',')] if csrf_origins else []
 
 # ----------------------------------------------------
 # Aplicaciones instaladas

@@ -1,11 +1,6 @@
 from django.db import models
-from django.db import models
 from django.contrib.auth.models import User
-from django.dispatch import receiver
-from django.forms import ValidationError
-from django.db.models import Sum 
-from django.db.models.signals import post_save
-from django.db import transaction
+from django.db.models import Sum
 
 
 #Creamos nuestros modelos
@@ -75,20 +70,20 @@ class Producto(models.Model):
     # Un producto puede tener varias Categorias
     categoria = models.ManyToManyField(Categoria, related_name='productos') # Con related_name le decimos que se llame productos
     # Un producto puede tener varias Tallas
-    tallaDisponible = models.ManyToManyField(Talla)
+    tallaDisponible = models.ManyToManyField(Talla, related_name='productos')
     # Un producto puede tener varias Tipos de Materia
-    tipoMateria = models.ManyToManyField(TipoMateria)
+    tipoMateria = models.ManyToManyField(TipoMateria, related_name='productos')
     # Un producto puede tener varias Instrucciones de Cuida
-    instruccionesCuidado = models.ManyToManyField(InstruccionesCuidado, blank=True) # Decimos que puede estar vacio
+    instruccionesCuidado = models.ManyToManyField(InstruccionesCuidado, related_name='productos', blank=True) # Decimos que puede estar vacio
 
     stockProducto = models.IntegerField(default=0) # Por defecto el stock es 0
     descripcion = models.TextField()
-    imagen = models.ImageField(upload_to='productos') # Ponermos la ruta donde se guardaran las imagenes
 
     #Metodo para obtener el stock disponible, en donde se suma el stock de todas las tallas 
     @property
     def stock_disponible(self):
-        return self.stockProducto
+        total_stock = self.stocktalla_set.aggregate(total=models.Sum('talla_stock'))['total']
+        return total_stock if total_stock else 0
     
     #Metodo para que nos diga si tiene stock
     @property
@@ -100,7 +95,15 @@ class Producto(models.Model):
     
     class Meta:
         db_table = 'productos'
-    
+
+#Creamos una clase para las imagenes de los productos
+class ImagenProducto(models.Model):
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE, related_name='imagenes') # Le pasamos la llave foranea de Producto para que se relacionen
+    imagenes = models.ImageField(upload_to='productos/', null=True, blank=True)
+
+    class Meta:
+        db_table = 'imagenes_productos'
+        
 #Creamos un modelo para el Stock de las tallas disponibles
 class StockTalla(models.Model):
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE) # Le pasamos la llave foranea de Producto para que se relacionen
@@ -140,7 +143,7 @@ class Resena(models.Model):
     def __str__(self):
         return f"{self.producto} - {self.usuario}"
 
-#Creamos el modelo para el cliente
+#Creamos el modelo para el cliente ----------------------------------------------------------------------------------------------------
 class Cliente(models.Model):
     usuario = models.OneToOneField(User, on_delete=models.CASCADE)
     telefono = models.CharField(max_length=15)
@@ -151,3 +154,73 @@ class Cliente(models.Model):
 
     class Meta:
         db_table = 'clientes'
+
+#Modelo de Puntos de Venta ----------------------------------------------------------------------------------------------------------
+class PuntoVenta(models.Model):
+    nombre = models.CharField(max_length=100)
+    ciudad = models.CharField(max_length=100)
+    direccion = models.TextField()
+    telefono = models.CharField(max_length=20, blank=True)
+    horario = models.CharField(max_length=100, blank=True)
+    maps_embed_url = models.TextField(
+        help_text="URL del iframe de Google Maps. Ve a maps.google.com → Compartir → Insertar mapa → copia solo el src del iframe"
+    )
+    maps_url = models.URLField(
+        help_text="URL directa de Google Maps para el botón 'Ver en Google Maps'",
+        blank=True
+    )
+    es_principal = models.BooleanField(default=False, help_text="Marcar si es el punto de venta principal")
+    activo = models.BooleanField(default=True)
+
+    def __str__(self):
+        return f"{self.nombre} - {self.ciudad}"
+
+    class Meta:
+        db_table = 'puntos_venta'
+
+#Modelo de Colaboradores ------------------------------------------------------------------------------------------------------------
+class Colaborador(models.Model):
+    nombre = models.CharField(max_length=100)
+    descripcion = models.TextField(blank=True)
+    logo = models.ImageField(upload_to='colaboradores/', blank=True, null=True) #El upload_to es para guardar la imagen en la carpeta 'colaboradores/'
+    url = models.URLField(blank=True, help_text="Sitio web o red social del colaborador")
+
+    def __str__(self):
+        return self.nombre
+
+    class Meta:
+        db_table = 'colaboradores'
+
+
+class Evento(models.Model):
+    nombre = models.CharField(max_length=150)
+    descripcion = models.TextField()
+    fecha = models.DateField()
+    lugar = models.CharField(max_length=200)
+    colaboradores = models.ManyToManyField(Colaborador, blank=True, related_name='eventos') #El realated_name es para que se pueda acceder a los colaboradores de un evento
+    activo = models.BooleanField(default=True)
+
+    def __str__(self):
+        return f"{self.nombre} - {self.fecha}"
+
+    @property
+    def es_proximo(self):
+        # Verificar si la fecha del evento es mayor o igual que la fecha actual        
+        from django.utils import timezone
+        return self.fecha >= timezone.now().date()
+
+    class Meta:
+        db_table = 'eventos'
+        ordering = ['-fecha'] # Ordenar los eventos por fecha descendente
+
+
+class FotoEvento(models.Model):
+    evento = models.ForeignKey(Evento, on_delete=models.CASCADE, related_name='fotos') #El related_name es para que se pueda acceder a las fotos de un evento
+    foto = models.ImageField(upload_to='eventos/') #El upload_to es para guardar la imagen en la carpeta 'eventos/'
+    descripcion = models.CharField(max_length=200, blank=True)
+
+    def __str__(self):
+        return f"Foto de {self.evento.nombre}"
+
+    class Meta:
+        db_table = 'fotos_eventos'

@@ -232,7 +232,7 @@ html, body {
     background: none;
     border: none;
     padding: 15px;
-    color: #147fcc;
+    color: #f28135;
     position: relative;
     padding-bottom: 15px;
     font-size: 1rem;
@@ -245,7 +245,7 @@ html, body {
     height: 3px;
     bottom: 10px;
     left: 0;
-    background-color: #1596e1;
+    background-color: #f28135;
     transition: width 0.3s ease;
 }
 
@@ -1319,4 +1319,201 @@ html, body {
     flex: none;
     padding: 2rem;
   }
+}
+
+/* ========================================
+   PUNTOS DE VENTA - NUEVOS ESTILOS
+======================================== */
+.puntos-hero {
+    background: linear-gradient(135deg, rgba(15,30,80,0.85), rgba(10,10,10,0.9)),
+                url("../img/Conjunto.jpg") center/cover no-repeat;
+    min-height: 280px;
+    display: flex;
+    align-items: center;
+}
+
+.pv-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pv-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.12) !important;
+}
+
+.pv-mapa {
+    position: relative;
+}
+
+.pv-badge-principal {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: #f28135;
+    color: #fff;
+    font-size: 11px;
+    padding: 4px 12px;
+    border-radius: 20px;
+}
+
+.pv-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.pv-info-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 0.875rem;
+    color: #6c757d;
+}
+
+.pv-info-item .material-symbols-outlined {
+    font-size: 18px;
+    color: #f28135;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.text-naranja {
+    color: #f28135;
+}
+
+.btn-pv {
+    background: #f28135;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    padding: 10px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-pv:hover {
+    background: #e06d20;
+    color: #fff;
+}
+
+/* ========================================
+   EVENTOS - NUEVOS ESTILOS
+======================================== */
+
+.eventos-hero {
+    background: linear-gradient(135deg, rgba(15,30,80,0.85), rgba(10,10,10,0.9)),
+                url("../img/registro.jpg") center/cover no-repeat;
+    min-height: 280px;
+    display: flex;
+    align-items: center;
+}
+
+.evento-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.evento-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.12) !important;
+}
+
+.evento-pasado {
+    opacity: 0.85;
+}
+
+.evento-img {
+    height: 220px;
+    object-fit: cover;
+}
+
+.evento-img-sm {
+    height: 160px;
+    object-fit: cover;
+}
+
+.evento-sin-foto {
+    height: 220px;
+    background: #f8f9fa;
+}
+
+.evento-sin-foto-sm {
+    height: 160px;
+    background: #f8f9fa;
+}
+
+.evento-carousel {
+    background: #000;
+}
+
+.evento-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.evento-meta-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    font-size: 0.875rem;
+    color: #6c757d;
+}
+
+.evento-meta-item .material-symbols-outlined {
+    font-size: 18px;
+    color: #f28135;
+    flex-shrink: 0;
+}
+
+.evento-seccion-badge {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 14px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.evento-seccion-badge.proximo {
+    background: #fff3e0;
+    color: #f28135;
+}
+
+.evento-seccion-badge.pasado {
+    background: #f1f3f5;
+    color: #6c757d;
+}
+
+.evento-badge-proximo {
+    background: #f28135;
+    color: #fff;
+    font-size: 11px;
+    border-radius: 20px;
+    padding: 4px 12px;
+}
+
+.evento-badge-pasado {
+    background: #e9ecef;
+    color: #6c757d;
+    font-size: 11px;
+    border-radius: 20px;
+    padding: 4px 12px;
+}
+
+.evento-colaboradores {
+    border-top: 1px solid #f0f0f0;
+    padding-top: 12px;
+}
+
+.evento-colab-chip {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 12px;
 }
