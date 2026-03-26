@@ -36,10 +36,10 @@
                     <img src="{% static 'img/logo.jpg' %}" alt="Logo" width="40" height="40" class="me-2 rounded-3">
                     Talcahualme
                 </a>
-                <a href="{% url 'tienda' %}"  class="btn btn-nav-login">Nosotros</a>
-                <a href="{% url 'productList' %}" class="btn btn-nav-login ">Productos</a>
-                <a href="{% url 'punto_venta' %}" class="btn btn-nav-login ">Puntos de Venta</a>
-                <a href="{% url 'eventos' %}" class="btn btn-nav-login ">Eventos</a>
+                <a href="{% url 'tienda' %}"  class="btn btn-nav-login {% if current_page == '/' %}active{% endif %}">Nosotros</a>
+                <a href="{% url 'productList' %}" class="btn btn-nav-login {% if current_page == '/productList/' %}active{% endif %}">Productos</a>
+                <a href="{% url 'punto_venta' %}" class="btn btn-nav-login {% if current_page == '/punto_venta/' %}active{% endif %}">Puntos de Venta</a>
+                <a href="{% url 'eventos' %}" class="btn btn-nav-login {% if current_page == '/eventos/' %}active{% endif %}">Eventos</a>
             </div>
             
             <!-- Usuario derecha -->
@@ -185,8 +185,8 @@
                         </div>
                     </div>
                     <p class="mb-2"><strong>Tallas:</strong> <span id="modalTallas"></span></p>
-                    <p class="mb-2"><strong>Material:</strong> <span id="modalMateriales" class="badge bg-warning text-dark ms-1"></span></p>
-                    <p class="mb-2"><strong>Cuidado:</strong> <span id="modalCuidados" class="badge bg-success text-white ms-1"></span></p>
+                    <p class="mb-2"><strong>Material:</strong> <span id="modalMateriales" class="badge badge-material ms-1"></span></p>
+                    <p class="mb-2"><strong>Cuidado:</strong> <span id="modalCuidados" class="badge badge-cuidado ms-1"></span></p>
                     <!-- Stock Status, se manejara con JS -->
                     <div class="stock-status mb-3">
                         <div id="modalStockIcon" class="h-2 w-2 rounded-full bg-green-600 animate-pulse me-2 d-inline-block"></div>

@@ -4,7 +4,8 @@ from .models import Categoria, Cliente, Producto, Resena, StockTalla, PuntoVenta
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.utils import timezone  # Importamos timezone para obtener la fecha actual
+from django.utils import timezone
+from django.urls import resolve
 
 # Metodo de registro
 def registro_view(request): # request = peticion

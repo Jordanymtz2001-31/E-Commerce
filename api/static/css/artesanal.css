@@ -18,24 +18,42 @@
 /* ──────────────────────────────────────────────────────────────────────────── */
 
 :root {
+    /* Colores primarios - paleta artesanal */
     --primary: #ec6d13;
     --primary-dark: #d55c0b;
+    --primary-light: #f4a261;
+    
+    /* Neutros - base */
     --bg-light: #f8f7f6;
     --text-main: #181411;
     --text-muted: #897261;
     
-    /* Gradientes reutilizables (Fase 2) */
-    --gradient-primary: linear-gradient(135deg, var(--primary), #f4a261);
-    --gradient-primary-strong: linear-gradient(135deg, #ec6d13 0%, #f4a261 50%, #e76f51 100%);
-    --gradient-dark: linear-gradient(135deg, #221810 0%, #1a120b 100%);
+    /* Color de precio - coherente con primario */
+    --price-color: var(--primary);
     
-    /* Sombras reutilizables (Fase 2) */
-    --shadow-sm: 0 4px 12px rgba(236, 109, 19, 0.3);
-    --shadow-md: 0 10px 30px rgba(236, 109, 19, 0.3);
-    --shadow-lg: 0 25px 50px -12px rgba(236, 109, 19, 0.15);
-    --shadow-xl: 0 20px 40px rgba(236, 109, 19, 0.5);
+    /* Gradiente UNICO para CTAs principales */
+    --gradient-primary: linear-gradient(135deg, var(--primary), var(--primary-light));
     
-    /* Shine effect reutilizable (Fase 2) */
+    /* Gradiente hero artesanal - tonos tierra/warm */
+    --gradient-hero: linear-gradient(135deg, #2d2420 0%, #1a1512 50%, #0f0d0b 100%);
+    --gradient-hero-overlay: linear-gradient(135deg, rgba(236, 109, 19, 0.15) 0%, rgba(15, 13, 11, 0.9) 100%);
+    
+    /* Sombras NEUTRAS - el color viene de la interacción, no de la estructura */
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+    --shadow-md: 0 6px 20px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 15px 35px rgba(0, 0, 0, 0.12);
+    --shadow-xl: 0 25px 50px rgba(0, 0, 0, 0.15);
+    
+    /* Badge Lana específico */
+    --badge-lana-bg: #fef3e2;
+    --badge-lana-color: #b45309;
+    
+    /* Depth - elevación de superficies */
+    --surface-1: #ffffff;
+    --surface-2: #f8f7f6;
+    --surface-3: #f0ede8;
+    
+    /* Shine effect para botones CTA */
     --shine-gradient: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
 }
 
@@ -108,22 +126,38 @@ html, body {
 /* § 4. COMPONENTES GENERALES (Cards, Efectos Hover, Badges)                  */
 /* ──────────────────────────────────────────────────────────────────────────── */
 
-/* Hero background */
+/* Hero background - artesanal y único */
 .hero-dark {
-    background: var(--gradient-dark);
+    background: var(--gradient-hero), var(--gradient-hero-overlay);
+    position: relative;
+}
+
+/* Patrón subtle de fondo - textura artesanal */
+.hero-dark::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        radial-gradient(circle at 20% 80%, rgba(236, 109, 19, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 80% 20%, rgba(244, 162, 97, 0.06) 0%, transparent 40%);
+    pointer-events: none;
 }
 
 /* ELIMINADO (Fase 1): .btn-hover-scale, .card-hover-scale - No usado en HTML */
 
-/* Cards con hover */
+/* Cards con hover - toque artesanal sutil */
 .card-hover {
     transition: all 0.3s ease;
-    border: none !important;
+    border: 1px solid rgba(236, 109, 19, 0.1) !important;
+    background: var(--surface-1);
 }
 .card-hover:hover {
     box-shadow: var(--shadow-lg) !important;
     border-color: var(--primary) !important;
-    transform: translateY(-5px);
+    transform: translateY(-4px);
 }
 
 /* Chips scroll (ocultado en todos los navegadores) */
@@ -157,11 +191,37 @@ html, body {
     }
 }
 
-/* ELIMINADO (Fase 1): .badge-position, .badge-top-*, .btn-outline-hover-primary - No usado */
-
 /* ──────────────────────────────────────────────────────────────────────────── */
-/* § 5. PRODUCTOS - CARDS Y FILTROS------------------------------------------------------------------------------/*
-/* ELIMINADO (Fase 1): .badge-nueva-coleccion - Reemplazado por .etiqueta-nueva */
+/* § 4. COMPONENTES - BADGES Y ETIQUETAS                                       */
+/* ──────────────────────────────────────────────────────────────────────────── */
+
+/* Badge Lana */
+.badge-lana {
+    background-color: var(--badge-lana-bg) !important;
+    color: var(--badge-lana-color) !important;
+}
+
+/* Badges del modal */
+.badge-material {
+    background-color: #f3e5f5 !important;
+    color: #7b1fa2 !important;
+}
+
+.badge-cuidado {
+    background-color: #e8f5e9 !important;
+    color: #2e7d32 !important;
+}
+
+/* Chips scroll (ocultado en todos los navegadores) */
+
+/* Texto innovación en hero - gradiente artesanal */
+.texto-inovacion {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 900 !important;
+}
 
 /* Contenedor imagen producto */
 .imagen-container-fixed {
@@ -227,12 +287,12 @@ html, body {
     }
 }
 
-/* Botón navbar - login-Nosotros-Productos (azul) */
+/* Botón navbar - login-Nosotros-Productos (naranja artesanal) */
 .btn-nav-login {
     background: none;
     border: none;
     padding: 15px;
-    color: #f28135;
+    color: var(--text-muted);
     position: relative;
     padding-bottom: 15px;
     font-size: 1rem;
@@ -245,11 +305,17 @@ html, body {
     height: 3px;
     bottom: 10px;
     left: 0;
-    background-color: #f28135;
+    background-color: var(--primary);
     transition: width 0.3s ease;
 }
 
-.btn-nav-login:hover::before {
+.btn-nav-login:hover,
+.btn-nav-login.active {
+    color: var(--primary);
+}
+
+.btn-nav-login:hover::before,
+.btn-nav-login.active::before {
     width: 100%;
 }
 
@@ -308,35 +374,11 @@ html, body {
 /* § 7. PÁGINA PRODUCTOS - HERO Y FILTROS                                     */
 /* ──────────────────────────────────────────────────────────────────────────── */
 
-/* Texto con gradiente narrativo */
-.texto-inovacion {
-    background: linear-gradient(135deg, #ec6d13 0%, #f4a261 50%, #e76f51 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    font-weight: 900 !important;
-    position: relative;
-}
-
-.texto-inovacion::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: inherit;
-    -webkit-mask: inherit;
-    mask: inherit;
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-}
-
 /* Etiqueta nueva colección (con animación pulse) */
 .etiqueta-nueva { 
     display: inline-flex !important;
     align-items: center;
-    background: rgba(231, 96, 12, 0.15) !important; /* Naranja suave */
+    background: rgba(231, 96, 12, 0.15) !important;
     padding: 8px 16px !important;
     border-radius: 50px !important;
     margin: 0 auto 1.5rem !important;
@@ -347,13 +389,13 @@ html, body {
     color: var(--primary) !important;
     border: 1px solid rgba(236, 109, 19, 0.3);
     transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(193, 157, 138, 0.2);
+    box-shadow: var(--shadow-sm);
 }
 
 .etiqueta-nueva:hover {
     background: rgba(236, 109, 19, 0.25) !important;
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(236, 109, 19, 0.3);
+    box-shadow: var(--shadow-md);
 }
 
 .etiqueta-nueva .punto {
@@ -370,13 +412,12 @@ html, body {
     50% { opacity: 0.5; }
 }
 
-/* Botón principal explorar (shine effect) */
+/* Botón principal explorar (único gradiente permitido) */
 .btn-explorar {
-    /* Base sólida */
     display: inline-flex !important;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #ec6d13 0%, #f4a261 50%, #e76f51 100%) !important;
+    background: var(--gradient-primary) !important;
     color: white !important;
     border: none !important;
     padding: 18px 36px !important;
@@ -384,9 +425,7 @@ html, body {
     font-weight: 700 !important;
     text-decoration: none !important;
     border-radius: 50px !important;
-    box-shadow: 
-        0 10px 30px rgba(236, 109, 19, 0.4),
-        0 4px 12px rgba(0, 0, 0, 0.1) !important;
+    box-shadow: var(--shadow-md);
     position: relative;
     overflow: hidden;
     transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1) !important;
@@ -431,18 +470,17 @@ html, body {
 
 /* Focus state */
 .btn-explorar:active {
-    box-shadow: 
-        0 20px 40px rgba(236, 109, 19, 0.6),
-        0 8px 20px rgba(0, 0, 0, 0.2) !important;
+    box-shadow: var(--shadow-xl);
+    transform: translateY(-2px) scale(1.02) !important;
     outline: none !important;
 }
 
 /* Chip de filtro activo */
 .chip-activo {
-    background: linear-gradient(135deg, #ec6d13, #f4a261) !important;
+    background: var(--primary) !important;
     color: white !important;
     border: none !important;
-    box-shadow: 0 4px 12px rgba(236,109,19,0.4);
+    box-shadow: var(--shadow-md);
     transform: translateY(-2px);
 }
 
@@ -466,12 +504,12 @@ html, body {
     animation: fadeIn 0.6s ease forwards;
 }
 
-/* Precio en cards y modal */
+/* Precio en cards y modal - coherente con color primario */
 .span-precio {
     font-size: clamp(1.2rem, 1vw, 1.75rem);
-    font-weight: 600 !important;
-    color: #2659b8 !important;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+    font-weight: 700 !important;
+    color: var(--price-color) !important;
+    letter-spacing: -0.5px;
 }
 
 /* Responsive precio en modal */
@@ -492,8 +530,8 @@ html, body {
 /* ──────────────────────────────────────────────────────────────────────────── */
 
 .footer-artisanal {
-    background: #ffffff !important;
-    border-top: 1px solid #e5e0dc !important;
+    background: var(--surface-1) !important;
+    border-top: 1px solid var(--surface-3) !important;
     padding: 4rem 0 2rem 0 !important;
 }
 
@@ -511,30 +549,27 @@ html, body {
     font-weight: 700 !important;
     font-size: 1.125rem !important;
     margin-bottom: 1.5rem !important;
-    color: #1f2937 !important;
-}
-
-@media (prefers-color-scheme: dark) {
-    .footer-section h3 { color: #ffffff !important; }
+    color: var(--text-main) !important;
 }
 
 .footer-link {
-    color: #6b7280 !important;
+    color: var(--text-muted) !important;
     text-decoration: none !important;
-    font-size: 0.875rem !important;
+    font-size: 0.9rem !important;
     display: block !important;
-    padding: 0.25rem 0 !important;
-    transition: all 0.3s ease !important;
+    padding: 0.5rem 0 !important;
+    transition: all 0.2s ease !important;
 }
 
 .footer-link .bi {
-    width: 16px !important;
-    height: 16px !important;
-    margin-right: 0.5rem !important;
+    width: 18px !important;
+    height: 18px !important;
+    margin-right: 0.75rem !important;
+    color: var(--primary) !important;
 }
 
 .footer-link:hover {
-    color: var(--primary) !important; /* Tu naranja */
+    color: var(--primary) !important;
     transform: translateX(4px) !important;
 }
 
@@ -749,10 +784,10 @@ html, body {
     animation: pulse 2s infinite !important;
 }
 
-/* Badges visibles en tema claro */
+/* Badges del modal - coherentes con el tema artesanal */
 #modalTallas { background-color: #e3f2fd !important; color: #1976d2 !important; }
 #modalMateriales { background-color: #f3e5f5 !important; color: #7b1fa2 !important; }
-#modalCuidados { background-color: #fff3e0 !important; color: #f57c00 !important; }
+#modalCuidados { background-color: #e8f5e9 !important; color: #2e7d32 !important; }
 
 /* Badge responsive */
 @media (max-width: 768px) {
@@ -870,13 +905,10 @@ html, body {
     50% { transform: translateY(-3px); }
 }
 
-/* Título hero con gradiente y underline */
+/* Título hero - color sólido coherente, no gradiente */
 .titulo-hero {
-    background: linear-gradient(135deg, var(--primary) 0%, #f4a261 50%, var(--primary-dark) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    position: relative;
+    color: var(--primary-dark);
+    font-weight: 800;
 }
 
 .titulo-hero::before {
@@ -887,7 +919,7 @@ html, body {
     transform: translateX(-50%);
     width: 60px;
     height: 4px;
-    background: linear-gradient(90deg, var(--primary), transparent);
+    background: var(--primary);
     border-radius: 2px;
 }
 
@@ -904,9 +936,9 @@ html, body {
     top: 0;
     width: 60px;
     height: 60px;
-    background: linear-gradient(135deg, var(--primary), #f4a261) !important;
+    background: var(--primary) !important;
     border: 3px solid white;
-    box-shadow: 0 8px 25px rgba(236,109,19,0.3);
+    box-shadow: var(--shadow-md);
     border-radius: 50% !important;
     display: flex !important;
     align-items: center !important;
@@ -925,7 +957,27 @@ html, body {
 
 .timeline-step:hover .timeline-icon {
     transform: scale(1.1) !important;
-    box-shadow: 0 12px 35px rgba(236,109,19,0.4) !important;
+    box-shadow: var(--shadow-lg) !important;
+}
+
+/* Línea conectora entre timeline items */
+.timeline-step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 28px;
+    top: 60px;
+    bottom: -40px;
+    width: 4px;
+    background: var(--primary);
+    border-radius: 2px;
+}
+
+/* Tarjeta de misión (card especial con icono) */
+.mision-card {
+    background: var(--surface-1) !important;
+    border: 1px solid var(--surface-3) !important;
+    position: relative;
+    overflow: hidden;
 }
 
 .timeline-icon img:hover {
@@ -963,17 +1015,33 @@ html, body {
 }
 
 .mision-icon {
-    background: linear-gradient(135deg, var(--primary), #f4a261);
+    background: var(--primary);
     width: 80px !important;
     height: 80px !important;
     border-radius: 50% !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    box-shadow: 0 10px 30px rgba(236,109,19,0.3);
+    box-shadow: var(--shadow-md);
     font-size: 2.5rem !important;
     margin: 0 auto 2rem !important;
     animation: pulse-heart 2s infinite;
+}
+
+/* Botones de acción principales */
+.btn-artesanal {
+    background: var(--primary) !important;
+    border: none !important;
+    color: white !important;
+    padding: 1rem 2.5rem !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    border-radius: 50px !important;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-md) !important;
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1) !important;
 }
 
 @keyframes pulse-heart {

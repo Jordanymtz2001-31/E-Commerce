@@ -64,7 +64,7 @@
                     {% if producto.categoria.all|length > 0 %}
                         {% for cat in producto.categoria.all%}
                             {% if cat.nombreCategoria == 'Lana' %}
-                                <span class="position-absolute top-3 end-3 badge bg-primary fs-2-xs px-3 py-2 rounded-pill fw-bold">Lana 100%</span>
+                                <span class="position-absolute top-3 end-3 badge fs-2-xs px-3 py-2 rounded-pill fw-bold badge-lana">Lana 100%</span>
                             {% endif %}
                         {% endfor %}
                     {% endif %}
