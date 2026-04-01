@@ -41,9 +41,6 @@ Thumbs.db
 *.pem
 credentials.json
 
-# Documentación adicional (opcional)
-/*.md
-!/README.md
 
 # Testing
 .pytest_cache/
