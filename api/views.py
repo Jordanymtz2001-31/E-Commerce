@@ -5,7 +5,6 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
-from django.urls import resolve
 
 # Metodo de registro
 def registro_view(request): # request = peticion

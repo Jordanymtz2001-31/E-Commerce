@@ -769,3 +769,6 @@ Not Found: /.well-known/appspecific/com.chrome.devtools.json
 Not Found: /talcahualme/categoria/9999/
 Not Found: /talcahualme/categoria/9999/
 Not Found: /talcahualme/categoria/9999/
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 2848
+Not Found: /talcahualme/categoria/9999/
