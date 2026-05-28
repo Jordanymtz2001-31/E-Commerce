@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Registro{% endblock %}
+
+{% block content %}
+<div class="registro-wrapper">
+
+  <!-- Lado izquierdo: imagen hero -->
+  <div class="registro-hero">
+    <div class="registro-hero-content">
+      <p class="registro-marca">TALCAHUALME</p>
+      <h2 class="registro-titulo">Viste la Tradición,<br>Siente la Innovación</h2>
+      <p class="registro-subtitulo">Ropa artesanal hecha a mano con materiales naturales. Cada pieza cuenta una historia única.</p>
+      <div class="registro-badges">
+        <span class="registro-badge">Artesanal</span>
+        <span class="registro-badge">Ético</span>
+        <span class="registro-badge">Sostenible</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lado derecho: formulario -->
+  <div class="registro-form-col">
+    <div class="registro-form-inner">
+
+      <h3 class="registro-form-titulo">Crear cuenta</h3>
+      <p class="registro-form-subtitulo">Completa tus datos para empezar.</p>
+
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags }} alert-dismissible fade show rounded-3 mb-3" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          </div>
+        {% endfor %}
+      {% endif %}
+
+      <form method="post" novalidate>
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+
+        <!-- Usuario -->
+        <div class="mb-3">
+          <label for="id_username" class="form-label">Usuario</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-person"></i></span>
+            <input type="text" name="username" class="form-control" id="id_username" placeholder="Ingresa tu usuario" required>
+          </div>
+          {% if form.username.errors %}
+            <div class="text-danger small mt-1">{{ form.username.errors }}</div>
+          {% endif %}
+        </div>
+
+        <!-- Email -->
+        <div class="mb-3">
+          <label for="id_email" class="form-label">Correo electrónico</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+            <input type="email" name="email" class="form-control" id="id_email" placeholder="tu@email.com" required>
+          </div>
+          {% if form.email.errors %}
+            <div class="text-danger small mt-1">{{ form.email.errors }}</div>
+          {% endif %}
+        </div>
+
+        <!-- Teléfono -->
+        <div class="mb-3">
+          <label for="id_telefono" class="form-label">Teléfono</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-telephone"></i></span>
+            <input type="number" name="telefono" class="form-control" id="id_telefono" placeholder="Ingresa tu teléfono" required>
+          </div>
+          {% if form.telefono.errors %}
+            <div class="text-danger small mt-1">{{ form.telefono.errors }}</div>
+          {% endif %}
+        </div>
+
+        <!-- Dirección -->
+        <div class="mb-3">
+          <label for="id_direccion" class="form-label">Dirección</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-geo-alt"></i></span>
+            <textarea name="direccion" class="form-control" id="id_direccion" placeholder="Ingresa tu dirección" rows="2" required></textarea>
+          </div>
+          {% if form.direccion.errors %}
+            <div class="text-danger small mt-1">{{ form.direccion.errors }}</div>
+          {% endif %}
+        </div>
+
+        <!-- Contraseñas -->
+        <div class="row g-2 mb-3">
+          <div class="col-6">
+            <label for="id_password1" class="form-label">Contraseña</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-lock"></i></span>
+              <input type="password" name="password1" class="form-control" id="id_password1" placeholder="••••••••" required>
+            </div>
+            {% if form.password1.errors %}
+              <div class="text-danger small mt-1">{{ form.password1.errors }}</div>
+            {% endif %}
+          </div>
+          <div class="col-6">
+            <label for="id_password2" class="form-label">Confirmar</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+              <input type="password" name="password2" class="form-control" id="id_password2" placeholder="••••••••" required>
+            </div>
+            {% if form.password2.errors %}
+              <div class="text-danger small mt-1">{{ form.password2.errors }}</div>
+            {% endif %}
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-registro w-100 mb-3">Registrarse</button>
+
+      </form>
+
+      <p class="text-center text-muted small mb-0">
+        ¿Ya tienes cuenta? <a href="{% url 'login' %}" class="registro-link">Inicia sesión</a>
+      </p>
+
+    </div>
+  </div>
+
+</div>
+{% endblock %}
