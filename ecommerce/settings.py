@@ -55,7 +55,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'api',
-    'widget_tweaks' # Libreria súper útil para estilizar formularios Django con Bootstrap sin escribir HTML manual
+    'widget_tweaks', # Libreria súper útil para estilizar formularios Django con Bootstrap sin escribir HTML manual
     
 ]
 
