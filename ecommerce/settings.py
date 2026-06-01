@@ -47,7 +47,7 @@ CSRF_TRUSTED_ORIGINS = [origin.strip() for origin in csrf_origins.split(',')] if
 # Aplicaciones instaladas
 # ----------------------------------------------------
 INSTALLED_APPS = [
-    #'jazzmin', # Aplicación de administración de Django Jazzmin
+    'jazzmin', # Aplicación de administración de Django Jazzmin
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -160,7 +160,7 @@ STATIC_ROOT = BASE_DIR / 'staticfiles' # Carpeta para archivos estaticos para pr
 # Configuracion para subir archivos
 if IS_PRODUCTION:
     # Producción → Cloudflare R2
-    MEDIA_URL = f"https://{os.environ.get('R2_PUBLIC_URL')}/"
+    MEDIA_URL = os.environ.get("R2_PUBLIC_URL") + "/"
     STORAGES = {
         "default": {
             "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
