@@ -47,7 +47,7 @@ CSRF_TRUSTED_ORIGINS = [origin.strip() for origin in csrf_origins.split(',')] if
 # Aplicaciones instaladas
 # ----------------------------------------------------
 INSTALLED_APPS = [
-    #'jazzmin', # Aplicación de administración de Django Jazzmin
+    'jazzmin', # Aplicación de administración de Django Jazzmin
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
