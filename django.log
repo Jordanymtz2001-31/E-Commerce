@@ -772,3 +772,67 @@ Not Found: /talcahualme/categoria/9999/
 Not Found: /favicon.ico
 "GET /favicon.ico HTTP/1.1" 404 2848
 Not Found: /talcahualme/categoria/9999/
+Internal Server Error: /talcahualme/registro/
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/views.py", line 23, in registro_view
+    CLienteService.registrar_cliente(formulario.cleaned_data)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/service.py", line 28, in registrar_cliente
+    Cliente.objects.create(
+    ~~~~~~~~~~~~~~~~~~~~~~^
+        user=user,
+        ^^^^^^^^^^
+        telefono=datos['telefono'],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        direccion=datos['direccion']
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/models/query.py", line 667, in create
+    obj = self.model(**kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/models/base.py", line 590, in __init__
+    raise TypeError(
+    ...<2 lines>...
+    )
+TypeError: Cliente() got unexpected keyword arguments: 'user'
+"POST /talcahualme/registro/ HTTP/1.1" 500 96595
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 2848
+Internal Server Error: /talcahualme/registro/
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/views.py", line 23, in registro_view
+    CLienteService.registrar_cliente(formulario.cleaned_data)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/service.py", line 28, in registrar_cliente
+    return Cliente.objects.create(
+           ~~~~~~~~~~~~~~~~~~~~~~^
+        user=user,
+        ^^^^^^^^^^
+        telefono=datos['telefono'],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        direccion=datos['direccion']
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/models/query.py", line 667, in create
+    obj = self.model(**kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/models/base.py", line 590, in __init__
+    raise TypeError(
+    ...<2 lines>...
+    )
+TypeError: Cliente() got unexpected keyword arguments: 'user'
+"POST /talcahualme/registro/ HTTP/1.1" 500 96621

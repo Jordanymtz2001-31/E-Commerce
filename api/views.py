@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
+from .service import CLienteService
 
 # Metodo de registro
 def registro_view(request): # request = peticion
@@ -16,6 +17,12 @@ def registro_view(request): # request = peticion
         #Obtenemos los datos del formulario que el usuario ingreso en la plantilla
         formulario = RegistroForm(request.POST)
         if formulario.is_valid(): #Validamos si los datos son correctos
+            
+            # Llamamos al servicio para registrar el cliente, el cual se encargará de guardar el usuario y el cliente en la base de datos
+            # Y con cleansed_data obtenemos los datos limpios en caso de que haya espacios o caracteres especiales
+            CLienteService.registrar_cliente(formulario.cleaned_data) 
+            
+            """
             user = formulario.save() #Guardamos en la bd
 
             #Creamos el cliente el cual el objeto del cliente se relaciona con el usuario 
@@ -24,6 +31,7 @@ def registro_view(request): # request = peticion
                 telefono = formulario.cleaned_data['telefono'],
                 direccion = formulario.cleaned_data['direccion']
                 )
+            """
             
             messages.success(request, 'Usuario registrado correctamente!') # Mensaje de exito
             return redirect('login') # Redireccionamos al login
