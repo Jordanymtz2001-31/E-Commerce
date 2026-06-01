@@ -5,7 +5,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
-# Aqui registramos nuestro formulario
+# Aqui registramos nuestro formulario (Dtos)
 class RegistroForm(UserCreationForm):
     telefono = forms.CharField(max_length=15, required=True) 
     direccion = forms.CharField(widget = forms.Textarea, required=False)
