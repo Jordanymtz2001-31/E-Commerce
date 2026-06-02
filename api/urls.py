@@ -1,7 +1,8 @@
 from django.urls import path
 from . import views
-
+  #Estas rutas te direccinan a la pagina web
 urlpatterns = [
+  
     path('', views.tienda_view, name='tienda'),
     path('registro/', views.registro_view, name='registro'),
     path('login/', views.login_view, name='login'),
