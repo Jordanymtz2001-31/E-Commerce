@@ -836,3 +836,23 @@ Traceback (most recent call last):
     )
 TypeError: Cliente() got unexpected keyword arguments: 'user'
 "POST /talcahualme/registro/ HTTP/1.1" 500 96621
+Not Found: /talcahualme/categoria/9999/
+Not Found: /talcahualme/categoria/9999/
+Forbidden (CSRF token from POST incorrect.): /talcahualme/login/
+"POST /talcahualme/login/ HTTP/1.1" 403 2514
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 2848
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Forbidden (CSRF token from POST incorrect.): /talcahualme/login/
+"POST /talcahualme/login/ HTTP/1.1" 403 2514
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959

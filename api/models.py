@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models import Sum
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 #Creamos nuestros modelos
@@ -79,11 +81,17 @@ class Producto(models.Model):
     stockProducto = models.IntegerField(default=0) # Por defecto el stock es 0
     descripcion = models.TextField()
 
-    #Metodo para obtener el stock disponible, en donde se suma el stock de todas las tallas 
     @property
     def stock_disponible(self):
-        total_stock = self.stocktalla_set.aggregate(total=models.Sum('talla_stock'))['total']
-        return total_stock if total_stock else 0
+        """
+        Retorna el stock total sumando todas las tallas.
+        Si el queryset usó annotate(stock_total=Sum(...)) desde el repositorio,
+        usa ese valor anotado (0 consultas SQL). Si no, hace aggregate (1 consulta).
+        """
+        if hasattr(self, 'stock_total') and self.stock_total is not None:
+            return self.stock_total
+        total = self.stocktalla_set.aggregate(total=Sum('talla_stock'))['total']
+        return total if total else 0
     
     #Metodo para que nos diga si tiene stock
     @property
@@ -117,9 +125,30 @@ class StockTalla(models.Model):
     def __str__(self):
         return f"{self.producto.nombre} - {self.talla.nombreTalla}"
 
-    #Metodo para que cada ves que guarde StockTalla, se agregue la talla al producto
+    """"
+    Metodo para que cada ves que guarde StockTalla, se agregue la talla al producto
+    Debe de ser persistente, es decir que solo se encargue de guardar, no con logica adicional, para evitar problemas de concurrencia y mantener la responsabilidad única (SRP). 
+    La lógica de agregar o quitar tallas del producto debe manejarse en la vista o en un servicio dedicado, no dentro del modelo.
+    """
     def save(self, *args, **kwargs):
-            super().save(*args, **kwargs)
+            super().save(*args, **kwargs) 
+            
+            """
+            Para este caso vamos a sar las señales(signal) que seria uno de los patrones de diseño(Observer).
+            Cada ves que se guarde un StockTalla, se va a ejecutar la función sincronizar_talla_disponible que va a verificar si el stock es mayor a 0, si es así, va a agregar la talla al producto.
+            
+            @receiver = receptor de senales
+            post_save = senal que se dispara cuando se guarda una instancia de StockTalla
+            """
+            
+            @receiver(post_save, sender=StockTalla)
+            def sincronizar_talla_disponible(sender, instance, **kwargs):
+                if instance.talla_stock > 0:
+                    instance.producto.tallaDisponible.add(instance.talla)
+                    
+                    
+            # Mala practica si el proyecto es grande, pero funciona
+            """
             # Si tiene stock, agregar talla a tallaDisponible
             if self.talla_stock > 0:
                 self.producto.tallaDisponible.add(self.talla)
@@ -127,6 +156,8 @@ class StockTalla(models.Model):
                 # Si ya no tiene stock, puedes decidir si la quitas:
                 # self.producto.tallaDisponible.remove(self.talla)
                 pass
+                
+            """
 
 #Creamos el modelo para las reseñas
 class Resena(models.Model):

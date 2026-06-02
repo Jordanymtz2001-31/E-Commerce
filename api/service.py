@@ -1,32 +1,57 @@
-from .models import Cliente, User
+from .models import Cliente, Resena
+from django.contrib.auth.models import User
 from django.db import transaction
-from .models import Cliente
 
-# Creamos el servicio para manejar la logica de negocio relacionada con el cliente, en este caso el registro del cliente, el cual se encargará de crear el usuario y el cliente en la base de datos
-class CLienteService:
-    
-    #Creamos un metodo estatico por que no necesitamos instanciar la clase para usarlo, ademas recibe un diccionario con los datos del formulario y devuelve un objeto cliente
+
+class ClienteService:
+    """
+    Servicio para la lógica de negocio relacionada con Cliente.
+
+    SRP: Separamos la lógica de negocio (creación de User + Cliente en una
+    transacción) de la capa de presentación (vistas) y de persistencia (modelos).
+    DIP: Las vistas dependen de esta abstracción en vez de llamar directamente
+    a Cliente.objects.create(), facilitando cambios futuros en la lógica.
+    """
+
     @staticmethod
-    def registrar_cliente(datos: dict) -> Cliente:
-        
-        """ 
-        Iniciamos la transaccion en caso de que ocurra un error en alguna de las operaciones, se revierta todo lo realizado hasta el momento
-        Esto es importante para mantener la integridad de la base de datos, ya que si ocurre un error al crear el cliente, no queremos que se cree el usuario sin el cliente asociado o viceversa
-        Es decir que si se vrea el User correctamente pero ocurre un error al crear el Cliente, se revierta la creacion del User para evitar tener un usuario sin cliente asociado
+    def registrar(datos: dict) -> Cliente:
         """
-        
+        Crea un User y su Cliente asociado en una sola transacción atómica.
+
+        Por qué transaction.atomic(): si falla la creación del Cliente después
+        de haber creado el User, se revierte todo para evitar un User huérfano
+        sin perfil de Cliente.
+        """
         with transaction.atomic():
-        
-            # Creamos el usuario
             user = User.objects.create_user(
                 username=datos['username'],
                 password=datos['password1'],
                 email=datos['email']
             )
-            
-            # Creamos el cliente asociado al usuario
+
             return Cliente.objects.create(
                 usuario=user,
                 telefono=datos['telefono'],
                 direccion=datos['direccion']
             )
+
+
+class ResenaService:
+    """
+    Servicio para la lógica de negocio relacionada con Reseñas.
+
+    SRP: Aísla la validación y creación de reseñas, manteniendo las vistas
+    delgadas y facilitando el testing unitario sin HTTP.
+    """
+
+    @staticmethod
+    def crear(producto, usuario, estrellas: int, comentario: str) -> Resena:
+        if estrellas < 1 or estrellas > 5:
+            raise ValueError("Las estrellas deben estar entre 1 y 5")
+
+        return Resena.objects.create(
+            producto=producto,
+            usuario=usuario,
+            estrellas=estrellas,
+            comentario=comentario.strip()
+        )

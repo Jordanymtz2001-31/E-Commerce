@@ -101,7 +101,6 @@ Fotos asociadas a un evento. Subidas a `media/eventos/`.
 | `/login/` | `login_view` | Inicio de sesión |
 | `/logout/` | `logout_view` | Cierre de sesión, redirige a tienda |
 | `/productList/` | `productos_view` | Catálogo de productos con filtro por categoría |
-| `/categoria/<id>/` | `productos_por_categoria` | Productos filtrados por categoría |
 | `/producto/<pk>/resena/` | `crear_resena` | Crear reseña (requiere login) |
 | `/punto_venta/` | `punto_venta_view` | Mapa y lista de puntos de venta activos |
 | `/eventos/` | `eventos_view` | Eventos próximos y pasados |

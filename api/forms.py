@@ -23,7 +23,7 @@ class RegistroForm(UserCreationForm):
         # Ahora el control total de la persistencia lo tiene el Service, el cual se encargará de guardar el usuario y el cliente en la base de datos
         
         if not commit:
-            raise ValueError("Para guardar, utliza ClienteService.registrar_cliente()")
+            raise ValueError("Para guardar, utiliza ClienteService.registrar()")
         
     #Aqui me falta agregar estilos a los campos para que se se pasen al html o al formulario
     #Para que solo en el html solo ientrada sobre este formulario junto con sus estilos
