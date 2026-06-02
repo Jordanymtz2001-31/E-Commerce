@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'api',
     'widget_tweaks', # Libreria súper útil para estilizar formularios Django con Bootstrap sin escribir HTML manual
+    'storages', # Libreria para manejar almacenamiento de archivos, necesaria para usar Cloudflare R2 en producción
     
 ]
 
@@ -160,7 +161,7 @@ STATIC_ROOT = BASE_DIR / 'staticfiles' # Carpeta para archivos estaticos para pr
 # Configuracion para subir archivos
 if IS_PRODUCTION:
     # Producción → Cloudflare R2
-    MEDIA_URL = os.environ.get("R2_PUBLIC_URL") + "/"
+    MEDIA_URL = f"https://{os.environ.get('R2_PUBLIC_URL')}/"
     STORAGES = {
         "default": {
             "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
