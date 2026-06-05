@@ -173,8 +173,6 @@ def punto_venta_view(request):
 
 #@login_required
 def checkout_view(request):
-    repo_categoria = CategoriaRepository()
-    categorias = repo_categoria.listar_todas()
     
     """
     Muestra el resumen del carrito y permite crear el pedido.
@@ -193,10 +191,11 @@ def checkout_view(request):
         messages.error(request, 'Completa tu perfil de cliente antes de comprar.')
         return redirect('tienda')
 
+    repo_categoria = CategoriaRepository()
+    categorias = repo_categoria.listar_todas()
+
     if request.method == 'POST':
         cart_data = request.POST.get('cart_data', '[]') # Si no se envia, se envia un array vacio
-        repo_categoria = CategoriaRepository()
-        categorias = repo_categoria.listar_todas()
         try:
             item = json.loads(cart_data) # Esperamos un JSON con la estructura: [{producto_id, talla, cantidad}, ...]
         except json.JSONDecodeError:
@@ -205,7 +204,7 @@ def checkout_view(request):
 
         if not item:
             messages.warning(request, 'Tu canasto está vacío.')
-            return render(request, 'checkout.html', {'cliente': cliente})
+            return render(request, 'checkout.html', {'cliente': cliente, 'categorias': categorias})
 
         try:
             pedido = PedidoService.crear(cliente=cliente, productos=item)
@@ -216,6 +215,9 @@ def checkout_view(request):
             return redirect('productList')
         except Talla.DoesNotExist:
             messages.error(request, 'Talla no válida.')
+            return redirect('productList')
+        except ValueError as e:
+            messages.error(request, str(e))
             return redirect('productList')
         
     context = {

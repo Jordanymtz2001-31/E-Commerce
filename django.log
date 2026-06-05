@@ -1019,3 +1019,4 @@ Traceback (most recent call last):
              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 TypeError: PedidoService.crear() got an unexpected keyword argument 'item'. Did you mean 'items'?
 "POST /talcahualme/checkout/ HTTP/1.1" 500 78773
+Not Found: /talcahualme/categoria/9999/

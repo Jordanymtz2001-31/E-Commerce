@@ -1,6 +1,6 @@
 import json
 from decimal import Decimal
-from .models import Cliente, Resena, Pedido, DetallePedido, Producto, Talla
+from .models import Cliente, Resena, Pedido, DetallePedido, Producto, Talla, StockTalla
 from django.contrib.auth.models import User
 from django.db import transaction
 
@@ -88,12 +88,26 @@ class PedidoService:
                 producto_obj = Producto.objects.get(pk=item['id'])
                 talla = Talla.objects.get(nombreTalla=item['talla'])
                 cantidad = int(item['cantidad'])
-                
+
+                # Bloqueamos la fila de StockTalla con select_for_update() para evitar
+                # condiciones de carrera si dos usuarios compran el mismo producto y talla
+                # simultáneamente. Esto requiere que estemos dentro de transaction.atomic().
+                stock_talla = StockTalla.objects.select_for_update().get(
+                    producto=producto_obj, talla=talla
+                )
+                if stock_talla.talla_stock < cantidad:
+                    raise ValueError(
+                        f"Stock insuficiente para {producto_obj.nombre} "
+                        f"(talla {talla.nombreTalla}): "
+                        f"solicitado {cantidad}, disponible {stock_talla.talla_stock}"
+                    )
+                stock_talla.talla_stock -= cantidad
+                stock_talla.save()
+
                 precio = producto_obj.precio
                 subtotal = precio * cantidad
                 total += subtotal
                 
-                # Agregamos el DetallePedido a la lista, pero sin asignarle el pedido aún, ya que necesitamos el ID del pedido para eso
                 detalles_data.append(DetallePedido(
                     producto=producto_obj,
                     cantidad=cantidad,
