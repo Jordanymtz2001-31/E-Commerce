@@ -93,7 +93,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ecommerce.wsgi.application'
 
-
+# Para cualquier vista con @login_required, si el usuario no está autenticado, lo redirige a esta URL (la vista de login)
+LOGIN_URL = '/talcahualme/login/'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 

@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Checkout - Talcahualme{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <h1 class="fw-bold mb-4 d-flex align-items-center gap-2">
+                <span class="material-symbols-outlined fs-2" style="color:var(--primary);">shopping_cart_checkout</span>
+                Finalizar Pedido
+            </h1>
+
+            <!-- Resumen del carrito (se llena con JS desde localStorage) -->
+            <div class="card border-0 shadow-sm rounded-4 mb-4">
+                <div class="card-header bg-white border-bottom px-4 py-3 rounded-top-4">
+                    <h5 class="fw-bold mb-0">Resumen de tu canasto</h5>
+                </div>
+                <div class="card-body p-4" id="checkout-resumen">
+                    <!-- JS lo llena -->
+                </div>
+            </div>
+
+            <!-- Dirección de envío -->
+            <div class="card border-0 shadow-sm rounded-4 mb-4">
+                <div class="card-header bg-white border-bottom px-4 py-3 rounded-top-4">
+                    <h5 class="fw-bold mb-0 d-flex align-items-center gap-2">
+                        <span class="material-symbols-outlined fs-5" style="color:var(--primary);">location_on</span>
+                        Dirección de envío
+                    </h5>
+                </div>
+                <div class="card-body p-4">
+                    <p class="mb-1"><strong>{{ cliente.usuario.username }}</strong></p>
+                    <p class="text-muted mb-1">{{ cliente.direccion }}</p>
+                    <p class="text-muted mb-0">{{ cliente.telefono }}</p>
+                </div>
+            </div>
+
+            <!-- Formulario de confirmación -->
+            <form id="checkout-form" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="cart_data" id="cart-data" value="[]">
+
+                <div class="d-flex gap-3">
+                    <a href="{% url 'productList' %}" class="btn btn-outline-secondary rounded-pill px-4">
+                        Seguir comprando
+                    </a>
+                    <button type="submit" id="btnConfirmarPedido" class="btn btn-artesanal flex-grow-1"
+                            style="padding:0.85rem 1.5rem !important;">
+                        <span class="material-symbols-outlined me-2 fs-5">check</span>
+                        Confirmar Pedido
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+    const resumen = document.getElementById('checkout-resumen');
+    const btn = document.getElementById('btnConfirmarPedido');
+
+    // SI el carrito esta vacio, mostrar mensaje y deshabilitar botón
+    if (carrito.length === 0) {
+        resumen.innerHTML = `
+            <div class="text-center py-4">
+                <span class="material-symbols-outlined fs-1 text-muted">shopping_bag</span>
+                <p class="text-muted mt-2">Tu canasto está vacío.</p>
+                <a href="{% url 'productList' %}" class="btn btn-explorar" style="padding:10px 24px !important;font-size:0.85rem !important;min-height:auto !important;">
+                    Explorar productos
+                </a>
+            </div>
+        `;
+        if (btn) btn.disabled = true;
+        return;
+    }
+
+    // Si tiene productos, construye el HTML, pero aun nose crea el pedido hasta que se confirme
+    let html = '';
+    let total = 0;
+    carrito.forEach(item => {
+        const subtotal = item.precio * item.cantidad;
+        total += subtotal;
+        html += `
+            <div class="d-flex align-items-center gap-3 mb-3 pb-3 border-bottom">
+                <img src="${item.imagen}" alt="${item.nombre}"
+                     style="width:60px;height:60px;object-fit:cover;border-radius:8px;">
+                <div class="flex-grow-1">
+                    <h6 class="fw-bold mb-0">${item.nombre}</h6>
+                    <small class="text-muted">Talla: ${item.talla} × ${item.cantidad}</small>
+                </div>
+                <span class="fw-bold span-precio">$${subtotal.toFixed(0)}</span>
+            </div>
+        `;
+    });
+
+    html += `
+        <div class="d-flex justify-content-between align-items-center pt-2">
+            <span class="fw-semibold fs-5">Total</span>
+            <span class="fw-bold span-precio fs-4">$${total.toFixed(0)} MXN</span>
+        </div>
+    `;
+
+    resumen.innerHTML = html; // Le asigna el HTML generado al contenedor del resumen
+
+    // Set form data on submit
+    document.getElementById('checkout-form').addEventListener('submit', function() {
+        document.getElementById('cart-data').value = JSON.stringify(carrito);
+        if (btn) {
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span> Procesando...';
+        }
+    });
+});
+</script>
+{% endblock %}

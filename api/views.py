@@ -1,3 +1,4 @@
+import json
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -5,13 +6,14 @@ from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 
 from .forms import RegistroForm
-from .models import Categoria, Cliente, Producto
-from .service import ClienteService, ResenaService
+from .models import Categoria, Cliente, Producto, Pedido, Talla
+from .service import ClienteService, ResenaService, PedidoService
 from .repositories import (
     ProductoRepository,
     CategoriaRepository,
     PuntoVentaRepository,
     EventoRepository,
+    PedidoRepository,
 )
 from .strategies import SinFiltro, FiltroPorCategoria
 
@@ -46,6 +48,12 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
+            
+            # Verifica si viene de una pagina protegida (con @login_required) y redirige ahí, sino a la tienda
+            next_url = request.GET.get('next')
+            if next_url:
+                return redirect(next_url)
+            
             messages.success(request, 'Inicio de sesion exitoso!')
             return redirect('tienda')
         else:
@@ -63,6 +71,22 @@ def tienda_view(request):
     categorias = CategoriaRepository().listar_todas()
     return render(request, 'tienda.html', {'categorias': categorias})
 
+
+def productos_por_categoria(request, categoria_id):
+    categoria_seleccionada = get_object_or_404(Categoria, id=categoria_id)
+    
+    repo = ProductoRepository()
+    categoria_repo = CategoriaRepository()
+    
+    productos = repo.obtener_por_categoria(categoria_id=categoria_id)
+    categorias = categoria_repo.listar_todas()
+    
+    context = {
+        'productos': productos,
+        'categorias': categorias,
+        'categoria_seleccionada': categoria_seleccionada,
+    }
+    return render(request, 'productos.html', context)
 
 def productos_view(request):
     """
@@ -95,7 +119,7 @@ def productos_view(request):
         
         # all() para cargar el queryset completo de StockTalla en memoria, evitando consultas adicionales dentro del bucle. 
         # Luego filtramos en Python para obtener solo los que tienen stock > 0.
-        stock = [s for s in producto.stocktalla_set.all() if s.talla_stock > 0]
+        stock = [s for s in producto.stocktalla_set.all()]
         producto.stock_por_talla = [
             {'talla': s.talla.nombreTalla, 'stock': s.talla_stock}
             for s in stock
@@ -145,6 +169,107 @@ def punto_venta_view(request):
         'puntos_venta': punto_venta_repo.listar_activos(),
     }
     return render(request, 'puntos_venta.html', context)
+
+
+#@login_required
+def checkout_view(request):
+    repo_categoria = CategoriaRepository()
+    categorias = repo_categoria.listar_todas()
+    
+    """
+    Muestra el resumen del carrito y permite crear el pedido.
+
+    GET: Muestra formulario con resumen del carrito (leído desde localStorage
+    en el frontend). POST: Crea el Pedido + DetallePedido via PedidoService.
+    """
+    
+    # Deforma manual verificamos si esta authenticado para mostrar un mensaje personalizado y redirigir a login con next, en lugar de usar @login_required que redirige automáticamente a LOGIN_URL sin mensaje.
+    if not request.user.is_authenticated:
+        messages.warning(request, 'Debes iniciar sesión para finalizar tu compra.')
+        return redirect(f'/talcahualme/login/?next={request.path}')  # Redirige a login y luego vuelve a checkout
+    try:
+        cliente = Cliente.objects.get(usuario=request.user)
+    except Cliente.DoesNotExist:
+        messages.error(request, 'Completa tu perfil de cliente antes de comprar.')
+        return redirect('tienda')
+
+    if request.method == 'POST':
+        cart_data = request.POST.get('cart_data', '[]') # Si no se envia, se envia un array vacio
+        repo_categoria = CategoriaRepository()
+        categorias = repo_categoria.listar_todas()
+        try:
+            item = json.loads(cart_data) # Esperamos un JSON con la estructura: [{producto_id, talla, cantidad}, ...]
+        except json.JSONDecodeError:
+            messages.error(request, 'Error al procesar el carrito.')
+            return redirect('productList')
+
+        if not item:
+            messages.warning(request, 'Tu canasto está vacío.')
+            return render(request, 'checkout.html', {'cliente': cliente})
+
+        try:
+            pedido = PedidoService.crear(cliente=cliente, productos=item)
+            messages.success(request, '¡Pedido creado con éxito!')
+            return redirect('pedido_confirmado', pk=pedido.pk)
+        except Producto.DoesNotExist:
+            messages.error(request, 'Uno de los productos ya no está disponible.')
+            return redirect('productList')
+        except Talla.DoesNotExist:
+            messages.error(request, 'Talla no válida.')
+            return redirect('productList')
+        
+    context = {
+        'cliente': cliente,
+        'categorias': categorias,
+    }
+
+    return render(request, 'checkout.html', context)
+
+
+@login_required
+def pedido_confirmado_view(request, pk):
+    """Muestra la confirmación de un pedido."""
+    
+    pedido_repo = PedidoRepository()
+    repo_categoria = CategoriaRepository()
+    categorias = repo_categoria.listar_todas()
+    
+    try:
+        cliente = Cliente.objects.get(usuario=request.user)
+        pedido = pedido_repo.obtener_con_detalles(pk=pk, cliente=cliente)
+    except (Cliente.DoesNotExist, Pedido.DoesNotExist):
+        messages.error(request, 'Pedido no encontrado.')
+        return redirect('tienda')
+
+    context = {
+        'pedido': pedido,
+        'categorias': categorias,
+    }
+    return render(request, 'pedido_confirmado.html', context)
+
+
+@login_required
+def mis_pedidos_view(request):
+    """Lista los pedidos del usuario autenticado."""
+    
+    repor_categoria = CategoriaRepository()
+    categorias = repor_categoria.listar_todas()
+    
+    try:
+        cliente = Cliente.objects.get(usuario=request.user)
+    except Cliente.DoesNotExist:
+        messages.error(request, 'Completa tu perfil de cliente primero.')
+        return redirect('tienda')
+
+    pedido_repo = PedidoRepository()
+    pedidos = pedido_repo.listar_por_cliente(cliente)
+    
+    context = {
+        'pedidos': pedidos,
+        'categorias': categorias,
+    }
+
+    return render(request, 'mis_pedidos.html', context)
 
 
 def eventos_view(request):

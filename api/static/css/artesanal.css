@@ -65,6 +65,7 @@ html, body {
     font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
     overflow-x: hidden; /* Evitar scroll horizontal */
     max-width: 100%;
+}
 
 /* ──────────────────────────────────────────────────────────────────────────── */
 /* § 3. NAVBAR + BOTONES NAVEGACIÓN (Desktop, Tablet, Mobile)                 */
@@ -192,7 +193,7 @@ html, body {
 }
 
 /* ──────────────────────────────────────────────────────────────────────────── */
-/* § 4. COMPONENTES - BADGES Y ETIQUETAS                                       */
+/* § 5. COMPONENTES - BADGES Y ETIQUETAS                                       */
 /* ──────────────────────────────────────────────────────────────────────────── */
 
 /* Badge Lana */
@@ -212,8 +213,6 @@ html, body {
     color: #2e7d32 !important;
 }
 
-/* Chips scroll (ocultado en todos los navegadores) */
-
 /* Texto innovación en hero - gradiente artesanal */
 .texto-inovacion {
     background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
@@ -228,7 +227,7 @@ html, body {
     height: 280px;
 }
 
-/* Imagen con zoom suave */
+.imagen-zoom-suave {
     transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
@@ -237,7 +236,7 @@ html, body {
     line-height: 1.2;
 }
 
-/* ELIMINADO (Fase 1): .btn-cantidad, .cantidad-control, .btn-agregar-carrito - Comentado en HTML, no se usa */\n
+/* ELIMINADO (Fase 1): .btn-cantidad, .cantidad-control, .btn-agregar-carrito - Comentado en HTML, no se usa */
 
 /* ──────────────────────────────────────────────────────────────────────────── */
 /* § 6. BOTONES DE ACCIÓN (Navbar, Generales)                                */
@@ -545,7 +544,7 @@ html, body {
     .footer-artisanal .text-muted { color: #a8a29e !important; }
 }
 
-.footer-section h3 {
+.footer-section {
     font-weight: 700 !important;
     font-size: 1.125rem !important;
     margin-bottom: 1.5rem !important;
@@ -856,26 +855,6 @@ html, body {
 /* § 10. PÁGINA TIENDA - HERO, TIMELINE, MISIÓN                               */
 /* ──────────────────────────────────────────────────────────────────────────── */
 
-/* Hero section con gradiente 
-.hero-section {
-    background: linear-gradient(135deg, var(--bg-light) 0%, #fdfbf8 100%);
-    position: relative;
-    overflow: hidden;
-}
-
-.hero-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: radial-gradient(circle at 20% 80%, rgba(236,109,19,0.05) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(236,109,19,0.03) 0%, transparent 50%);
-    pointer-events: none;
-}
-*/
-
 /* Badge de año (flotante) */
 .badge-artesanal {
     background: linear-gradient(135deg, var(--primary), #f4a261) !important;
@@ -960,26 +939,6 @@ html, body {
     box-shadow: var(--shadow-lg) !important;
 }
 
-/* Línea conectora entre timeline items */
-.timeline-step:not(:last-child)::after {
-    content: '';
-    position: absolute;
-    left: 28px;
-    top: 60px;
-    bottom: -40px;
-    width: 4px;
-    background: var(--primary);
-    border-radius: 2px;
-}
-
-/* Tarjeta de misión (card especial con icono) */
-.mision-card {
-    background: var(--surface-1) !important;
-    border: 1px solid var(--surface-3) !important;
-    position: relative;
-    overflow: hidden;
-}
-
 .timeline-icon img:hover {
     transform: scale(1.1) !important;
 }
@@ -1026,22 +985,6 @@ html, body {
     font-size: 2.5rem !important;
     margin: 0 auto 2rem !important;
     animation: pulse-heart 2s infinite;
-}
-
-/* Botones de acción principales */
-.btn-artesanal {
-    background: var(--primary) !important;
-    border: none !important;
-    color: white !important;
-    padding: 1rem 2.5rem !important;
-    font-weight: 700 !important;
-    text-transform: uppercase !important;
-    letter-spacing: 0.5px !important;
-    border-radius: 50px !important;
-    position: relative;
-    overflow: hidden;
-    box-shadow: var(--shadow-md) !important;
-    transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1) !important;
 }
 
 @keyframes pulse-heart {
@@ -1099,33 +1042,7 @@ html, body {
 }
 
 /* ──────────────────────────────────────────────────────────────────────────── */
-/* § 11. PÁGINA LOGIN                                                          */
-/* ──────────────────────────────────────────────────────────────────────────── */
-
-/* Login split-screen layout con hero */
-.timeline-step {
-    padding-left: 2rem !important;
-}
-    
-.timeline-icon {
-    width: 50px !important;
-    height: 50px !important;
-}
-    
-.timeline-icon img {
-    width: 42px !important;
-    height: 42px !important;
-}
-
-/* (Colores varían según versión split-screen) */ 
-:root {  
-    --primary: #ec6d13;
-    --primary-dark: #d55c0b;
-    --bg-light: #f8f7f6;
-}
-
-/* ──────────────────────────────────────────────────────────────────────────── */
-/* § 12. PÁGINA REGISTRO                                                       */
+/* § 11. PÁGINA REGISTRO                                                       */
 /* ──────────────────────────────────────────────────────────────────────────── */
 
 /* ========================================
@@ -1207,7 +1124,7 @@ html, body {
   font-size: clamp(1.75rem, 4vw, 2.25rem);
   font-weight: 600;
   margin-bottom: 4px;
-  background: linear-gradient(135deg, var(--primary) 0%, #35a4ed 50%, var(--primary-dark) 100%);
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 50%, var(--primary-dark) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -1254,9 +1171,9 @@ html, body {
   }
 }
 
-/* ========================================
-   LOGIN CLIENTES - NUEVOS ESTILOS
-======================================== */
+/* ──────────────────────────────────────────────────────────────────────────── */
+/* § 12. PÁGINA LOGIN                                                          */
+/* ──────────────────────────────────────────────────────────────────────────── */
 
 /* ── Login split screen ── */
 .login-wrapper {
@@ -1278,23 +1195,11 @@ html, body {
   max-width: 380px;
 }
 
-.login-branding {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 1.5rem;
-}
-
-.login-brand-name {
-  font-size: 1.1rem;
-  font-weight: 600;
-}
-
 .login-titulo {
   font-size: clamp(1.75rem, 4vw, 2.25rem);
   font-weight: 600;
   margin-bottom: 4px;
-  background: linear-gradient(135deg, var(--primary) 0%, #35a4ed 50%, var(--primary-dark) 100%);
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 50%, var(--primary-dark) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -1389,9 +1294,9 @@ html, body {
   }
 }
 
-/* ========================================
-   PUNTOS DE VENTA - NUEVOS ESTILOS
-======================================== */
+/* ──────────────────────────────────────────────────────────────────────────── */
+/* § 13. PÁGINA PUNTOS DE VENTA                                                */
+/* ──────────────────────────────────────────────────────────────────────────── */
 .puntos-hero {
     background: linear-gradient(135deg, rgba(15,30,80,0.85), rgba(10,10,10,0.9)),
                 url("../img/Conjunto.jpg") center/cover no-repeat;
@@ -1466,9 +1371,9 @@ html, body {
     color: #fff;
 }
 
-/* ========================================
-   EVENTOS - NUEVOS ESTILOS
-======================================== */
+/* ──────────────────────────────────────────────────────────────────────────── */
+/* § 14. PÁGINA EVENTOS                                                        */
+/* ──────────────────────────────────────────────────────────────────────────── */
 
 .eventos-hero {
     background: linear-gradient(135deg, rgba(15,30,80,0.85), rgba(10,10,10,0.9)),
@@ -1584,4 +1489,73 @@ html, body {
     border-radius: 20px;
     padding: 4px 12px;
     font-size: 12px;
+}
+
+/* ──────────────────────────────────────────────────────────────────────────── */
+/* § 15. OFFCAVAS CARRITO + SIZE PICKER                                        */
+/* ──────────────────────────────────────────────────────────────────────────── */
+
+.offcanvas.offcanvas-end {
+    width: 400px;
+    max-width: 100vw;
+    border-left: 1px solid var(--surface-3);
+}
+
+.offcanvas-header {
+    padding: 1.25rem 1.5rem;
+}
+
+.offcanvas-body {
+    padding: 0;
+}
+
+.cart-item {
+    border-bottom: 1px solid var(--surface-3);
+    padding: 1rem 0;
+}
+
+.cart-item:last-child {
+    border-bottom: none;
+}
+
+#cart-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.size-option {
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.85rem;
+}
+
+.size-option:not(.disabled):hover {
+    transform: translateY(-1px);
+}
+
+#qtyInput::-webkit-inner-spin-button,
+#qtyInput::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+#qtyInput[type=number] {
+    -moz-appearance: textfield;
+}
+
+/* Botón del carrito en navbar con hover naranja suave */
+.btn.position-relative .material-symbols-outlined {
+    transition: color 0.2s ease;
+}
+.btn.position-relative:hover .material-symbols-outlined {
+    color: var(--primary) !important;
+}
+
+/* Responsive: offcanvas ancho completo en móvil */
+@media (max-width: 480px) {
+    .offcanvas.offcanvas-end {
+        width: 100vw;
+    }
 }

@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Mis Pedidos - Talcahualme{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="fw-bold mb-4 d-flex align-items-center gap-2">
+        <span class="material-symbols-outlined fs-2" style="color:var(--primary);">receipt_long</span>
+        Mis Pedidos
+    </h1>
+
+    {% if pedidos %}
+        {% for pedido in pedidos %}
+        <div class="card border-0 shadow-sm rounded-4 mb-3">
+            <div class="card-body p-4">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div>
+                        <h5 class="fw-bold mb-1">Pedido #{{ pedido.id }}</h5>
+                        <small class="text-muted">{{ pedido.creado|date:"d/m/Y H:i" }}</small>
+                    </div>
+                    <span class="badge rounded-pill px-3 py-2 
+                        {% if pedido.estado == 'PENDIENTE' %}bg-warning text-dark
+                        {% elif pedido.estado == 'PAGADO' %}bg-success text-white
+                        {% elif pedido.estado == 'FALLIDO' %}bg-danger text-white
+                        {% elif pedido.estado == 'ENVIADO' %}bg-info text-white
+                        {% endif %}">
+                        {{ pedido.get_estado_display }}
+                    </span>
+                </div>
+
+                {% for detalle in pedido.detalles.all %}
+                <div class="d-flex align-items-center gap-3 mb-2 pb-2 border-bottom border-light">
+                    <div class="flex-grow-1">
+                        <span class="fw-semibold">{{ detalle.producto.nombre }}</span>
+                        <small class="text-muted ms-2">Talla: {{ detalle.Talla.nombreTalla }} × {{ detalle.cantidad }}</small>
+                    </div>
+                    <span class="fw-semibold">${{ detalle.precio_unitario|floatformat:0 }}</span>
+                </div>
+                {% endfor %}
+
+                <div class="d-flex justify-content-between align-items-center pt-2">
+                    <span class="fw-bold">Total</span>
+                    <span class="fw-bold span-precio">${{ pedido.total|floatformat:0 }} MXN</span>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="text-center py-5">
+            <span class="material-symbols-outlined fs-1 text-muted">receipt_long</span>
+            <p class="text-muted mt-3 mb-3">No tienes pedidos aún.</p>
+            <a href="{% url 'productList' %}" class="btn btn-explorar" style="padding:12px 28px !important;font-size:0.9rem !important;min-height:auto !important;">
+                Explorar productos
+            </a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

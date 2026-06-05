@@ -185,7 +185,37 @@ class Cliente(models.Model):
 
     class Meta:
         db_table = 'clientes'
-
+        
+#Creamos el modelo de Pedido ------------------------------------------------------------------------------------------------------
+class Pedido(models.Model):
+    ESTADOS = [
+        ('PENDIENTE', 'Pendiente de Pago'),
+        ('PAGADO', 'Pagado'),
+        ('FALLIDO', 'Pago Fallido'),
+        ('ENVIADO', 'Enviado'),
+        ]
+    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, related_name='pedidos') # El related_name es para que se pueda acceder a los pedidos desde el cliente, es decir cliente.pedidos.all() para obtener todos los pedidos de un cliente (Relación inversa)
+    creado = models.DateTimeField(auto_now_add=True)
+    estado = models.CharField(max_length=20, choices=ESTADOS, default='PENDIENTE')
+    total = models.DecimalField(max_digits=10, decimal_places=2)
+    
+    # Campo clave para conectar con Stripe, puede ser nulo porque se crea el pedido antes de iniciar el proceso de pago
+    stripe_id_sesion = models.CharField(max_length=255, blank=True, null=True) 
+    
+    class Meta:
+        db_table = 'pedidos'
+    
+#Creamos el modelo de Detalle de Pedido (Tabla intermedia entre Pedido y Producto)------------------------------------------------------------------------------------------------------
+class DetallePedido(models.Model):
+    pedido = models.ForeignKey(Pedido, on_delete=models.CASCADE, related_name='detalles') # El related_name es para que se pueda acceder a los detalles de un pedido
+    producto = models.ForeignKey(Producto, on_delete=models.PROTECT) # Usamos PROTECT para evitar que se borre un producto que está en un pedido
+    cantidad = models.PositiveIntegerField(default=1)
+    precio_unitario = models.DecimalField(max_digits=10, decimal_places=2) # Precio del producto al momento de hacer el pedido
+    Talla = models.ForeignKey(Talla, on_delete=models.PROTECT) # Agregamos la talla al detalle del pedido para saber qué talla se pidió
+    
+    class Meta:
+        db_table = 'detalles_pedido'
+        
 #Modelo de Puntos de Venta ----------------------------------------------------------------------------------------------------------
 class PuntoVenta(models.Model):
     nombre = models.CharField(max_length=100)

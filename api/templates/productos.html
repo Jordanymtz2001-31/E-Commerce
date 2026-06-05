@@ -85,8 +85,7 @@
                     <p class="text-muted flex-grow-1 mb-4 descripcion-clamp">
                         {{ producto.descripcion }}
                     </p>
-                    {% if producto.stockProducto > 0 %} <!--Implementacion de un modal para mostrar los detalles del producto-->
-                    <a class="btn btn-light text-muted w-100 fw-bold mt-auto modal-trigger"
+                    <button class="btn btn-light text-muted w-100 fw-bold mt-auto modal-trigger"
                     data-producto-id="{{ producto.id }}"
                     data-imagenes="[{% for img in producto.imagenes.all %}'{{ img.imagenes.url }}'{% if not forloop.last %},{% endif %}{% endfor %}]"
                     data-titulo="{{ producto.nombre }}"
@@ -97,25 +96,10 @@
                     data-cuidados="{% for c in producto.instruccionesCuidado.all %}{{ c.nombre }}{% if not forloop.last %} | {% endif %}{% endfor %}"
                     data-stock="{{ producto.stock_disponible }}"
                     data-stock-tallas="[{% for s in producto.stock_por_talla %}{'talla':'{{ s.talla }}','stock':{{ s.stock }}}{% if not forloop.last %},{% endif %}{% endfor %}]"
-                    data-descripcion="{{ producto.descripcion|truncatewords:20 }}">
-                        Ver Detalles
-                    </a>
-                    {% else %}
-                    <button class="btn btn-light text-muted w-100 fw-bold mt-auto modal-trigger" 
-                    data-producto-id="{{ producto.id }}"
-                    data-imagenes="[{% for img in producto.imagenes.all %}'{{ img.imagenes.url }}'{% if not forloop.last %},{% endif %}{% endfor %}]"
-                    data-titulo="{{ producto.nombre }}"
-                    data-precio="$ {{ producto.precio|floatformat:0 }} MXN"
-                    data-categoria="{% for cat in producto.categoria.all %}{{ cat.nombreCategoria }}{% if not forloop.last %}, {% endif %}{% endfor %}"
-                    data-tallas="{% for t in producto.tallaDisponible.all %}{{ t.nombreTalla }}{% if not forloop.last %}, {% endif %}{% endfor %}"
-                    data-materiales="{% for m in producto.tipoMateria.all %}{{ m.nombreTipoMateria }}{% if not forloop.last %}, {% endif %}{% endfor %}"
-                    data-cuidados="{% for c in producto.instruccionesCuidado.all %}{{ c.nombre }}{% if not forloop.last %} | {% endif %}{% endfor %}"
-                    data-stock="{{ producto.stock_disponible }}"
-                    data-stock-tallas="[{% for s in producto.stock_por_talla %}{'talla':'{{ s.talla }}','stock':{{ s.stock }}}{% if not forloop.last %},{% endif %}{% endfor %}]"
-                    data-descripcion="{{ producto.descripcion|truncatewords:20 }}">
+                    data-descripcion="{{ producto.descripcion|truncatewords:20 }}"
+                    >
                         Ver Detalles
                     </button>
-                    {% endif %}
                 </div>
             </div>
         </div>

@@ -856,3 +856,166 @@ Not Found: /.well-known/appspecific/com.chrome.devtools.json
 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
 Not Found: /.well-known/appspecific/com.chrome.devtools.json
 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Not Found: /talcahualme/categoria/9999/
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Forbidden (CSRF token from POST incorrect.): /admin/api/producto/2/change/
+"POST /admin/api/producto/2/change/ HTTP/1.1" 403 2514
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 2848
+Not Found: /accounts/login/
+"GET /accounts/login/?next=/talcahualme/checkout/ HTTP/1.1" 404 2888
+Not Found: /accounts/login/
+"GET /accounts/login/?next=/talcahualme/checkout/ HTTP/1.1" 404 2888
+Not Found: /accounts/login/
+"GET /accounts/login/?next=/talcahualme/checkout/ HTTP/1.1" 404 2888
+Not Found: /accounts/login/
+"GET /accounts/login/?next=/talcahualme/checkout/ HTTP/1.1" 404 2888
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Not Found: /accounts/login/
+"GET /accounts/login/?next=/talcahualme/checkout/ HTTP/1.1" 404 2888
+Not Found: /accounts/login/
+"GET /accounts/login/?next=/talcahualme/checkout/ HTTP/1.1" 404 2888
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Internal Server Error: /talcahualme/checkout/
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/contrib/auth/decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/views.py", line 177, in checkout_view
+    cliente = get_object_or_404(cliente,usuario=request.user)
+                                ^^^^^^^
+UnboundLocalError: cannot access local variable 'cliente' where it is not associated with a value
+"GET /talcahualme/checkout/ HTTP/1.1" 500 81112
+Not Found: /talcahualme/checkout/
+"GET /talcahualme/checkout/ HTTP/1.1" 404 5181
+Not Found: /talcahualme/checkout/
+"GET /talcahualme/checkout/ HTTP/1.1" 404 5181
+Internal Server Error: /talcahualme/checkout/
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/contrib/auth/decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/views.py", line 177, in checkout_view
+    cliente = Cliente.objects.get(cliente,usuario=request.user)
+                                  ^^^^^^^
+UnboundLocalError: cannot access local variable 'cliente' where it is not associated with a value
+"GET /talcahualme/checkout/ HTTP/1.1" 500 81122
+Not Found: /accounts/login/
+"GET /accounts/login/?next=/talcahualme/checkout/ HTTP/1.1" 404 2888
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 2848
+Not Found: /accounts/login/
+"GET /accounts/login/?next=/talcahualme/checkout/ HTTP/1.1" 404 2888
+Internal Server Error: /talcahualme/checkout/
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/views.py", line 219, in checkout_view
+    return render(request, 'checkout.html', {'cliente': cliente, 'categorias': categorias})
+                                                                               ^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'categorias' where it is not associated with a value
+"GET /talcahualme/checkout/ HTTP/1.1" 500 76396
+Forbidden (CSRF token from POST incorrect.): /admin/login/
+"POST /admin/login/?next=/admin/api/producto/2/change/ HTTP/1.1" 403 2514
+Forbidden (CSRF token from POST incorrect.): /admin/login/
+"POST /admin/login/?next=/admin/api/producto/2/change/ HTTP/1.1" 403 2514
+Internal Server Error: /talcahualme/checkout/
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/views.py", line 211, in checkout_view
+    pedido = PedidoService.crear(cliente=cliente, productos=productos)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/service.py", line 89, in crear
+    talla = Talla.objects.get(nombreTalla=producto['talla'])
+                                          ~~~~~~~~^^^^^^^^^
+TypeError: 'Producto' object is not subscriptable
+"POST /talcahualme/checkout/ HTTP/1.1" 500 84945
+Internal Server Error: /talcahualme/checkout/
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/views.py", line 211, in checkout_view
+    pedido = PedidoService.crear(cliente=cliente, items=item)
+TypeError: PedidoService.crear() got an unexpected keyword argument 'items'
+"POST /talcahualme/checkout/ HTTP/1.1" 500 78647
+Internal Server Error: /talcahualme/checkout/
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/views.py", line 211, in checkout_view
+    pedido = PedidoService.crear(cliente=cliente, item=item)
+TypeError: PedidoService.crear() got an unexpected keyword argument 'item'
+"POST /talcahualme/checkout/ HTTP/1.1" 500 78639
+Internal Server Error: /talcahualme/checkout/
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/views.py", line 211, in checkout_view
+    pedido = PedidoService.crear(cliente=cliente, items=item)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: PedidoService.crear() got an unexpected keyword argument 'item'. Did you mean 'items'?
+"POST /talcahualme/checkout/ HTTP/1.1" 500 78773
+Internal Server Error: /talcahualme/checkout/
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/views.py", line 211, in checkout_view
+    pedido = PedidoService.crear(cliente=cliente, items=item)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: PedidoService.crear() got an unexpected keyword argument 'item'. Did you mean 'items'?
+"POST /talcahualme/checkout/ HTTP/1.1" 500 78773
