@@ -127,3 +127,58 @@ class PedidoService:
             DetallePedido.objects.bulk_create(detalles_data) # Guardamos los detalles en la base de datos
 
             return pedido
+
+class StripeService:
+    """
+    Servicio para la lógica de negocio relacionada con Stripe.
+
+    SRP: Centraliza la integración con Stripe, facilitando cambios futuros
+    (como cambiar a otro proveedor de pagos) sin afectar las vistas.
+    """
+
+    @staticmethod
+    def crear_session_checkout(pedido: Pedido, request) -> str:
+        """
+        Crea una sesión de checkout de Stripe para un pedido.
+
+        Args:
+            pedido: Pedido para el cual se va a crear la sesión de pago.
+            request: HttpRequest para construir URLs de éxito y cancelación.
+
+        Retorna:
+            URL de la sesión de checkout de Stripe.
+        """
+        import stripe
+        from django.conf import settings
+        from django.urls import reverse
+
+        stripe.api_key = settings.STRIPE_SECRET_KEY # Obtenemos la clave secreta de Stripe desde las configuraciones de Django, esto es una buena práctica para no hardcodear claves en el código fuente
+
+        line_items = [] # Lista de items que se enviarán a Stripe, cada uno con su precio, cantidad y descripción. Esto se construye a partir de los detalles del pedido, transformando la información de nuestros modelos a lo que Stripe espera.
+        for detalle in pedido.detalles.all():
+            line_items.append({
+                'price_data': {
+                    'currency': 'mxn',
+                    'product_data': {
+                        'name': detalle.producto.nombre,
+                    },
+                    'unit_amount': int(detalle.precio_unitario * 100), # Stripe espera el monto en centavos
+                },
+                'quantity': detalle.cantidad,
+            })
+
+        session = stripe.checkout.Session.create(
+            line_items=line_items,
+            mode='payment',
+            success_url=request.build_absolute_uri(
+                reverse('pago_exitoso', args=[pedido.id])
+            ) + '?session_id={CHECKOUT_SESSION_ID}', # Agregamos el session_id como query param para poder verificar el pago en la vista de éxito
+            cancel_url=request.build_absolute_uri(
+                reverse('checkout')
+            ) + '?cancelado=1', # Agregamos un query param para identificar que el pago fue cancelado
+        )
+        
+        pedido.stripe_id_sesion = session.id # Guardamos el ID de la sesión de Stripe en el pedido para futuras referencias (como verificar el estado del pago)
+        pedido.save(update_fields=['stripe_id_sesion']) # Solo actualizamos el campo stripe_id_sesion para optimizar la consulta a la base de datos
+
+        return session.url

@@ -1,13 +1,21 @@
 import json
+import stripe
+import logging
+
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
+from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponse
+from django.conf import settings
 
 from .forms import RegistroForm
 from .models import Categoria, Cliente, Producto, Pedido, Talla
-from .service import ClienteService, ResenaService, PedidoService
+from .service import ClienteService, ResenaService, PedidoService, StripeService
+
+logger = logging.getLogger(__name__)
 from .repositories import (
     ProductoRepository,
     CategoriaRepository,
@@ -207,9 +215,11 @@ def checkout_view(request):
             return render(request, 'checkout.html', {'cliente': cliente, 'categorias': categorias})
 
         try:
+            # Llamamos a la capa de negocio para crear el pedido. Esto incluye la creación del Pedido, los DetallePedido y el cálculo del total. Si algo falla (producto no existe, talla no válida, etc), se lanzará una excepción y no se creará un pedido a medio hacer.
+            # Tambien llamamos a StripeService para crear la sesión de checkout y obtener la URL a la que redirigir al usuario para que complete el pago. Esto mantiene la lógica de integración con Stripe encapsulada en un servicio, facilitando el mantenimiento y testing.
             pedido = PedidoService.crear(cliente=cliente, productos=item)
-            messages.success(request, '¡Pedido creado con éxito!')
-            return redirect('pedido_confirmado', pk=pedido.pk)
+            stripe_url = StripeService.crear_session_checkout(pedido, request)
+            return redirect(stripe_url)
         except Producto.DoesNotExist:
             messages.error(request, 'Uno de los productos ya no está disponible.')
             return redirect('productList')
@@ -226,6 +236,63 @@ def checkout_view(request):
     }
 
     return render(request, 'checkout.html', context)
+
+
+@login_required
+def pago_exitoso_view(request, pk):
+    """Muestra confirmación después de un pago exitoso en Stripe."""
+    repo_categoria = CategoriaRepository()
+    categorias = repo_categoria.listar_todas()
+
+    try:
+        cliente = Cliente.objects.get(usuario=request.user)
+        pedido = Pedido.objects.get(pk=pk, cliente=cliente)
+    except (Cliente.DoesNotExist, Pedido.DoesNotExist):
+        messages.error(request, 'Pedido no encontrado.')
+        return redirect('tienda')
+
+    return render(request, 'pedido_confirmado.html', {
+        'pedido': pedido,
+        'categorias': categorias,
+        'pago_exitoso': True,
+    })
+
+
+@csrf_exempt # Stripe no envia el csrf token como un navegador normal, esta pensado para recibir peticiones automaticas de stripe
+def stripe_webhook_view(request):
+    """
+    Endpoint para que Stripe notifique eventos (checkout.session.completed).
+    Basicamente ocurre cuando un cliente completa el proceso de pago.
+    
+    Pero stripe manda un mensaje de confirmacion pero no en el navegador, por ende se manda en el webhook (esta vista)
+    Y al mismo validamos y cambiamos el estado del pedido
+        
+    payload: El cuerpo del mensaje que Stripe envía.
+    sig_header: La firma que Stripe envía en los headers para verificar que el webhook es de Stripe.
+    """
+    payload = request.body
+    sig_header = request.META.get('HTTP_STRIPE_SIGNATURE')
+    webhook_secret = settings.STRIPE_WEBHOOK_SECRET
+
+    try:
+        # Verificamos la firma del webhook
+        event = stripe.Webhook.construct_event(payload, sig_header, webhook_secret)
+    except ValueError:
+        return HttpResponse(status=400)
+    except stripe.error.SignatureVerificationError:
+        return HttpResponse(status=400)
+
+    if event['type'] == 'checkout.session.completed': # Si el evento es de un checkout completado
+        session = event['data']['object'] # Obtenemos la sesión de Stripe
+        try:
+            pedido = Pedido.objects.get(stripe_id_sesion=session['id']) # Buscamos el pedido asociado a la sesión
+            pedido.estado = 'PAGADO'
+            pedido.save(update_fields=['estado'])
+            logger.info(f"Pedido {pedido.id} marcado como PAGADO via webhook")
+        except Pedido.DoesNotExist:
+            logger.warning(f"Webhook: Pedido no encontrado para sesion {session['id']}")
+
+    return HttpResponse(status=200)
 
 
 @login_required

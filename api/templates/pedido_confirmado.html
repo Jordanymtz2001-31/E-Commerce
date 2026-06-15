@@ -9,8 +9,13 @@
             <div class="mb-4">
                 <span class="material-symbols-outlined fs-1" style="color:#10b981;font-size:4rem;">check_circle</span>
             </div>
+            {% if pago_exitoso %}
+            <h1 class="fw-bold mb-2">¡Pago Exitoso!</h1>
+            <p class="text-muted mb-4">Tu pago ha sido procesado correctamente. Te enviamos los detalles a tu correo.</p>
+            {% else %}
             <h1 class="fw-bold mb-2">¡Pedido Confirmado!</h1>
             <p class="text-muted mb-4">Tu pedido ha sido registrado exitosamente.</p>
+            {% endif %}
 
             <div class="card border-0 shadow-sm rounded-4 mb-4 text-start">
                 <div class="card-body p-4">
@@ -44,7 +49,6 @@
 
             <p class="text-muted small mb-4">
                 Recibirás un correo con los detalles de tu pedido.
-                El pago se realizará contra entrega por el momento.
             </p>
 
             <div class="d-flex gap-3 justify-content-center">

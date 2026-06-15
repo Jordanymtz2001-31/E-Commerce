@@ -43,6 +43,11 @@ if not os.getenv('DB_NAME'):
 csrf_origins = os.getenv('CSRF_TRUSTED_ORIGINS', '')
 CSRF_TRUSTED_ORIGINS = [origin.strip() for origin in csrf_origins.split(',')] if csrf_origins else []
 
+
+# Configuración de Stripe (Pasarela de pagos)
+STRIPE_PUBLIC_KEY = os.getenv('STRIPE_PUBLIC_KEY')
+STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY')
+STRIPE_WEBHOOK_SECRET = os.getenv('STRIPE_WEBHOOK_SECRET')
 # ----------------------------------------------------
 # Aplicaciones instaladas
 # ----------------------------------------------------

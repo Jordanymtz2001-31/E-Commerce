@@ -13,6 +13,8 @@ urlpatterns = [
     path('punto_venta/', views.punto_venta_view, name='punto_venta'),
     path('eventos/', views.eventos_view, name='eventos'),
     path('checkout/', views.checkout_view, name='checkout'),
+    path('pedido/<int:pk>/pago-exitoso/', views.pago_exitoso_view, name='pago_exitoso'),
     path('pedido/<int:pk>/confirmacion/', views.pedido_confirmado_view, name='pedido_confirmado'),
+    path('stripe/webhook/', views.stripe_webhook_view, name='stripe_webhook'),
     path('mis-pedidos/', views.mis_pedidos_view, name='mis_pedidos'),
 ]

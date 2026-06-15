@@ -15,6 +15,11 @@ Antes de cualquier tarea creativa (features, componentes, funcionalidad), carga 
 1. **$Brainstorming** — para explorar requerimientos, diseño e intención antes de implementar.
 2. **$Django-expert** — para todo lo relacionado con modelos, vistas, serializers, ORM, migraciones, DRF.
 3. **$Interface-design** — para diseño de dashboards, paneles admin, apps e interfaces interactivas (no marketing).
+4. **$Stripe-* (4 skills)** — para integraciones de pagos, connected accounts, facturación, aprovisionamiento de servicios (via Stripe Projects), y actualizaciones de API. Cargar según corresponda:
+   - `$Stripe-best-practices` — elegir API, configurar Connect, suscripciones, seguridad.
+   - `$Stripe-directory` — buscar socios, proveedores o servicios.
+   - `$Stripe-projects` — aprovisionar infraestructura (DBs, hosting, LLMs, etc.).
+   - `$Upgrade-stripe` — migrar versiones de API/SDK.
 
 ---
 
