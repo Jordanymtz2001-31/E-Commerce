@@ -131,6 +131,28 @@ class PedidoService:
 
             return pedido
 
+    @staticmethod
+    def restaurar_stock(pedido: Pedido) -> Pedido:
+        """
+        Restaura el stock de un pedido que no fue pagado (cancelado o expirado).
+        """
+        with transaction.atomic():
+            for detalle in pedido.detalles.all():
+                
+                # Bloqueamos la fila de StockTalla con select_for_update() para evitar
+                # condiciones de carrera si dos usuarios compran el mismo producto y talla
+                # simultáneamente. Esto requiere que estemos dentro de transaction.atomic().
+                
+                stock_talla = StockTalla.objects.select_for_update().get(
+                    producto=detalle.producto, talla=detalle.Talla
+                )
+                stock_talla.talla_stock += detalle.cantidad # Aumentamos el stock del producto relacionado y le sumamos la cantidad que se iba a comprar
+                stock_talla.save()
+            pedido.estado = 'FALLIDO'
+            pedido.save(update_fields=['estado'])
+        return pedido
+
+
 class StripeService:
 
     """
@@ -206,7 +228,7 @@ class StripeService:
             ) + '?session_id={CHECKOUT_SESSION_ID}', # Agregamos el session_id como query param para poder verificar el pago en la vista de éxito
             cancel_url=request.build_absolute_uri(
                 reverse('checkout')
-            ) + '?cancelado=1', # Agregamos un query param para identificar que el pago fue cancelado
+            ) + f'?cancelado=1&pedido_id={pedido.id}', # Agregamos query params para identificar que el pago fue cancelado y restaurar el stock
         )
         
         pedido.stripe_id_sesion = session.id # Guardamos el ID de la sesión de Stripe en el pedido para futuras referencias (como verificar el estado del pago)

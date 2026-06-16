@@ -199,6 +199,17 @@ def checkout_view(request):
         messages.error(request, 'Completa tu perfil de cliente antes de comprar.')
         return redirect('tienda')
 
+    # Manejar cancelación de pago desde Stripe
+    cancelado = request.GET.get('cancelado')
+    pedido_id = request.GET.get('pedido_id')
+    if cancelado and pedido_id:
+        try:
+            pedido = Pedido.objects.get(pk=pedido_id, cliente=cliente, estado='PENDIENTE')
+            PedidoService.restaurar_stock(pedido)
+            messages.info(request, 'Pago cancelado. El stock ha sido liberado.')
+        except Pedido.DoesNotExist:
+            pass
+
     repo_categoria = CategoriaRepository()
     categorias = repo_categoria.listar_todas()
 
@@ -308,6 +319,15 @@ def stripe_webhook_view(request):
             logger.info(f"Pedido {pedido.id} marcado como PAGADO via webhook")
         except Pedido.DoesNotExist:
             logger.warning(f"Webhook: Pedido no encontrado para sesion {session['id']}")
+
+    elif event['type'] == 'checkout.session.expired': # Si el evento es de una sesión expirada
+        session = event['data']['object']
+        try:
+            pedido = Pedido.objects.get(stripe_id_sesion=session['id'], estado='PENDIENTE')
+            PedidoService.restaurar_stock(pedido)
+            logger.info(f"Pedido {pedido.id} — sesión expirada, stock restaurado")
+        except Pedido.DoesNotExist:
+            pass
 
     return HttpResponse(status=200)
 
