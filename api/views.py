@@ -229,8 +229,17 @@ def checkout_view(request):
             # Llamamos a la capa de negocio para crear el pedido. Esto incluye la creación del Pedido, los DetallePedido y el cálculo del total. Si algo falla (producto no existe, talla no válida, etc), se lanzará una excepción y no se creará un pedido a medio hacer.
             # Tambien llamamos a StripeService para crear la sesión de checkout y obtener la URL a la que redirigir al usuario para que complete el pago. Esto mantiene la lógica de integración con Stripe encapsulada en un servicio, facilitando el mantenimiento y testing.
             pedido = PedidoService.crear(cliente=cliente, productos=item)
-            stripe_url = StripeService.crear_session_checkout(pedido, request)
-            return redirect(stripe_url)
+            return redirect(StripeService.crear_session_checkout(pedido, request))
+        
+        # Capturamos las excepciones de Stripe que pueden ocurrir en la capa de negocio y redirigimos al usuario a la vista de checkout con un mensaje de error.
+        except stripe.error.StripeError as e:
+            logger.error(f'Error al crear la sesión de Stripe: {e}')
+            if pedido:
+                PedidoService.restaurar_stock(pedido)
+            messages.error(request, 'Error al procesar el pago, Intentalo de nuevo.')
+            return redirect('checkout')
+        
+        # Captura de excepciones del producto y talla
         except Producto.DoesNotExist:
             messages.error(request, 'Uno de los productos ya no está disponible.')
             return redirect('productList')
