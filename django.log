@@ -1021,3 +1021,255 @@ TypeError: PedidoService.crear() got an unexpected keyword argument 'item'. Did 
 "POST /talcahualme/checkout/ HTTP/1.1" 500 78773
 Not Found: /talcahualme/categoria/9999/
 Not Found: /talcahualme/categoria/9999/
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 2848
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Internal Server Error: /talcahualme/checkout/
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/views.py", line 221, in checkout_view
+    stripe_url = StripeService.crear_session_checkout(pedido, request)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/service.py", line 179, in crear_session_checkout
+    stripe_customer_id = StripeService.obtener_o_crear_cliente(pedido.cliente)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/service.py", line 151, in obtener_o_crear_cliente
+    if cliente.stripe_customer_id:
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Cliente' object has no attribute 'stripe_customer_id'
+"POST /talcahualme/checkout/ HTTP/1.1" 500 88431
+Internal Server Error: /talcahualme/checkout/
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/views.py", line 221, in checkout_view
+    stripe_url = StripeService.crear_session_checkout(pedido, request)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/service.py", line 179, in crear_session_checkout
+    stripe_customer_id = StripeService.obtener_o_crear_cliente(pedido.cliente)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/service.py", line 151, in obtener_o_crear_cliente
+    if cliente.stripe_customer_id:
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Cliente' object has no attribute 'stripe_customer_id'
+"POST /talcahualme/checkout/ HTTP/1.1" 500 89076
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 2848
+Internal Server Error: /talcahualme/checkout/
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/views.py", line 221, in checkout_view
+    stripe_url = StripeService.crear_session_checkout(pedido, request)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/service.py", line 179, in crear_session_checkout
+    stripe_customer_id = StripeService.obtener_o_crear_cliente(pedido.cliente)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/service.py", line 151, in obtener_o_crear_cliente
+    if cliente.stripe_customer_id:
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Cliente' object has no attribute 'stripe_customer_id'
+"POST /talcahualme/checkout/ HTTP/1.1" 500 89135
+Internal Server Error: /talcahualme/checkout/
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/views.py", line 221, in checkout_view
+    stripe_url = StripeService.crear_session_checkout(pedido, request)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/service.py", line 179, in crear_session_checkout
+    stripe_customer_id = StripeService.obtener_o_crear_cliente(pedido.cliente)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/service.py", line 156, in obtener_o_crear_cliente
+    name=f"{cliente.usuario.first_name} {cliente.user.last_name}",
+                                         ^^^^^^^^^^^^
+AttributeError: 'Cliente' object has no attribute 'user'
+"POST /talcahualme/checkout/ HTTP/1.1" 500 89080
+Internal Server Error: /talcahualme/checkout/
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/views.py", line 221, in checkout_view
+    stripe_url = StripeService.crear_session_checkout(pedido, request)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/service.py", line 179, in crear_session_checkout
+    stripe_customer_id = StripeService.obtener_o_crear_cliente(pedido.cliente)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/service.py", line 156, in obtener_o_crear_cliente
+    name=f"{cliente.usuario.first_name} {cliente.user.last_name}",
+                                         ^^^^^^^^^^^^
+AttributeError: 'Cliente' object has no attribute 'user'
+"POST /talcahualme/checkout/ HTTP/1.1" 500 89080
+Internal Server Error: /talcahualme/checkout/
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/views.py", line 221, in checkout_view
+    stripe_url = StripeService.crear_session_checkout(pedido, request)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/service.py", line 179, in crear_session_checkout
+    stripe_customer_id = StripeService.obtener_o_crear_cliente(pedido.cliente)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/service.py", line 158, in obtener_o_crear_cliente
+    'django_user_id': cliente.user.id
+                      ^^^^^^^^^^^^
+AttributeError: 'Cliente' object has no attribute 'user'
+"POST /talcahualme/checkout/ HTTP/1.1" 500 89034
+Internal Server Error: /talcahualme/checkout/
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/views.py", line 221, in checkout_view
+    stripe_url = StripeService.crear_session_checkout(pedido, request)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/service.py", line 194, in crear_session_checkout
+    session = stripe.checkout.Session.create(
+        payment_method_types=['card'], # Tipos de pago aceptados, en este caso solo tarjetas de crédito
+    ...<10 lines>...
+        billing_address_collection='required', # Requerimos la información de la dirección de facturación
+    )
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/stripe/checkout/_session.py", line 2581, in create
+    cls._static_request(
+    ~~~~~~~~~~~~~~~~~~~^
+        "post",
+        ^^^^^^^
+        cls.class_url(),
+        ^^^^^^^^^^^^^^^^
+        params=params,
+        ^^^^^^^^^^^^^^
+    ),
+    ^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/stripe/_api_resource.py", line 171, in _static_request
+    return _APIRequestor._global_instance().request(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        method_,
+        ^^^^^^^^
+    ...<3 lines>...
+        base_address=base_address,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/stripe/_api_requestor.py", line 221, in request
+    resp = requestor._interpret_response(rbody, rcode, rheaders, api_mode)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/stripe/_api_requestor.py", line 911, in _interpret_response
+    self.handle_error_response(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        rbody, rcode, resp.data, rheaders, api_mode
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/stripe/_api_requestor.py", line 363, in handle_error_response
+    raise err
+stripe._error.InvalidRequestError: Request req_AjMHAg1e4nygT9: No such customer: 'cus_UiQmGFh7p52Br8'
+"POST /talcahualme/checkout/ HTTP/1.1" 500 123072
+Internal Server Error: /talcahualme/checkout/
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/views.py", line 221, in checkout_view
+    stripe_url = StripeService.crear_session_checkout(pedido, request)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/service.py", line 194, in crear_session_checkout
+    session = stripe.checkout.Session.create(
+        payment_method_types=['card'], # Tipos de pago aceptados, en este caso solo tarjetas de crédito
+    ...<10 lines>...
+        billing_address_collection='required', # Requerimos la información de la dirección de facturación
+    )
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/stripe/checkout/_session.py", line 2581, in create
+    cls._static_request(
+    ~~~~~~~~~~~~~~~~~~~^
+        "post",
+        ^^^^^^^
+        cls.class_url(),
+        ^^^^^^^^^^^^^^^^
+        params=params,
+        ^^^^^^^^^^^^^^
+    ),
+    ^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/stripe/_api_resource.py", line 171, in _static_request
+    return _APIRequestor._global_instance().request(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        method_,
+        ^^^^^^^^
+    ...<3 lines>...
+        base_address=base_address,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/stripe/_api_requestor.py", line 221, in request
+    resp = requestor._interpret_response(rbody, rcode, rheaders, api_mode)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/stripe/_api_requestor.py", line 911, in _interpret_response
+    self.handle_error_response(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        rbody, rcode, resp.data, rheaders, api_mode
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/stripe/_api_requestor.py", line 363, in handle_error_response
+    raise err
+stripe._error.InvalidRequestError: Request req_K0kIP3eg02ZFy3: No such customer: 'cus_UiQmGFh7p52Br8'
+"POST /talcahualme/checkout/ HTTP/1.1" 500 123072
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 2848
+Internal Server Error: /talcahualme/checkout/
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/views.py", line 221, in checkout_view
+    stripe_url = StripeService.crear_session_checkout(pedido, request)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/service.py", line 194, in crear_session_checkout
+    session = stripe.checkout.Session.create(
+        payment_method_types=['card'], # Tipos de pago aceptados, en este caso solo tarjetas de crédito
+    ...<14 lines>...
+        ) + '?cancelado=1', # Agregamos un query param para identificar que el pago fue cancelado
+    )
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/stripe/checkout/_session.py", line 2581, in create
+    cls._static_request(
+    ~~~~~~~~~~~~~~~~~~~^
+        "post",
+        ^^^^^^^
+        cls.class_url(),
+        ^^^^^^^^^^^^^^^^
+        params=params,
+        ^^^^^^^^^^^^^^
+    ),
+    ^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/stripe/_api_resource.py", line 171, in _static_request
+    return _APIRequestor._global_instance().request(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        method_,
+        ^^^^^^^^
+    ...<3 lines>...
+        base_address=base_address,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/stripe/_api_requestor.py", line 221, in request
+    resp = requestor._interpret_response(rbody, rcode, rheaders, api_mode)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/stripe/_api_requestor.py", line 911, in _interpret_response
+    self.handle_error_response(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        rbody, rcode, resp.data, rheaders, api_mode
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/stripe/_api_requestor.py", line 363, in handle_error_response
+    raise err
+stripe._error.InvalidRequestError: Request req_4cHQJu1nVHFzAE: No such customer: 'cus_UiR7eWokUHGXv2'
+"POST /talcahualme/checkout/ HTTP/1.1" 500 123534

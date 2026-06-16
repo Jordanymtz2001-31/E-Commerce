@@ -3,6 +3,9 @@ from decimal import Decimal
 from .models import Cliente, Resena, Pedido, DetallePedido, Producto, Talla, StockTalla
 from django.contrib.auth.models import User
 from django.db import transaction
+import stripe
+from django.conf import settings
+from django.urls import reverse
 
 
 class ClienteService:
@@ -129,13 +132,37 @@ class PedidoService:
             return pedido
 
 class StripeService:
+
     """
     Servicio para la lógica de negocio relacionada con Stripe.
 
     SRP: Centraliza la integración con Stripe, facilitando cambios futuros
     (como cambiar a otro proveedor de pagos) sin afectar las vistas.
     """
-
+    
+    @staticmethod
+    def obtener_o_crear_cliente(cliente: Cliente) -> str:
+        """
+        Verificar si el cliente de Django ya tiene un ID de Stripe asociado,
+        Si no lo tiene, lo creamos en Stripe y lo guardamos en la base de datos.
+        Devolvemos el ID de Stripe del cliente.
+        """
+        
+        if cliente.stripe_customer_id:
+            return cliente.stripe_customer_id
+        else:
+            customer = stripe.Customer.create(
+                email=cliente.usuario.email,
+                name=cliente.usuario.username,
+                metadata={
+                    'django_user_id': cliente.usuario.id
+                }
+            )
+            
+        cliente.stripe_customer_id = customer.id
+        cliente.save()
+        return customer.id
+        
     @staticmethod
     def crear_session_checkout(pedido: Pedido, request) -> str:
         """
@@ -147,12 +174,9 @@ class StripeService:
 
         Retorna:
             URL de la sesión de checkout de Stripe.
-        """
-        import stripe
-        from django.conf import settings
-        from django.urls import reverse
-
+        """        
         stripe.api_key = settings.STRIPE_SECRET_KEY # Obtenemos la clave secreta de Stripe desde las configuraciones de Django, esto es una buena práctica para no hardcodear claves en el código fuente
+        stripe_customer_id = StripeService.obtener_o_crear_cliente(pedido.cliente)
 
         line_items = [] # Lista de items que se enviarán a Stripe, cada uno con su precio, cantidad y descripción. Esto se construye a partir de los detalles del pedido, transformando la información de nuestros modelos a lo que Stripe espera.
         for detalle in pedido.detalles.all():
@@ -168,7 +192,14 @@ class StripeService:
             })
 
         session = stripe.checkout.Session.create(
+            customer=stripe_customer_id,
             line_items=line_items,
+            billing_address_collection='required', # Requerimos la información de la dirección de facturación, por seguridad ayuda a evitar fraudes.
+            
+            # Para guardar el metodo de pago y la informacion de la tarjeta de crédito en la base de datos
+            payment_intent_data={
+                'setup_future_usage': 'on_session'
+            },
             mode='payment',
             success_url=request.build_absolute_uri(
                 reverse('pago_exitoso', args=[pedido.id])

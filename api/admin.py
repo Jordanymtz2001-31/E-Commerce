@@ -23,29 +23,8 @@ class TipoMateriaAdmin(admin.ModelAdmin):
 class InstruccionesCuidadoAdmin(admin.ModelAdmin):
     list_display = ['nombre']
 
-#Creamos esta clases para validar el stock total de las tallas que se agregan
 class StockTallaFormSet(BaseInlineFormSet):
-    def clean(self):
-        super().clean()
-
-        # OBTENER stock FÍSICO del producto
-        stock_fisico = self.instance.stockProducto
-
-        # SUMAR SOLO tallas con stock > 0
-        stock_usado = 0
-        for form in self.forms:
-            if hasattr(form, 'cleaned_data') and form.cleaned_data:
-                talla_stock = form.cleaned_data.get('talla_stock', 0)
-                if talla_stock > 0:
-                    stock_usado += talla_stock
-        
-        # VALIDAR que NO exceda lo físico
-        if stock_usado > stock_fisico:
-            excedente = stock_usado - stock_fisico
-            raise ValidationError(
-                f"Stock total ({stock_usado}) excede stock físico ({stock_fisico}). "
-                f"Reduce {excedente} unidades, ya que solo se mostraran {stock_fisico} unidades."
-            )
+    pass
 
 #Clase para agregar mas de una imagen del producto
 class FotoProductoInline(admin.TabularInline):
@@ -61,18 +40,17 @@ class StockTallaInline(admin.TabularInline):
 
 @admin.register(Producto)
 class ProductoAdmin(admin.ModelAdmin):
-    list_display = ['nombre', 'precio', 'stockProducto', 'descripcion'] #Estos son los campos a mostrar en el administrador en la tabla
+    list_display = ['nombre', 'precio', 'stock_tallas', 'descripcion']
     list_filter = ['categoria'] # Estos son los campos de filtro
     search_fields = ['nombre'] # Estos son los campos de busqueda
     filter_horizontal = ['categoria', 'tallaDisponible', 'tipoMateria', 'instruccionesCuidado'] # Estos son los campos de filtro horizontal para que se pase la informacion de una tabla a otra
     inlines = [StockTallaInline, FotoProductoInline]  # Aqui agregamos la clase de StockTallaInline  y la clase de FotoProductoInline
 
-    #Metodo para mostrar el stock de las tallas
     def stock_tallas(self, obj):
         return StockTalla.objects.filter(producto=obj).aggregate(
             total=Sum('talla_stock')
         )['total'] or 0
-    stock_tallas.short_description = 'Stock Asignado'
+    stock_tallas.short_description = 'Stock Total'
 
 @admin.register(Resena)
 class ReseñaAdmin(admin.ModelAdmin):

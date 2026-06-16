@@ -71,7 +71,6 @@ class ProductosViewTest(TestCase):
             nombre='Test Product',
             precio=100.00,
             descripcion='Test description',
-            stockProducto=10
         )
         self.producto.categoria.add(self.categoria)
 
@@ -317,7 +316,6 @@ class ResenaViewTest(TestCase):
             nombre='Test Product',
             precio=100.00,
             descripcion='Test',
-            stockProducto=10
         )
         self.producto.categoria.add(self.categoria)
 
@@ -525,7 +523,6 @@ class ProductosPorCategoriaViewTest(TestCase):
             nombre='Test Product',
             precio=100.00,
             descripcion='Test',
-            stockProducto=10
         )
         self.producto.categoria.add(self.categoria)
 

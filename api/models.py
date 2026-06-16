@@ -78,7 +78,6 @@ class Producto(models.Model):
     # Un producto puede tener varias Instrucciones de Cuida
     instruccionesCuidado = models.ManyToManyField(InstruccionesCuidado, related_name='productos', blank=True) # Decimos que puede estar vacio
 
-    stockProducto = models.IntegerField(default=0) # Por defecto el stock es 0
     descripcion = models.TextField()
 
     @property
@@ -179,6 +178,10 @@ class Cliente(models.Model):
     usuario = models.OneToOneField(User, on_delete=models.CASCADE)
     telefono = models.CharField(max_length=15)
     direccion = models.TextField()
+    
+    # Campo clave para conectar con Stripe, puede ser nulo porque se crea el pedido antes de iniciar el proceso de pago
+    stripe_customer_id = models.CharField(max_length=255, blank=True, null=True) 
+    
 
     def __str__(self):
         return str(self.usuario.username)

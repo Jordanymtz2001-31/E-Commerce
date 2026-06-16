@@ -250,12 +250,29 @@ def pago_exitoso_view(request, pk):
     except (Cliente.DoesNotExist, Pedido.DoesNotExist):
         messages.error(request, 'Pedido no encontrado.')
         return redirect('tienda')
-
-    return render(request, 'pedido_confirmado.html', {
+    
+    # Verificar el pago con Stripe
+    session_id = request.GET.get('session_id')
+    if session_id and pedido.estado == 'PENDIENTE':
+        try:
+            stripe.api_key = settings.STRIPE_SECRET_KEY
+            session = stripe.checkout.Session.retrieve(session_id)
+            
+            if session.payment_status == 'paid': # SI el pago fue exitoso
+                # Actualizamos el estado del pedido a "PAGO EXITOSO"
+                pedido.estado = 'PAGADO'
+                pedido.save(update_fields=['estado']) # update_fields indica que solo actualizaremos el campo "estado"   
+        except stripe.error.StripeError as e:
+            messages.error(request, f'Error al verificar el pago: {e}')
+            return redirect('tienda')
+        
+    context = {
         'pedido': pedido,
         'categorias': categorias,
         'pago_exitoso': True,
-    })
+    }
+    return render(request, 'pedido_confirmado.html', context)
+
 
 
 @csrf_exempt # Stripe no envia el csrf token como un navegador normal, esta pensado para recibir peticiones automaticas de stripe

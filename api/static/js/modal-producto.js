@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             sizePicker.innerHTML = ''; // Limpiamos las tallas anteriores, Sin esto, cada vez que abres un producto nuevo se acumularían las tallas del anterior.
 
-            if (stockTallas.length > 0) {
+            if (stockTallas.some(t => t.stock > 0)) { // Si hay tallas con stock
                 carritoActions.style.display = 'block'; // Mostramos toda la seccion de acciones de carrito (que incluye el botón de agregar al carrito y el selector de cantidad) si hay tallas disponibles
 
                 // Recorremos el array de tallas con stock, por cada talla creamos un botón tipo radio para que el usuario pueda seleccionar una talla, también agregamos un event listener para cambiar el estilo del botón seleccionado cuando se clickea
