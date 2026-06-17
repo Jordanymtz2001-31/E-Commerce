@@ -856,6 +856,53 @@ html, body {
 
 
 /* ──────────────────────────────────────────────────────────────────────────── */
+/* § 9c. TOAST CARRITO + ANIMACIÓN BADGE                                       */
+/* ──────────────────────────────────────────────────────────────────────────── */
+
+#cartToast {
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+    background: white;
+    min-width: 320px;
+    overflow: hidden;
+}
+
+#cartToast .btn-link {
+    border-radius: 0;
+    transition: background 0.2s ease;
+}
+
+#cartToast .btn-link:hover {
+    background: rgba(236, 109, 19, 0.08);
+}
+
+@keyframes cartBounce {
+    0%, 100% { transform: scale(1); }
+    25% { transform: scale(1.35); }
+    50% { transform: scale(0.9); }
+    75% { transform: scale(1.1); }
+}
+
+.cart-bounce {
+    animation: cartBounce 0.5s ease;
+}
+
+@media (max-width: 480px) {
+    #cartToast {
+        min-width: unset;
+        width: 100%;
+        border-radius: 12px 12px 0 0;
+    }
+    .toast-container {
+        left: 0;
+        bottom: 0;
+        padding: 0 !important;
+    }
+}
+
+
+/* ──────────────────────────────────────────────────────────────────────────── */
 /* § 10. PÁGINA TIENDA - HERO, TIMELINE, MISIÓN                               */
 /* ──────────────────────────────────────────────────────────────────────────── */
 

@@ -178,6 +178,28 @@ document.addEventListener('DOMContentLoaded', function() {
                     // Con dataset es para acceder a los datos del producto desde el modal de producto, si no encuentra el dato en el dataset, usa un valor por defecto (como el título del modal o 0 para el precio)
                     agregarAlCarrito(productoId, this.dataset.productoNombre || document.getElementById('modalTitulo').textContent, this.dataset.productoPrecio || '0', imagen, talla, cantidad);
 
+                    // Toast notificación
+                    const toastEl = document.getElementById('cartToast');
+                    if (toastEl) {
+                        document.getElementById('toastProductName').textContent =
+                            this.dataset.productoNombre || document.getElementById('modalTitulo').textContent;
+                        document.getElementById('toastProductDetail').textContent =
+                            `Talla ${talla} · ${cantidad} ${cantidad === 1 ? 'unidad' : 'unidades'}`;
+                        
+                        // Creamos una instancia del toast para mostrarlo
+                        const toast = bootstrap.Toast.getOrCreateInstance(toastEl);
+                        toast.show();
+                    }
+
+                    // Animación badge carrito
+                    const badge = document.getElementById('cart-badge');
+                    if (badge) {
+                        badge.classList.remove('cart-bounce');
+                        void badge.offsetWidth; // Forzar reflow para reiniciar animación
+                        badge.classList.add('cart-bounce');
+                        setTimeout(() => badge.classList.remove('cart-bounce'), 600);
+                    }
+
                     // Feedback visual para el usuario, cambiamos el texto del botón temporalmente para indicar que se agregó al carrito, y luego lo volvemos a su estado original después de 1.5 segundos
                     const originalText = nuevoBtn.innerHTML;
                     nuevoBtn.innerHTML = '<span class="material-symbols-outlined me-2 fs-5">check</span> Agregado ✓';

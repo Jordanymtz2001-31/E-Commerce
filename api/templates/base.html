@@ -315,6 +315,26 @@
         </div>
     </div>
 
+    <!-- Toast notificación carrito -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index:1080;">
+        <div id="cartToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="4000">
+            <div class="toast-body p-0">
+                <div class="d-flex align-items-center p-3">
+                    <span class="material-symbols-outlined fs-4 me-3" style="color:var(--primary);">check_circle</span>
+                    <div class="flex-grow-1 min-w-0">
+                        <p class="fw-bold mb-0 small text-truncate" id="toastProductName">Producto</p>
+                        <p class="text-muted mb-0 small" id="toastProductDetail">Talla · x1</p>
+                    </div>
+                </div>
+                <div class="d-flex border-top">
+                    <button class="btn btn-link text-decoration-none flex-grow-1 py-2 small" data-bs-dismiss="toast">Seguir viendo</button>
+                    <button class="btn btn-link text-decoration-none flex-grow-1 py-2 small fw-semibold" 
+                            style="color:var(--primary);" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCarrito" data-bs-dismiss="toast">Ver canasto</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Esto es para saber si el usuario esta logueado -->
     <script> window.USER_LOGGED_IN = {{ user.is_authenticated|yesno:"true,false" }}; 
     console.log('Usuario logueado:', window.USER_LOGGED_IN);
