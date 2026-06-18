@@ -36,6 +36,13 @@
                 </div>
             </div>
 
+            {% if not STRIPE_ENABLED %}
+            <div class="alert alert-warning rounded-4 mb-4 d-flex align-items-center gap-2">
+                <span class="material-symbols-outlined fs-5">construction</span>
+                <span>El sistema de pago estará disponible próximamente. Por ahora puedes explorar y armar tu canasto.</span>
+            </div>
+            {% endif %}
+
             <!-- Formulario de confirmación -->
             <form id="checkout-form" method="post">
                 {% csrf_token %}
@@ -46,7 +53,8 @@
                         Seguir comprando
                     </a>
                     <button type="submit" id="btnConfirmarPedido" class="btn btn-artesanal flex-grow-1"
-                            style="padding:0.85rem 1.5rem !important;">
+                            style="padding:0.85rem 1.5rem !important;"
+                            {% if not STRIPE_ENABLED %}disabled{% endif %}>
                         <span class="material-symbols-outlined me-2 fs-5">lock</span>
                         Ir a pagar (Stripe)
                     </button>

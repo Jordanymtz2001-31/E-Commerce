@@ -213,6 +213,11 @@ def checkout_view(request):
     repo_categoria = CategoriaRepository()
     categorias = repo_categoria.listar_todas()
 
+    # Validacion de Stripe para el caso de que no este activo (BETA)
+    if not settings.STRIPE_ENABLED:
+        messages.info(request, 'El sistema de pago estará disponible próximamente.')
+        return redirect('checkout')
+
     if request.method == 'POST':
         cart_data = request.POST.get('cart_data', '[]') # Si no se envia, se envia un array vacio
         try:

@@ -1,5 +1,9 @@
+from django.conf import settings
+
+
 def navbar_context(request):
-    """Agrega la ruta actual al contexto para determinar enlaces activos en el navbar."""
+    """Agrega variables globales al contexto de todas las templates."""
     return {
-        'current_page': request.path
+        'current_page': request.path, # Esto es para mostrar el menu activo
+        'STRIPE_ENABLED': settings.STRIPE_ENABLED, # Para mostrar el botón de pagar con Stripe
     }

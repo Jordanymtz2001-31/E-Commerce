@@ -45,6 +45,7 @@ CSRF_TRUSTED_ORIGINS = [origin.strip() for origin in csrf_origins.split(',')] if
 
 
 # Configuración de Stripe (Pasarela de pagos)
+STRIPE_ENABLED = os.getenv('STRIPE_ENABLED', 'False') == 'True'
 STRIPE_PUBLIC_KEY = os.getenv('STRIPE_PUBLIC_KEY')
 STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY')
 STRIPE_WEBHOOK_SECRET = os.getenv('STRIPE_WEBHOOK_SECRET')
