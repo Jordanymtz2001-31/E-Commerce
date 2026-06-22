@@ -213,6 +213,10 @@ html, body {
     color: #2e7d32 !important;
 }
 
+.badge-colores {
+    background-color: #e3f2fd !important;
+}
+
 /* Texto innovación en hero - gradiente artesanal */
 .texto-inovacion {
     background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);

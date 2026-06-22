@@ -30,6 +30,7 @@ class ProductoRepository:
             'categoria',
             'tallaDisponible',
             'tipoMateria',
+            'color',
         ).annotate(
             stock_total=models.Sum('stocktalla_set__talla_stock'),
         )
@@ -53,6 +54,7 @@ class ProductoRepository:
             'tallaDisponible',
             'tipoMateria',
             'instruccionesCuidado',
+            'color',
             'stocktalla_set__talla',
         )
         if categoria_id:

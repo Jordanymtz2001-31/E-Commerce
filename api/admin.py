@@ -2,9 +2,10 @@ from django.contrib import admin
 from django.dispatch import receiver
 from django.forms import BaseInlineFormSet, ValidationError
 from django.db.models import Sum
+from django.utils.html import format_html
 
 # Regrsitramos nuestro modelos en el panel del administrador que puede ver los datos y realizar operaciones
-from .models import InstruccionesCuidado, Producto, Categoria, Cliente, Resena, StockTalla, Talla, TipoMateria, PuntoVenta, Colaborador, Evento, FotoEvento, ImagenProducto
+from .models import InstruccionesCuidado, Producto, Categoria, Cliente, Resena, StockTalla, Talla, TipoMateria, PuntoVenta, Colaborador, Evento, FotoEvento, ImagenProducto, Color
 
 @admin.register(Categoria)
 class CategoriaAdmin(admin.ModelAdmin):
@@ -22,6 +23,18 @@ class TipoMateriaAdmin(admin.ModelAdmin):
 @admin.register(InstruccionesCuidado)
 class InstruccionesCuidadoAdmin(admin.ModelAdmin):
     list_display = ['nombre']
+    
+@admin.register(Color)
+class ColorAdmin(admin.ModelAdmin):
+    list_display = ['nombre', 'codigo_hex', 'mostrar_color']
+
+    # Funcion para mostrar el color
+    def mostrar_color(self, obj):
+        return format_html(
+            '<span style="display:inline-block;width:20px;height:20px;background:{};border-radius:50%;border:1px solid #ccc;"></span>',
+            obj.codigo_hex
+        )
+    mostrar_color.short_description = 'Muestra'
 
 class StockTallaFormSet(BaseInlineFormSet):
     pass
@@ -37,13 +50,14 @@ class StockTallaInline(admin.TabularInline):
     formset = StockTallaFormSet # Agregamos la clase de StockTallaFormSet
     extra = 1  # Esto es para que se muestre un formulario extra
     fields = ['talla', 'talla_stock']  # Solo estos campos
-
+    
+    
 @admin.register(Producto)
 class ProductoAdmin(admin.ModelAdmin):
     list_display = ['nombre', 'precio', 'stock_tallas', 'descripcion']
     list_filter = ['categoria'] # Estos son los campos de filtro
     search_fields = ['nombre'] # Estos son los campos de busqueda
-    filter_horizontal = ['categoria', 'tallaDisponible', 'tipoMateria', 'instruccionesCuidado'] # Estos son los campos de filtro horizontal para que se pase la informacion de una tabla a otra
+    filter_horizontal = ['color', 'categoria', 'tallaDisponible', 'tipoMateria', 'instruccionesCuidado'] # Estos son los campos de filtro horizontal para que se pase la informacion de una tabla a otra
     inlines = [StockTallaInline, FotoProductoInline]  # Aqui agregamos la clase de StockTallaInline  y la clase de FotoProductoInline
 
     def stock_tallas(self, obj):

@@ -96,6 +96,28 @@ document.addEventListener('DOMContentLoaded', function() {
                 stockText.className = 'text-danger fw-medium small';
             }
 
+            // --- Colores ---
+            const coloresContainer = document.getElementById('modalColores');
+            if (coloresContainer) {
+                let colores = [];
+                try {
+                    const raw = this.dataset.colores || '[]';
+                    colores = JSON.parse(raw.replace(/'/g, '"'));
+                } catch(e) {
+                    console.error('Error parseando colores:', e, this.dataset.colores);
+                }
+                if (colores.length > 0) {
+                    coloresContainer.innerHTML = colores.map(c =>
+                        `<span class="d-inline-flex align-items-center gap-1 me-2 badge bg-light text-dark border fw-normal">
+                            <span style="display:inline-block;width:12px;height:12px;background:${c.hex};border-radius:50%;border:1px solid #ccc;"></span>
+                            ${c.nombre}
+                        </span>`
+                    ).join('');
+                } else {
+                    coloresContainer.innerHTML = '<span class="text-muted small">N/A</span>';
+                }
+            }
+
             // --- SIZE PICKER: poblar tallas seleccionables ---
             const sizePicker = document.getElementById('sizePicker'); // Optengo el contenedor donde van las tallas para agregarle los botones de talla dinamicamente
             const carritoActions = document.getElementById('carrito-actions'); // Contenedor del botón de agregar al carrito, lo mostramos o ocultamos dependiendo si hay tallas disponibles, si no hay tallas no tiene sentido mostrar el botón de agregar al carrito porque no se podría seleccionar una talla

@@ -27,18 +27,38 @@
         </div>
     </div>
     
-    <!-- Chips Filtros -->
-    <div class="chips-scroll pb-3 mb-5">
+    <!-- CHIPS DE FILTROS -->
+
+    <!-- FILTRO POR CATEGORIA-->
+    <div class="chips-scroll pb-3 mb-4">
         <h3 class="footer-section mb-3">Categorias</h3>
         <div class="d-flex gap-2 flex-nowrap"><!-- Colocamos el #catalogo para que nos lleve a la sección de productos (el #catalogo debe estar pegado con la llave } (}#catalogo))--> 
             <a href=" {% url 'productList' %}#catalogo" class="badge bg-light text-dark border border-secondary-subtle px-4 py-2 fw-medium text-decoration-none rounded-pill chip-filtro
-                    {% if not categoria_seleccionada %}chip-activo{% endif %}">
+                    {% if not categoria_seleccionada and not color_seleccionado %}chip-activo{% endif %}">
                 Todos
             </a>
             {% for categoria in categorias %}<!-- Colocamos el #Catalogo para que nos lleve a la seccion de productos pero con el id de la categoria -->
             <a href="{% url 'productList' %}?categoria={{ categoria.id }}#catalogo " class="badge bg-light text-dark border border-secondary-subtle px-4 py-2 fw-medium text-decoration-none rounded-pill chip-filtro 
                     {% if categoria_seleccionada.id == categoria.id %}chip-activo{% endif %}">
                 {{ categoria.nombreCategoria }}
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!--FILTRO POR COLOR-->
+    <div class="chips-scroll pb-3 mb-5">
+        <h3 class="footer-section mb-3">Colores</h3>
+        <div class="d-flex gap-2 flex-nowrap">
+            <a href=" {% url 'productList' %}#catalogo" class="badge bg-light text-dark border border-secondary-subtle px-4 py-2 fw-medium text-decoration-none rounded-pill chip-filtro
+                    {% if not color_seleccionado and not categoria_seleccionada %}chip-activo{% endif %}">
+                Todos
+            </a>
+            {% for color in colores %}
+            <a href="{% url 'productList' %}?color={{ color.id }}#catalogo" class="badge bg-light text-dark border border-secondary-subtle px-4 py-2 fw-medium text-decoration-none rounded-pill chip-filtro d-inline-flex align-items-center gap-2
+                    {% if color_seleccionado.id == color.id %}chip-activo{% endif %}">
+                <span style="display:inline-block;width:14px;height:14px;background:{{ color.codigo_hex }};border-radius:50%;border:1px solid #ccc;"></span>
+                {{ color.nombre }}
             </a>
             {% endfor %}
         </div>
@@ -96,6 +116,7 @@
                     data-cuidados="{% for c in producto.instruccionesCuidado.all %}{{ c.nombre }}{% if not forloop.last %} | {% endif %}{% endfor %}"
                     data-stock="{{ producto.stock_disponible }}"
                     data-stock-tallas="[{% for s in producto.stock_por_talla %}{'talla':'{{ s.talla }}','stock':{{ s.stock }}}{% if not forloop.last %},{% endif %}{% endfor %}]"
+                    data-colores="[{% for c in producto.color.all %}{'nombre':'{{ c.nombre }}','hex':'{{ c.codigo_hex }}'}{% if not forloop.last %},{% endif %}{% endfor %}]"
                     data-descripcion="{{ producto.descripcion|truncatewords:20 }}"
                     >
                         Ver Detalles

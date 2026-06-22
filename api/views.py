@@ -12,7 +12,7 @@ from django.http import HttpResponse
 from django.conf import settings
 
 from .forms import RegistroForm
-from .models import Categoria, Cliente, Producto, Pedido, Talla
+from .models import Categoria, Cliente, Producto, Pedido, Talla, Color
 from .service import ClienteService, ResenaService, PedidoService, StripeService
 
 logger = logging.getLogger(__name__)
@@ -23,7 +23,7 @@ from .repositories import (
     EventoRepository,
     PedidoRepository,
 )
-from .strategies import SinFiltro, FiltroPorCategoria
+from .strategies import SinFiltro, FiltroPorCategoria, FiltroPorColor
 
 
 def registro_view(request):
@@ -110,16 +110,23 @@ def productos_view(request):
     # usaríamos listar_con_stock() que usa annotate + Sum en SQL.
     productos = repo.listar_con_desglose_tallas()
     categorias = categoria_repo.listar_todas()
+    colores = Color.objects.all()
 
     categoria_id = request.GET.get('categoria')
+    color_id = request.GET.get('color')
+
+    categoria_seleccionada = None
+    color_seleccionado = None
+
     if categoria_id:
-        categoria = get_object_or_404(Categoria, id=categoria_id)
-        strategy = FiltroPorCategoria(categoria.id)
-        categoria_seleccionada = categoria
+        categoria_seleccionada = get_object_or_404(Categoria, id=categoria_id)
+        strategy = FiltroPorCategoria(categoria_seleccionada.id)
+    elif color_id:
+        color_seleccionado = get_object_or_404(Color, id=color_id)
+        strategy = FiltroPorColor(color_seleccionado.id)
     else:
         # Null Object Pattern: evita el if/else en la llamada a aplicar()
         strategy = SinFiltro()
-        categoria_seleccionada = None
 
     productos_filtrados = strategy.aplicar(productos)
 
@@ -136,7 +143,9 @@ def productos_view(request):
     context = {
         'productos': productos_filtrados,
         'categorias': categorias,
+        'colores': colores,
         'categoria_seleccionada': categoria_seleccionada,
+        'color_seleccionado': color_seleccionado,
     }
     return render(request, 'productos.html', context)
 

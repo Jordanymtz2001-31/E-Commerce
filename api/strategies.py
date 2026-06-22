@@ -48,3 +48,13 @@ class FiltroPorCategoria(FiltroProductoStrategy):
         # Aplicamos el filtro al queryset usando el ID de categoría guardado en la instancia para compararlo con el campo categoria__id de los productos. 
         # Esto devuelve solo los productos que pertenecen a la categoría especificada.
         return queryset.filter(categoria__id=self.categoria_id)
+
+
+class FiltroPorColor(FiltroProductoStrategy):
+    """Filtra productos por ID de color."""
+
+    def __init__(self, color_id: int):
+        self.color_id = color_id
+
+    def aplicar(self, queryset: QuerySet) -> QuerySet:
+        return queryset.filter(color__id=self.color_id)

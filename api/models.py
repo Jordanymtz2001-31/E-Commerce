@@ -65,11 +65,23 @@ class InstruccionesCuidado(models.Model):
     
     class Meta:
         db_table = 'instrucciones_cuidado'
+        
+#Creamos el modelo para los colores---------------------------------------------------------------------------------------------------
+class Color(models.Model):
+    nombre = models.CharField(max_length=50, unique=True, help_text="Nombre del color")
+    codigo_hex = models.CharField(max_length=7, unique=True, help_text="Código hexadecimal del color, ej: #FF0000 (rojo)")
+    
+    def __str__(self):
+        return self.nombre
+    
+    class Meta:
+        db_table = 'colores'
+
     
 class Producto(models.Model):
     nombre = models.CharField(max_length=50, null=False, blank=False) #Decimos que no puede estar vacio
     precio = models.DecimalField(max_digits=10, decimal_places=2, null=False, blank=False) # Colocamos la cantidad de digitos y decimales
-
+    color = models.ManyToManyField(Color, related_name='productos', blank=True) # Con related_name le decimos que se llame productos(max_length=50, null=False, blank=False)
     # Un producto puede tener varias Categorias
     categoria = models.ManyToManyField(Categoria, related_name='productos') # Con related_name le decimos que se llame productos
     # Un producto puede tener varias Tallas
@@ -173,7 +185,7 @@ class Resena(models.Model):
 
     def __str__(self):
         return f"{self.producto} - {self.usuario}"
-
+    
 #Creamos el modelo para el cliente ----------------------------------------------------------------------------------------------------
 class Cliente(models.Model):
     usuario = models.OneToOneField(User, on_delete=models.CASCADE)
