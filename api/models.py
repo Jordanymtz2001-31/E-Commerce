@@ -9,14 +9,7 @@ from .validators import validar_tamano_imagen
 #Creamos nuestros modelos
 
 class Categoria(models.Model):
-    CATEGORIA = [
-        ('Niño', 'Niño'),
-        ('Adulto', 'Adulto'),
-        ('Tradicional', 'Tradicional'),
-        ('Innovador', 'Innovador'),
-        ('Algodon', 'Algodon'),
-        ('Lana', 'Lana'),]
-    nombreCategoria = models.CharField(max_length=50, choices=CATEGORIA)
+    nombreCategoria = models.CharField(max_length=50, unique=True)
     
 
     def __str__(self):
