@@ -207,7 +207,6 @@ class Pedido(models.Model):
     creado = models.DateTimeField(auto_now_add=True)
     estado = models.CharField(max_length=20, choices=ESTADOS, default='PENDIENTE')
     total = models.DecimalField(max_digits=10, decimal_places=2)
-    
     # Campo clave para conectar con Stripe, puede ser nulo porque se crea el pedido antes de iniciar el proceso de pago
     stripe_id_sesion = models.CharField(max_length=255, blank=True, null=True) 
     
