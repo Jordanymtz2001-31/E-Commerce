@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.db.models import Sum
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from .validators import validar_tamano_imagen
 
 
 #Creamos nuestros modelos
@@ -106,7 +107,7 @@ class Producto(models.Model):
 #Creamos una clase para las imagenes de los productos
 class ImagenProducto(models.Model):
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE, related_name='imagenes') # Le pasamos la llave foranea de Producto para que se relacionen
-    imagenes = models.ImageField(upload_to='productos/', null=True, blank=True)
+    imagenes = models.ImageField(upload_to='productos/', null=True, blank=True, validators=[validar_tamano_imagen]) # Le pasamos la validacion de tamaño
 
     class Meta:
         db_table = 'imagenes_productos'
@@ -246,7 +247,7 @@ class PuntoVenta(models.Model):
 class Colaborador(models.Model):
     nombre = models.CharField(max_length=100)
     descripcion = models.TextField(blank=True)
-    logo = models.ImageField(upload_to='colaboradores/', blank=True, null=True) #El upload_to es para guardar la imagen en la carpeta 'colaboradores/'
+    logo = models.ImageField(upload_to='colaboradores/', blank=True, null=True, validators=[validar_tamano_imagen]) #El upload_to es para guardar la imagen en la carpeta 'colaboradores/'
     url = models.URLField(blank=True, help_text="Sitio web o red social del colaborador")
 
     def __str__(self):
@@ -280,7 +281,7 @@ class Evento(models.Model):
 
 class FotoEvento(models.Model):
     evento = models.ForeignKey(Evento, on_delete=models.CASCADE, related_name='fotos') #El related_name es para que se pueda acceder a las fotos de un evento
-    foto = models.ImageField(upload_to='eventos/') #El upload_to es para guardar la imagen en la carpeta 'eventos/'
+    foto = models.ImageField(upload_to='eventos/', validators=[validar_tamano_imagen]) #El upload_to es para guardar la imagen en la carpeta 'eventos/'
     descripcion = models.CharField(max_length=200, blank=True)
 
     def __str__(self):

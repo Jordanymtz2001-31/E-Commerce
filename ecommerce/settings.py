@@ -165,6 +165,9 @@ STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles' # Carpeta para archivos estaticos para produccion, Django se encarga de crearla si no existe
                                         # Con py manage.py collectstatic se crean los archivos estaticos
 
+# Limite de tamaño para subida de archivos (imagenes)
+DATA_UPLOAD_MAX_MEMORY_SIZE = 25 * 1024 * 1024  # 25 MB — permite subir multiples imagenes
+
 # Configuracion para subir archivos
 if IS_PRODUCTION:
     # Producción → Cloudflare R2
