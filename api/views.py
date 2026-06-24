@@ -22,6 +22,7 @@ from .repositories import (
     PuntoVentaRepository,
     EventoRepository,
     PedidoRepository,
+    VarianteProductoRepository,
 )
 from .strategies import SinFiltro, FiltroPorCategoria, FiltroPorColor
 
@@ -82,13 +83,33 @@ def tienda_view(request):
 
 def productos_por_categoria(request, categoria_id):
     categoria_seleccionada = get_object_or_404(Categoria, id=categoria_id)
-    
+
     repo = ProductoRepository()
     categoria_repo = CategoriaRepository()
-    
+
     productos = repo.obtener_por_categoria(categoria_id=categoria_id)
     categorias = categoria_repo.listar_todas()
-    
+
+    for producto in productos:
+        
+        # Creamos una lista comprehension, esto se trabaja de otra forma    
+        # 1 .Creamos el atributo dinamico(variantes_data) en el objeto producto como auxiliar
+        producto.variantes_data = [
+            
+            # 2. Definimos que forma toma la informacion
+            {
+                'sku': v.sku,
+                'color': {'nombre': v.color.nombre, 'hex': v.color.codigo_hex} if v.color else None,
+                'talla': v.talla.nombreTalla if v.talla else None,
+                'stock': v.stock,
+                'precio': float(v.precio),
+                'imagen': v.imagen.url if v.imagen else None,
+            }
+            
+            # 3. Definimos la condicion y indicamos de donde tomar la informacion
+            for v in producto.variantes.all()
+        ]
+
     context = {
         'productos': productos,
         'categorias': categorias,
@@ -105,10 +126,7 @@ def productos_view(request):
     repo = ProductoRepository()
     categoria_repo = CategoriaRepository()
 
-    # Usamos listar_con_desglose_tallas porque la vista necesita el detalle
-    # stock por talla (stock_por_talla). Si solo se necesitara el total,
-    # usaríamos listar_con_stock() que usa annotate + Sum en SQL.
-    productos = repo.listar_con_desglose_tallas()
+    productos = repo.listar_con_variantes()
     categorias = categoria_repo.listar_todas()
     colores = Color.objects.all()
 
@@ -131,13 +149,16 @@ def productos_view(request):
     productos_filtrados = strategy.aplicar(productos)
 
     for producto in productos_filtrados:
-        
-        # all() para cargar el queryset completo de StockTalla en memoria, evitando consultas adicionales dentro del bucle. 
-        # Luego filtramos en Python para obtener solo los que tienen stock > 0.
-        stock = [s for s in producto.stocktalla_set.all()]
-        producto.stock_por_talla = [
-            {'talla': s.talla.nombreTalla, 'stock': s.talla_stock}
-            for s in stock
+        producto.variantes_data = [
+            {
+                'sku': v.sku,
+                'color': {'nombre': v.color.nombre, 'hex': v.color.codigo_hex} if v.color else None,
+                'talla': v.talla.nombreTalla if v.talla else None,
+                'stock': v.stock,
+                'precio': float(v.precio),
+                'imagen': v.imagen.url if v.imagen else None,
+            }
+            for v in producto.variantes.all()
         ]
 
     context = {
