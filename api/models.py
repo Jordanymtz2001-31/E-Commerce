@@ -101,7 +101,7 @@ class Producto(models.Model):
 #Creamos una clase para las imagenes de los productos
 class ImagenProducto(models.Model):
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE, related_name='imagenes')
-    imagenes = models.ImageField(upload_to='productos/', null=True, blank=True, validators=[validar_tamano_imagen])
+    imagenes = models.ImageField(upload_to='productos/', null=True, blank=True, help_text="Imagenes del producto en general", validators=[validar_tamano_imagen])
 
     class Meta:
         db_table = 'imagenes_productos'
@@ -113,8 +113,8 @@ class VarianteProducto(models.Model):
     talla = models.ForeignKey(Talla, on_delete=models.SET_NULL, null=True, blank=True)
     precio = models.DecimalField(max_digits=10, decimal_places=2)
     stock = models.PositiveIntegerField(default=0)
-    imagen = models.ImageField(upload_to='variantes/', null=True, blank=True, validators=[validar_tamano_imagen])
-    sku = models.CharField(max_length=100, unique=True)
+    imagen = models.ImageField(upload_to='variantes/', null=True, blank=True, help_text="Imagen de la variante en especifico", validators=[validar_tamano_imagen])
+    sku = models.CharField(max_length=100, unique=True, help_text="Se genera automáticamente")
     activo = models.BooleanField(default=True)
 
     class Meta:
