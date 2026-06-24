@@ -6,11 +6,8 @@ from django.dispatch import receiver
 from .validators import validar_tamano_imagen
 
 
-#Creamos nuestros modelos
-
 class Categoria(models.Model):
     nombreCategoria = models.CharField(max_length=50, unique=True)
-    
 
     def __str__(self):
         return self.nombreCategoria
@@ -31,7 +28,7 @@ class Talla(models.Model):
 
     def __str__(self):
         return self.nombreTalla
-    
+
     class Meta:
         db_table = 'tallas'
     
@@ -45,7 +42,7 @@ class TipoMateria(models.Model):
 
     def __str__(self):
         return self.nombreTipoMateria
-    
+
     class Meta:
         db_table = 'tipos_materia'
 
@@ -55,7 +52,7 @@ class InstruccionesCuidado(models.Model):
 
     def __str__(self):
         return self.nombre
-    
+
     class Meta:
         db_table = 'instrucciones_cuidado'
         
@@ -63,27 +60,19 @@ class InstruccionesCuidado(models.Model):
 class Color(models.Model):
     nombre = models.CharField(max_length=50, unique=True, help_text="Nombre del color")
     codigo_hex = models.CharField(max_length=7, unique=True, help_text="Código hexadecimal del color, ej: #FF0000 (rojo)")
-    
+
     def __str__(self):
         return self.nombre
-    
+
     class Meta:
         db_table = 'colores'
 
-    
-class Producto(models.Model):
-    nombre = models.CharField(max_length=50, null=False, blank=False) #Decimos que no puede estar vacio
-    precio = models.DecimalField(max_digits=10, decimal_places=2, null=False, blank=False) # Colocamos la cantidad de digitos y decimales
-    color = models.ManyToManyField(Color, related_name='productos', blank=True) # Con related_name le decimos que se llame productos(max_length=50, null=False, blank=False)
-    # Un producto puede tener varias Categorias
-    categoria = models.ManyToManyField(Categoria, related_name='productos') # Con related_name le decimos que se llame productos
-    # Un producto puede tener varias Tallas
-    tallaDisponible = models.ManyToManyField(Talla, related_name='productos')
-    # Un producto puede tener varias Tipos de Materia
-    tipoMateria = models.ManyToManyField(TipoMateria, related_name='productos')
-    # Un producto puede tener varias Instrucciones de Cuida
-    instruccionesCuidado = models.ManyToManyField(InstruccionesCuidado, related_name='productos', blank=True) # Decimos que puede estar vacio
 
+class Producto(models.Model):
+    nombre = models.CharField(max_length=50, null=False, blank=False)
+    categoria = models.ManyToManyField(Categoria, related_name='productos')
+    tipoMateria = models.ManyToManyField(TipoMateria, related_name='productos')
+    instruccionesCuidado = models.ManyToManyField(InstruccionesCuidado, related_name='productos', blank=True)
     descripcion = models.TextField()
 
     @property
@@ -95,7 +84,7 @@ class Producto(models.Model):
         """
         if hasattr(self, 'stock_total') and self.stock_total is not None:
             return self.stock_total
-        total = self.stocktalla_set.aggregate(total=Sum('talla_stock'))['total']
+        total = self.variantes.filter(activo=True).aggregate(total=Sum('stock'))['total']
         return total if total else 0
     
     #Metodo para que nos diga si tiene stock
@@ -105,66 +94,70 @@ class Producto(models.Model):
 
     def __str__(self):
         return self.nombre
-    
+
     class Meta:
         db_table = 'productos'
 
 #Creamos una clase para las imagenes de los productos
 class ImagenProducto(models.Model):
-    producto = models.ForeignKey(Producto, on_delete=models.CASCADE, related_name='imagenes') # Le pasamos la llave foranea de Producto para que se relacionen
-    imagenes = models.ImageField(upload_to='productos/', null=True, blank=True, validators=[validar_tamano_imagen]) # Le pasamos la validacion de tamaño
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE, related_name='imagenes')
+    imagenes = models.ImageField(upload_to='productos/', null=True, blank=True, validators=[validar_tamano_imagen])
 
     class Meta:
         db_table = 'imagenes_productos'
-        
-#Creamos un modelo para el Stock de las tallas disponibles
-class StockTalla(models.Model):
-    producto = models.ForeignKey(Producto, on_delete=models.CASCADE) # Le pasamos la llave foranea de Producto para que se relacionen
-    talla = models.ForeignKey(Talla, on_delete=models.CASCADE) # Le pasamos la llave foranea de Talla para que se relacionen
-    talla_stock = models.IntegerField(default=0) # Por defecto el stock es 0
 
-    class Meta: # Aqui decimos que la combinacion de producto y talla debe ser unica, ya que sino hay dos productos con el mismo nombre y con otra talla, pero el nombre se repite
-        unique_together = ('producto', 'talla') #Aqui decimos que la combinacion de producto y talla debe ser unica
-        db_table = 'stock_tallas'
 
+class VarianteProducto(models.Model):
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE, related_name='variantes')
+    color = models.ForeignKey(Color, on_delete=models.SET_NULL, null=True, blank=True)
+    talla = models.ForeignKey(Talla, on_delete=models.SET_NULL, null=True, blank=True)
+    precio = models.DecimalField(max_digits=10, decimal_places=2)
+    stock = models.PositiveIntegerField(default=0)
+    imagen = models.ImageField(upload_to='variantes/', null=True, blank=True, validators=[validar_tamano_imagen])
+    sku = models.CharField(max_length=100, unique=True)
+    activo = models.BooleanField(default=True)
+
+    class Meta:
+        unique_together = ('producto', 'color', 'talla')
+        db_table = 'variantes_producto'
+        verbose_name = 'Variante de producto'
+        verbose_name_plural = 'Variantes de producto'
+
+    # Metodo para que nos diga el nombre de la variante convinando el producto, color y talla
     def __str__(self):
-        return f"{self.producto.nombre} - {self.talla.nombreTalla}"
+        partes = [self.producto.nombre]
+        if self.color:
+            partes.append(str(self.color))
+        if self.talla:
+            partes.append(str(self.talla))
+        return ' - '.join(partes)
 
-    """"
-    Metodo para que cada ves que guarde StockTalla, se agregue la talla al producto
-    Debe de ser persistente, es decir que solo se encargue de guardar, no con logica adicional, para evitar problemas de concurrencia y mantener la responsabilidad única (SRP). 
-    La lógica de agregar o quitar tallas del producto debe manejarse en la vista o en un servicio dedicado, no dentro del modelo.
-    """
     def save(self, *args, **kwargs):
-            super().save(*args, **kwargs) 
+        # Si no se proporciona un SKU, genera uno basado en el producto, color y talla
+        # Usamos replace() para reemplazar espacios en blanco con guiones bajos
+        
+        # Pero si ya tenemos un SKU lo mantenemos
+        if not self.sku:
+            color_part = self.color.nombre.upper().replace(' ', '_') if self.color else 'SIN_COLOR'
+            talla_part = self.talla.nombreTalla.upper().replace(' ', '_') if self.talla else 'SIN_TALLA'
+            self.sku = f"{self.producto.id}-{color_part}-{talla_part}"
             
-            """
-            Para este caso vamos a sar las señales(signal) que seria uno de los patrones de diseño(Observer).
-            Cada ves que se guarde un StockTalla, se va a ejecutar la función sincronizar_talla_disponible que va a verificar si el stock es mayor a 0, si es así, va a agregar la talla al producto.
-            
-            @receiver = receptor de senales
-            post_save = senal que se dispara cuando se guarda una instancia de StockTalla
-            """
-            
-            @receiver(post_save, sender=StockTalla)
-            def sincronizar_talla_disponible(sender, instance, **kwargs):
-                if instance.talla_stock > 0:
-                    instance.producto.tallaDisponible.add(instance.talla)
-                    
-                    
-            # Mala practica si el proyecto es grande, pero funciona
-            """
-            # Si tiene stock, agregar talla a tallaDisponible
-            if self.talla_stock > 0:
-                self.producto.tallaDisponible.add(self.talla)
-            else:
-                # Si ya no tiene stock, puedes decidir si la quitas:
-                # self.producto.tallaDisponible.remove(self.talla)
-                pass
-                
-            """
+            # Normalizamos el SKU para eliminar caracteres no deseados
+            import unicodedata
+            self.sku = unicodedata.normalize('NFKD', self.sku).encode('ASCII', 'ignore').decode('ASCII')
 
-#Creamos el modelo para las reseñas
+        super().save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        
+        # Si la variante tiene una imagen, la borramos tambien
+        if self.imagen:
+            self.imagen.delete(save=False) # save=False para que no se guarde en la base de datos
+        
+        # Llamamos al metodo delete de la superclase
+        super().delete(*args, **kwargs)
+
+
 class Resena(models.Model):
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
     usuario = models.ForeignKey('Cliente', on_delete=models.CASCADE) # Le pasamos la llave foranea de Cliente para que se relacionen
@@ -202,8 +195,8 @@ class Pedido(models.Model):
         ('PAGADO', 'Pagado'),
         ('FALLIDO', 'Pago Fallido'),
         ('ENVIADO', 'Enviado'),
-        ]
-    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, related_name='pedidos') # El related_name es para que se pueda acceder a los pedidos desde el cliente, es decir cliente.pedidos.all() para obtener todos los pedidos de un cliente (Relación inversa)
+    ]
+    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, related_name='pedidos')
     creado = models.DateTimeField(auto_now_add=True)
     estado = models.CharField(max_length=20, choices=ESTADOS, default='PENDIENTE')
     total = models.DecimalField(max_digits=10, decimal_places=2)
@@ -218,9 +211,13 @@ class DetallePedido(models.Model):
     pedido = models.ForeignKey(Pedido, on_delete=models.CASCADE, related_name='detalles') # El related_name es para que se pueda acceder a los detalles de un pedido
     producto = models.ForeignKey(Producto, on_delete=models.PROTECT) # Usamos PROTECT para evitar que se borre un producto que está en un pedido
     cantidad = models.PositiveIntegerField(default=1)
-    precio_unitario = models.DecimalField(max_digits=10, decimal_places=2) # Precio del producto al momento de hacer el pedido
-    Talla = models.ForeignKey(Talla, on_delete=models.PROTECT) # Agregamos la talla al detalle del pedido para saber qué talla se pidió
-    
+    precio_unitario = models.DecimalField(max_digits=10, decimal_places=2)
+    talla = models.ForeignKey(Talla, on_delete=models.PROTECT)
+    variante = models.ForeignKey(
+        VarianteProducto, on_delete=models.SET_NULL, null=True, blank=True,
+        related_name='detalles_pedido'
+    )
+
     class Meta:
         db_table = 'detalles_pedido'
         
@@ -232,10 +229,10 @@ class PuntoVenta(models.Model):
     telefono = models.CharField(max_length=20, blank=True)
     horario = models.CharField(max_length=100, blank=True)
     maps_embed_url = models.TextField(
-        help_text="URL del iframe de Google Maps. Ve a maps.google.com → Compartir → Insertar mapa → copia solo el src del iframe"
+        help_text="URL del iframe de Google Maps. Ve a maps.google.com \u2192 Compartir \u2192 Insertar mapa \u2192 copia solo el src del iframe"
     )
     maps_url = models.URLField(
-        help_text="URL directa de Google Maps para el botón 'Ver en Google Maps'",
+        help_text="URL directa de Google Maps para el bot\u00f3n 'Ver en Google Maps'",
         blank=True
     )
     es_principal = models.BooleanField(default=False, help_text="Marcar si es el punto de venta principal")

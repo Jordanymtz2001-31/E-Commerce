@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
         btn.addEventListener('click', function(e) {
             e.preventDefault();
 
-            // Datos básicos
+            const productoId = this.dataset.productoId;
             document.getElementById('modalTitulo').textContent = this.dataset.titulo;
             document.getElementById('modalPrecio').textContent = this.dataset.precio;
             document.getElementById('modalCategoria').textContent = this.dataset.categoria || 'Sin categoría';
