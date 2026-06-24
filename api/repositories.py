@@ -1,75 +1,43 @@
 from django.db import models
 from django.db.models import QuerySet, Prefetch
 from django.shortcuts import get_object_or_404
-from .models import Categoria, Producto, PuntoVenta, Evento, Pedido, DetallePedido
+from .models import Categoria, Producto, PuntoVenta, Evento, Pedido, DetallePedido, VarianteProducto
 
 
 class ProductoRepository:
-    """
-    Repositorio para el acceso a datos de Producto.
 
-    DIP: Las vistas dependen de este repositorio (abstracción) en vez de
-    llamar a Producto.objects.filter(...) directamente. Si en el futuro se
-    agrega caché (Redis) o se cambia el ORM, solo se modifica este archivo.
-    OCP: Agregar un nuevo método de consulta (ej: buscar_por_precio) no
-    requiere modificar las vistas existentes.
-    """
-
-    def listar_con_stock(self, categoria_id: int = None) -> QuerySet:
-        """
-        Para listados que solo necesitan el stock total (sin desglose por talla).
-
-        Usa annotate + Sum('talla_stock') para calcular stock_disponible en
-        la propia consulta SQL, evitando el N+1 que ocurriría si cada producto
-        hiciera un aggregate() individual.
-        El valor anotado queda disponible como producto.stock_total y la
-        property stock_disponible lo usa automáticamente.
-        """
+    def listar_con_variantes(self, categoria_id: int = None) -> QuerySet:
+        
+        # Cargamos varias relaciones en una sola consulta
+        # Tambien las variantes pero solo las activas y relaciones con talla y color
         qs = Producto.objects.prefetch_related(
             'imagenes',
             'categoria',
-            'tallaDisponible',
-            'tipoMateria',
-            'color',
-        ).annotate(
-            stock_total=models.Sum('stocktalla_set__talla_stock'),
-        )
-        if categoria_id:
-            qs = qs.filter(categoria__id=categoria_id)
-        return qs
-
-    def listar_con_desglose_tallas(self, categoria_id: int = None) -> QuerySet:
-        """
-        Para listados que SÍ necesitan el detalle stock por talla en la UI
-        (ej: stock_por_talla en la tarjeta del producto).
-
-        Usa prefetch_related('stocktalla_set__talla') para cargar TODOS los
-        StockTalla + Talla en 2 consultas fijas, sin importar cuántos
-        productos haya. Sin esto, producto.stocktalla_set.filter() dentro
-        de un bucle generaría N consultas adicionales.
-        """
-        qs = Producto.objects.prefetch_related(
-            'imagenes',
-            'categoria',
-            'tallaDisponible',
             'tipoMateria',
             'instruccionesCuidado',
-            'color',
-            'stocktalla_set__talla',
+            Prefetch(
+                'variantes',
+                queryset=VarianteProducto.objects.filter(activo=True).select_related('color', 'talla'),
+            ),
+        ).annotate( # Creamos campos auxiliares para hacer consultas mas eficientes
+            stock_total=models.Sum('variantes__stock', filter=models.Q(variantes__activo=True)), # Suma el stock de todas las variantes activas
+            precio_min=models.Min('variantes__precio', filter=models.Q(variantes__activo=True)), # Minimo de todas las variantes activas
+            precio_max=models.Max('variantes__precio', filter=models.Q(variantes__activo=True)), # Maximo de todas las variantes activas
         )
+        
+        # Si hay un id de categoria, filtramos por ella
         if categoria_id:
             qs = qs.filter(categoria__id=categoria_id)
         return qs
 
-    # Alias semántico: prefetch_related es correcto para el desglose
-    listar_con_relaciones = listar_con_desglose_tallas
+    # Creamos un alias para cuando otro metodo lo llame ejecute este metodo
+    listar_con_relaciones = listar_con_variantes
 
     def filtrar_por_categoria(self, queryset: QuerySet, categoria_id: int) -> QuerySet:
-        
         return queryset.filter(categoria__id=categoria_id)
 
     def obtener_por_categoria(self, categoria_id: int) -> QuerySet:
-        return self.listar_con_desglose_tallas(categoria_id=categoria_id)
+        return self.listar_con_variantes(categoria_id=categoria_id)
 
 
 class CategoriaRepository:
@@ -137,6 +105,20 @@ class PedidoRepository:
         """
         
         qs = Pedido.objects.prefetch_related(
-            Prefetch('detalles', queryset=DetallePedido.objects.select_related('producto', 'Talla')),
+            Prefetch('detalles', queryset=DetallePedido.objects.select_related('producto', 'Talla', 'variante')),
         ).filter(cliente=cliente)
         return get_object_or_404(qs, pk=pk)
+
+
+# Repositorio para acceder a datos de VarianteProducto (Aun sin uso)
+class VarianteProductoRepository:
+
+    def listar_activas_por_producto(self, producto_id: int):
+        return VarianteProducto.objects.filter(
+            producto_id=producto_id, activo=True
+        ).select_related('color', 'talla')
+
+    def listar_activas_por_productos(self, producto_ids: list):
+        return VarianteProducto.objects.filter(
+            producto_id__in=producto_ids, activo=True
+        ).select_related('color', 'talla')
