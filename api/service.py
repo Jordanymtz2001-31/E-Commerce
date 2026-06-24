@@ -1,6 +1,6 @@
 import json
 from decimal import Decimal
-from .models import Cliente, Resena, Pedido, DetallePedido, Producto, Talla, StockTalla
+from .models import Cliente, Resena, Pedido, DetallePedido, Producto, Talla, VarianteProducto
 from django.contrib.auth.models import User
 from django.db import transaction
 import stripe
@@ -78,53 +78,121 @@ class PedidoService:
 
         Args:
             cliente: Cliente que realiza el pedido.
-            productos: Lista de dicts con {id: product_id, talla: str, cantidad: int}.
+            productos: Lista de dicts con {id, talla, cantidad, sku?, color?}.
+            Cada item debe incluir sku de la VarianteProducto.
 
-        La transacción asegura que si algo falla (producto no existe, talla
-        inválida), no se quede un pedido a medio crear.
+        ---
+        Optimización N+1:
+        La versión anterior hacía 3 consultas por cada item del carrito
+        (Producto.get, Talla.get, VarianteProducto.select_for_update().get).
+        Con 10 items en el carrito, eso era 30 consultas a MySQL.
+
+        En un servidor Gunicorn con 4 workers, si 3 usuarios hacen checkout
+        simultáneo, los 4 workers quedan atrapados esperando ~90 consultas
+        mientras los requests de imágenes, CSS, etc. se encolan hasta que
+        Gunicorn cierra la conexión (ERR_CONNECTION_CLOSED).
+
+        Solución: Extraer todos los IDs/skus ANTES del for, hacer 3 consultas
+        masivas con filter(__in=...), mapear a diccionarios en memoria y
+        dentro del for solo acceder al dict — 0 consultas adicionales.
+
+        select_for_update() también se hace en lote para bloquear todas las
+        variantes involucradas en una sola transacción atómica, evitando
+        deadlocks entre workers concurrentes.
         """
         with transaction.atomic():
-            total = Decimal('0.00') # Inicializamos el total del pedido en 0, lo iremos sumando a medida que procesamos cada item
-            detalles_data = [] # Lista para almacenar los objetos DetallePedido que vamos a crear, esto nos permite usar bulk_create para optimizar la inserción en la base de datos
+            # --- FASE 1: Recopilar todos los IDs y skus ---
+            producto_ids = [item['id'] for item in productos]
+            tallas = [item['talla'] for item in productos]
+            skus = [item['sku'] for item in productos]
+
+            # --- FASE 2: Cargar todo en 3 consultas masivas ---
+            # Creamos diccionarios en memoria con los IDs/skus/tallas de los items
+            
+            productos_map = {
+                p.id: p # Claves : valores
+                for p in Producto.objects.filter(pk__in=producto_ids) # pk__in indica que si esta dentro de la lista
+            }
+            tallas_map = {
+                t.nombreTalla: t # Claves : valores
+                for t in Talla.objects.filter(nombreTalla__in=set(tallas)) # nombreTalla__in indica que si esta dentro de la lista
+            }
+            
+            # Traemos las variantes y las bloqueamos para evitar compras duplicadas simultáneas
+            variantes = VarianteProducto.objects.filter(
+                sku__in=skus, activo=True # Filtramos las variantes activas y las que estan en la lista de skus
+            ).select_for_update()
+            
+            variantes_map = {
+                v.sku: v  # Claves : valores
+                for v in variantes
+            }
+
+            # --- FASE 3: Procesar items en memoria (0 consultas) ---
+            total = Decimal('0.00')
+            detalles_data = []
+            variantes_a_actualizar = [] # Lista para guardar las variantes modificadas
 
             for item in productos:
-                producto_obj = Producto.objects.get(pk=item['id'])
-                talla = Talla.objects.get(nombreTalla=item['talla'])
+                
+                # Ahora accedemos directamente a los diccionarios en memoria
+                producto_obj = productos_map.get(item['id'])
+                if producto_obj is None:
+                    raise Producto.DoesNotExist(
+                        f"Producto con ID {item['id']} no encontrado."
+                    )
+                talla_obj = tallas_map.get(item['talla'])
+                if talla_obj is None:
+                    raise Talla.DoesNotExist(
+                        f"Talla '{item['talla']}' no válida."
+                    )
                 cantidad = int(item['cantidad'])
 
-                # Bloqueamos la fila de StockTalla con select_for_update() para evitar
-                # condiciones de carrera si dos usuarios compran el mismo producto y talla
-                # simultáneamente. Esto requiere que estemos dentro de transaction.atomic().
-                stock_talla = StockTalla.objects.select_for_update().get(
-                    producto=producto_obj, talla=talla
-                )
-                if stock_talla.talla_stock < cantidad:
+                sku = item.get('sku')
+                if not sku:
+                    raise ValueError("El item del carrito no tiene SKU de variante.")
+
+                variante_obj = variantes_map.get(sku)
+                if variante_obj is None:
+                    raise ValueError(
+                        f"Variante con SKU {sku} no encontrada o inactiva."
+                    )
+                if variante_obj.stock < cantidad:
                     raise ValueError(
                         f"Stock insuficiente para {producto_obj.nombre} "
-                        f"(talla {talla.nombreTalla}): "
-                        f"solicitado {cantidad}, disponible {stock_talla.talla_stock}"
+                        f"(variante {sku}): "
+                        f"solicitado {cantidad}, disponible {variante_obj.stock}"
                     )
-                stock_talla.talla_stock -= cantidad
-                stock_talla.save()
+                    
+                # Restamos stock en memoria
+                variante_obj.stock -= cantidad
+                if variante_obj not in variantes_a_actualizar:
+                    variantes_a_actualizar.append(variante_obj)
+                
 
-                precio = producto_obj.precio
+                precio = variante_obj.precio
                 subtotal = precio * cantidad
                 total += subtotal
-                
+
                 detalles_data.append(DetallePedido(
                     producto=producto_obj,
                     cantidad=cantidad,
                     precio_unitario=precio,
-                    Talla=talla,
+                    talla=talla_obj,
+                    variante=variante_obj,
                 ))
 
-            # Creamos el pedido con el total calculado, pero sin detalles aún, ya que necesitamos el ID del pedido para asignarlo a los detalles
+            # --- FASE 4: Crear pedido y guardar detalles ---
             pedido = Pedido.objects.create(
                 cliente=cliente,
                 total=total,
             )
+            
+            # Actualizamos el stock de todas las variantes afectadas
+            if variantes_a_actualizar:
+                VarianteProducto.objects.bulk_update(variantes_a_actualizar, ['stock']) # Con bulk_update hacemos 1 sola consultas
 
-            # Por cada detalle en detalles_data
+            # Asignamos el pedido creado a los detalles en memoria de forma limpia
             for detalle in detalles_data:
                 detalle.pedido = pedido # Asignamos el pedido al detalle antes de guardarlo en la base de datos
             DetallePedido.objects.bulk_create(detalles_data) # Guardamos los detalles en la base de datos
@@ -135,19 +203,45 @@ class PedidoService:
     def restaurar_stock(pedido: Pedido) -> Pedido:
         """
         Restaura el stock de un pedido que no fue pagado (cancelado o expirado).
+
+        ---
+        Optimización N+1:
+        La versión anterior iteraba sobre cada detalle y hacía un
+        select_for_update().get() individual (N queries para N detalles).
+        Ahora cargamos todas las variantes en un solo query con
+        filter(pk__in=variante_ids).select_for_update() y las mapeamos
+        en un diccionario para restaurar en memoria.
         """
         with transaction.atomic():
-            for detalle in pedido.detalles.all():
-                
-                # Bloqueamos la fila de StockTalla con select_for_update() para evitar
-                # condiciones de carrera si dos usuarios compran el mismo producto y talla
-                # simultáneamente. Esto requiere que estemos dentro de transaction.atomic().
-                
-                stock_talla = StockTalla.objects.select_for_update().get(
-                    producto=detalle.producto, talla=detalle.Talla
-                )
-                stock_talla.talla_stock += detalle.cantidad # Aumentamos el stock del producto relacionado y le sumamos la cantidad que se iba a comprar
-                stock_talla.save()
+            
+            # Cargamos los detalles y sus variantes asociadas
+            detalles = pedido.detalles.select_related('variante').all()
+            variante_ids = [d.variante_id for d in detalles if d.variante_id]
+            
+            # Bloqueamos las filas en la base de datos con select_for_update()
+            variantes_map = {
+                v.id: v # Claves : valores
+                for v in VarianteProducto.objects.filter(
+                    pk__in=variante_ids # pk__in indica que si esta dentro de la lista
+                ).select_for_update()
+            }
+            
+            variantes_a_actualizar = []
+            
+            # Modificamos el stock puramente en la memoria RAM
+            for detalle in detalles:
+                if detalle.variante_id and detalle.variante_id in variantes_map:
+                    variante = variantes_map[detalle.variante_id]
+                    variante.stock += detalle.cantidad
+                    
+                    if variante not in variantes_a_actualizar:
+                        variantes_a_actualizar.append(variante)
+                        
+            # Enviamos una única consulta SQL para actualizar todas las variantes afectadas       
+            if variantes_a_actualizar:
+                VarianteProducto.objects.bulk_update(variantes_a_actualizar, ['stock'])
+            
+            # Actualizamos el estado del pedido
             pedido.estado = 'FALLIDO'
             pedido.save(update_fields=['estado'])
         return pedido
@@ -196,12 +290,24 @@ class StripeService:
 
         Retorna:
             URL de la sesión de checkout de Stripe.
-        """        
+        """       
+        
+        # 1. Autenticación con Stripe utilizando las buenas prácticas
         stripe.api_key = settings.STRIPE_SECRET_KEY # Obtenemos la clave secreta de Stripe desde las configuraciones de Django, esto es una buena práctica para no hardcodear claves en el código fuente
         stripe_customer_id = StripeService.obtener_o_crear_cliente(pedido.cliente)
 
-        line_items = [] # Lista de items que se enviarán a Stripe, cada uno con su precio, cantidad y descripción. Esto se construye a partir de los detalles del pedido, transformando la información de nuestros modelos a lo que Stripe espera.
-        for detalle in pedido.detalles.all():
+        # Optimización N+1: Usamos select_related('producto') para cargar
+        # el nombre del producto en la misma consulta que los detalles.
+        # Sin esto, cada acceso a detalle.producto.nombre dispararía una
+        # consulta adicional (N queries para N detalles), saturando los
+        # workers de Gunicorn igual que el checkout.
+        
+        # 2. Optimización N+1: Cargamos los detalles y sus productos base eficientemente
+        detalles = pedido.detalles.select_related('producto').all()
+        line_items = []
+        
+        for detalle in detalles:
+            
             line_items.append({
                 'price_data': {
                     'currency': 'mxn',
