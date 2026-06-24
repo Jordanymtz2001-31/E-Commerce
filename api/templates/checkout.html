@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', function() {
                      style="width:60px;height:60px;object-fit:cover;border-radius:8px;">
                 <div class="flex-grow-1">
                     <h6 class="fw-bold mb-0">${item.nombre}</h6>
-                    <small class="text-muted">Talla: ${item.talla} × ${item.cantidad}</small>
+                    <small class="text-muted">${item.color ? item.color + ' · ' : ''}Talla: ${item.talla} × ${item.cantidad}</small>
                 </div>
                 <span class="fw-bold span-precio">$${subtotal.toFixed(0)}</span>
             </div>

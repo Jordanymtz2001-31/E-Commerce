@@ -194,7 +194,11 @@
                     </div>
                     <p class="mb-2"><strong>Material:</strong> <span id="modalMateriales" class="badge badge-material ms-1"></span></p>
                     <p class="mb-2"><strong>Cuidado:</strong> <span id="modalCuidados" class="badge badge-cuidado ms-1"></span></p>
-                    <p class="mb-2"><strong>Colores:</strong> <span id="modalColores" class="badge badge-colores ms-1"></span></p>
+                    <!-- SELECTOR DE COLOR (interactivo) -->
+                    <p class="mb-2"><strong>Color:</strong></p>
+                    <div id="colorPicker" class="d-flex gap-2 flex-wrap mb-3">
+                        <!-- Se llena con JS desde modal-producto.js -->
+                    </div>
                     <!-- Stock Status, se manejara con JS -->
                     <div class="stock-status mb-3">
                         <div id="modalStockIcon" class="h-2 w-2 rounded-full bg-green-600 animate-pulse me-2 d-inline-block"></div>
@@ -223,6 +227,7 @@
                                 </button>
                             </div>
                         </div>
+                        <input type="hidden" id="varianteSku" value="">
                         <button id="btnAgregarCarrito" class="btn btn-artesanal w-100 mt-1" style="padding:0.75rem 1.5rem !important;font-size:0.95rem !important;">
                             <span class="material-symbols-outlined me-2 fs-5">shopping_bag</span>
                             Agregar al canasto
