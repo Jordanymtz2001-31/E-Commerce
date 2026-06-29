@@ -254,6 +254,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     label.addEventListener('click', function () {
                         if (disabled) {
                             actualizarStockDisplay({ stock: 0 });
+                            document.getElementById('btnAgregarCarrito').disabled = true;
                             return;
                         }
 
@@ -267,6 +268,9 @@ document.addEventListener('DOMContentLoaded', function () {
                         varianteSkuInput.value = v.sku;
 
                         actualizarStockDisplay(v);
+
+                        // Habilitar el botón porque hay una variante válida seleccionada
+                        document.getElementById('btnAgregarCarrito').disabled = false;
 
                         // Si la variante es más barata que el precio base, mostrar descuento.
                         // Si es igual o más cara, mostrar solo el precio de la variante.
@@ -306,11 +310,19 @@ document.addEventListener('DOMContentLoaded', function () {
                         document.getElementById('modalPrecio').innerHTML =
                             `$ ${primerConStock.precio.toFixed(0)} MXN`;
                     }
+
+                    // Habilitar botón porque hay una variante con stock auto-seleccionada
+                    const btnAuto = document.getElementById('btnAgregarCarrito');
+                    if (btnAuto) btnAuto.disabled = false;
                 } else {
                     varianteSeleccionada = null;
                     varianteSkuInput.value = '';
                     actualizarStockDisplay(null);
                     document.getElementById('modalPrecio').innerHTML = `$ ${precioBaseNum.toFixed(0)} MXN`;
+
+                    // Deshabilitar botón porque no hay variante con stock
+                    const btnAuto = document.getElementById('btnAgregarCarrito');
+                    if (btnAuto) btnAuto.disabled = true;
                 }
             }
 
@@ -506,6 +518,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
 
                 nuevoBtn.dataset.productoNombre = this.dataset.titulo;
+
+                // Inicialmente deshabilitado hasta que se seleccione una variante con stock
+                nuevoBtn.disabled = true;
             }
 
             // -----------------------------------------------------------------
