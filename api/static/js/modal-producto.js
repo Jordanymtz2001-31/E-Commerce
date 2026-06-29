@@ -58,6 +58,7 @@
  *   - data-cuidados            — instrucciones de cuidado
  *   - data-descripcion         — descripción del producto
  *   - data-precio-min-num      — precio mínimo como número
+ *   - data-precio-base         — precio de referencia del producto
  *   - data-imagenes            — JSON array de URLs de imágenes
  *   - data-imagen              — fallback si data-imagenes falla
  *   - data-variantes           — JSON array de objetos variante
@@ -95,8 +96,9 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('modalDescripcion').textContent = this.dataset.descripcion || '';
 
             // -----------------------------------------------------------------
-            // 1.2 Parsear precio mínimo (se usa como precio base para mostrar)
+            // 1.2 Parsear precios: base (referencia) y mínimo (para catálogo)
             // -----------------------------------------------------------------
+            const precioBaseNum = parseFloat(this.dataset.precioBase) || 0;
             const precioMinNum = parseFloat(this.dataset.precioMinNum) || 0;
 
             // -----------------------------------------------------------------
@@ -266,13 +268,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
                         actualizarStockDisplay(v);
 
-                        // Si esta variante tiene precio distinto al mínimo, se muestra
-                        // con precio tachado (precio con descuento)
-                        if (v.precio && v.precio !== precioMinNum) {
+                        // Si la variante es más barata que el precio base, mostrar descuento.
+                        // Si es igual o más cara, mostrar solo el precio de la variante.
+                        if (v.precio && v.precio < precioBaseNum) {
                             const el = document.getElementById('modalPrecio');
-                            el.innerHTML = `$ ${v.precio.toFixed(0)} MXN <small class="text-muted fw-normal fs-6"><s>$${precioMinNum.toFixed(0)} MXN</s></small>`;
+                            el.innerHTML = `$ ${v.precio.toFixed(0)} MXN <small class="text-muted fw-normal fs-6"><s>$${precioBaseNum.toFixed(0)} MXN</s></small>`;
+                        } else if (v.precio) {
+                            document.getElementById('modalPrecio').innerHTML = `$ ${v.precio.toFixed(0)} MXN`;
                         } else {
-                            document.getElementById('modalPrecio').innerHTML = `$ ${precioMinNum.toFixed(0)} MXN`;
+                            document.getElementById('modalPrecio').innerHTML = `$ ${precioBaseNum.toFixed(0)} MXN`;
                         }
                     });
 
@@ -293,10 +297,20 @@ document.addEventListener('DOMContentLoaded', function () {
                     varianteSeleccionada = primerConStock;
                     varianteSkuInput.value = primerConStock.sku;
                     actualizarStockDisplay(primerConStock);
+
+                    // Mostrar precio correcto de la variante auto-seleccionada
+                    if (primerConStock.precio && primerConStock.precio < precioBaseNum) {
+                        document.getElementById('modalPrecio').innerHTML =
+                            `$ ${primerConStock.precio.toFixed(0)} MXN <small class="text-muted fw-normal fs-6"><s>$${precioBaseNum.toFixed(0)} MXN</s></small>`;
+                    } else if (primerConStock.precio) {
+                        document.getElementById('modalPrecio').innerHTML =
+                            `$ ${primerConStock.precio.toFixed(0)} MXN`;
+                    }
                 } else {
                     varianteSeleccionada = null;
                     varianteSkuInput.value = '';
                     actualizarStockDisplay(null);
+                    document.getElementById('modalPrecio').innerHTML = `$ ${precioBaseNum.toFixed(0)} MXN`;
                 }
             }
 
@@ -367,26 +381,28 @@ document.addEventListener('DOMContentLoaded', function () {
                         this.className = `btn btn-sm rounded-pill px-3 d-inline-flex align-items-center gap-2 color-option btn-primary text-white`;
 
                         // Si la variante de este color tiene imagen propia, se muestra
-                        // primero en el carrusel, seguida de las imágenes generales
+                        // solo esa imagen en el carrusel (sin las imágenes generales)
                         const varianteConImagen = variantes.find(v =>
                             v.color && v.color.nombre === color.nombre && v.imagen
                         );
                         if (varianteConImagen) {
-                            renderCarousel([varianteConImagen.imagen, ...imagenes]);
+                            renderCarousel([varianteConImagen.imagen]);
                         } else {
                             renderCarousel(imagenes);
                         }
 
-                        // Si la variante de este color tiene precio distinto al mínimo,
-                        // se muestra con precio tachado
-                        const varianteConPrecio = variantes.find(v =>
-                            v.color && v.color.nombre === color.nombre && v.precio && v.precio !== precioMinNum
+                        // Si la primera variante de este color es más barata que el precio base,
+                        // mostrar descuento. Si no, mostrar su precio normal.
+                        const varianteDelColor = variantes.find(v =>
+                            v.color && v.color.nombre === color.nombre && v.precio
                         );
-                        if (varianteConPrecio) {
+                        if (varianteDelColor && varianteDelColor.precio < precioBaseNum) {
                             const el = document.getElementById('modalPrecio');
-                            el.innerHTML = `$ ${varianteConPrecio.precio.toFixed(0)} MXN <small class="text-muted fw-normal fs-6"><s>$${precioMinNum.toFixed(0)} MXN</s></small>`;
+                            el.innerHTML = `$ ${varianteDelColor.precio.toFixed(0)} MXN <small class="text-muted fw-normal fs-6"><s>$${precioBaseNum.toFixed(0)} MXN</s></small>`;
+                        } else if (varianteDelColor) {
+                            document.getElementById('modalPrecio').innerHTML = `$ ${varianteDelColor.precio.toFixed(0)} MXN`;
                         } else {
-                            document.getElementById('modalPrecio').innerHTML = `$ ${precioMinNum.toFixed(0)} MXN`;
+                            document.getElementById('modalPrecio').innerHTML = `$ ${precioBaseNum.toFixed(0)} MXN`;
                         }
 
                         // Reconstruir las tallas disponibles para este color
@@ -406,7 +422,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         v.color && v.color.nombre === colorSeleccionado && v.imagen
                     );
                     if (primerConImagen) {
-                        renderCarousel([primerConImagen.imagen, ...imagenes]);
+                        renderCarousel([primerConImagen.imagen]);
                     }
                 }
             }
@@ -419,8 +435,6 @@ document.addEventListener('DOMContentLoaded', function () {
             // Si ninguna variante tiene stock, se oculta el botón de agregar
             const count = variantes.reduce((sum, v) => sum + v.stock, 0);
             carritoActions.style.display = count > 0 ? 'block' : 'none';
-
-            document.getElementById('modalPrecio').innerHTML = `$ ${precioMinNum.toFixed(0)} MXN`;
 
             // -----------------------------------------------------------------
             // 1.6 Configurar botón "Agregar al carrito"

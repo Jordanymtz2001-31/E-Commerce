@@ -69,11 +69,16 @@ class VarianteProductoAdmin(admin.ModelAdmin):
 
 @admin.register(Producto)
 class ProductoAdmin(admin.ModelAdmin):
-    list_display = ['nombre', 'rango_precios', 'stock_variantes', 'descripcion']
+    list_display = ['nombre', 'precio_base', 'rango_precios', 'stock_variantes', 'descripcion']
     list_filter = ['categoria']
     search_fields = ['nombre']
     filter_horizontal = ['categoria', 'tipoMateria', 'instruccionesCuidado']
     inlines = [FotoProductoInline, VarianteProductoInline]
+    fieldsets = [
+        (None, {
+            'fields': ['nombre', 'precio_base', 'descripcion', 'categoria', 'tipoMateria', 'instruccionesCuidado']
+        }),
+    ]
 
     # Metodo para mostrar el rango de precios en el administrador
     def rango_precios(self, obj):

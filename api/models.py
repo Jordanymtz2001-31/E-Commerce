@@ -70,6 +70,9 @@ class Color(models.Model):
 
 class Producto(models.Model):
     nombre = models.CharField(max_length=50, null=False, blank=False)
+    precio_base = models.DecimalField(max_digits=10, decimal_places=2,
+        help_text="Precio de referencia del producto. Si una variante es más barata, se mostrará como descuento."
+    )
     categoria = models.ManyToManyField(Categoria, blank=True, related_name='productos')
     tipoMateria = models.ManyToManyField(TipoMateria, related_name='productos')
     instruccionesCuidado = models.ManyToManyField(InstruccionesCuidado, related_name='productos', blank=True)
