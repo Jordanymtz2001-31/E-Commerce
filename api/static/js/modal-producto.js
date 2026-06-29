@@ -1,275 +1,530 @@
-document.addEventListener('DOMContentLoaded', function() {
+/**
+ * ============================================================================
+ * modal-producto.js — Modal de producto del catálogo
+ * ============================================================================
+ *
+ * RESPONSABILIDAD:
+ *   Controla el modal que se abre al hacer clic en un producto del catálogo.
+ *   Muestra información del producto, galería de imágenes, selector de
+ *   variantes (color + talla), indicador de stock, y permite agregar al carrito.
+ *
+ * FLUJO GENERAL (cuando el usuario hace clic en un producto):
+ *   1. Se leen los dataset-* del botón (título, categoría, precio, imágenes, variantes)
+ *   2. Se renderiza el carrusel de imágenes con las fotos del producto
+ *   3. Se extraen los colores únicos de las variantes y se crean los botones de color
+ *   4. Al seleccionar un color:
+ *      - Se filtran las tallas disponibles para ese color
+ *      - Se actualiza el carrusel si la variante tiene imagen propia
+ *      - Se actualiza el precio si difiere del precio mínimo
+ *   5. Al seleccionar una talla:
+ *      - Se muestra el indicador de stock (verde/rojo)
+ *      - Se actualiza el precio si difiere del precio mínimo
+ *   6. Al hacer clic en "Agregar al carrito":
+ *      - Se valida que haya variante seleccionada y stock disponible
+ *      - Se llama a agregarAlCarrito() (definida en otro archivo)
+ *      - Se muestra toast de confirmación y animación en el badge del carrito
+ *
+ * DEPENDENCIAS:
+ *   - Bootstrap 5 (Carousel, Modal, Toast)
+ *   - function agregarAlCarrito() — definida en carrito.js
+ *   - window.USER_LOGGED_IN — variable global para controlar visibilidad del formulario de reseña
+ *
+ * VARIABLES HTML ESPERADAS:
+ *   - #modalProducto           — contenedor del modal Bootstrap
+ *   - #modalCarouselInner      — slides del carrusel
+ *   - #carouselProducto        — elemento raíz del carrusel
+ *   - #carouselPrev/Next       — botones de navegación del carrusel
+ *   - #carouselIndicadores     — indicadores del carrusel
+ *   - #modalTitulo/Categoria/Materiales/Cuidados/Descripcion — info del producto
+ *   - #modalPrecio             — precio mostrado
+ *   - #colorPicker             — contenedor de botones de color
+ *   - #sizePicker              — contenedor de botones de talla
+ *   - #carrito-actions         — sección de agregar al carrito
+ *   - #varianteSku             — input hidden con el SKU de la variante seleccionada
+ *   - #modalStockIcon/Text     — indicador de stock
+ *   - #btnAgregarCarrito       — botón de agregar al carrito
+ *   - #qtyInput                — input de cantidad
+ *   - #cartToast               — toast de confirmación
+ *   - #cart-badge              — badge del carrito en el navbar
+ *   - #formResena              — formulario de reseñas
+ *   - #loginRequerido          — mensaje de login requerido
+ *   - .modal-trigger           — botones que abren el modal (en el catálogo)
+ *
+ * VARIABLES DATA-ATRIBUTOS ESPERADAS EN .modal-trigger:
+ *   - data-producto-id         — ID del producto
+ *   - data-titulo              — nombre del producto
+ *   - data-categoria           — categoría del producto
+ *   - data-materiales          — materiales (separados por coma)
+ *   - data-cuidados            — instrucciones de cuidado
+ *   - data-descripcion         — descripción del producto
+ *   - data-precio-min-num      — precio mínimo como número
+ *   - data-imagenes            — JSON array de URLs de imágenes
+ *   - data-imagen              — fallback si data-imagenes falla
+ *   - data-variantes           — JSON array de objetos variante
+ *
+ * ESTRUCTURA ESPERADA DE CADA OBJETO VARIANTE:
+ *   {
+ *     sku: string,              // identificador único (ej: "1-ROJO-M")
+ *     precio: number,           // precio de esta variante
+ *     stock: number,            // unidades disponibles
+ *     imagen: string|null,      // URL de imagen específica de la variante
+ *     color: { nombre: string, hex: string } | null,
+ *     talla: string             // nombre de la talla (ej: "M", "42")
+ *   }
+ *
+ * BACKUP: api/static/js/modal-producto.js.bak
+ */
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    // =========================================================================
+    // 1. CLICK EN BOTONES DEL CATÁLOGO — abre el modal de producto
+    // =========================================================================
     document.querySelectorAll('.modal-trigger').forEach(btn => {
-        btn.addEventListener('click', function(e) {
+        btn.addEventListener('click', function (e) {
             e.preventDefault();
 
+            // -----------------------------------------------------------------
+            // 1.1 Poblar información básica del producto
+            // -----------------------------------------------------------------
             const productoId = this.dataset.productoId;
             document.getElementById('modalTitulo').textContent = this.dataset.titulo;
-            document.getElementById('modalPrecio').textContent = this.dataset.precio;
             document.getElementById('modalCategoria').textContent = this.dataset.categoria || 'Sin categoría';
-
-            // NUEVOS DATOS
-            //document.getElementById('modalTallas').textContent = this.dataset.tallas || 'N/A';
             document.getElementById('modalMateriales').textContent = this.dataset.materiales || 'N/A';
             document.getElementById('modalCuidados').textContent = this.dataset.cuidados || 'N/A';
             document.getElementById('modalDescripcion').textContent = this.dataset.descripcion || '';
 
-            // Construir carousel de imágenes
-            const imagenesRaw = this.dataset.imagenes || "[]"; // Obtener las imagenes de dataset y las parsear
-            let imagenes = []; // Array para almacenar las imagenes
+            // -----------------------------------------------------------------
+            // 1.2 Parsear precio mínimo (se usa como precio base para mostrar)
+            // -----------------------------------------------------------------
+            const precioMinNum = parseFloat(this.dataset.precioMinNum) || 0;
 
-            // Usamos try catch para parsear el JSON
+            // -----------------------------------------------------------------
+            // 1.3 Parsear imágenes del producto
+            //     Django envía el JSON con comillas simples, por eso se reemplazan
+            //     antes de parsear. Si falla, se usa la imagen individual como fallback.
+            // -----------------------------------------------------------------
+            const imagenesRaw = this.dataset.imagenes || "[]";
+            let imagenes = [];
             try {
-                imagenes = JSON.parse(imagenesRaw.replace(/'/g, '"')); // Reemplazar las comillas simples por comillas dobles
-            } catch(e) {
-                imagenes = [this.dataset.imagen]; // Si falla, usamos la imagen principal
+                imagenes = JSON.parse(imagenesRaw.replace(/'/g, '"'));
+            } catch (e) {
+                imagenes = [this.dataset.imagen];
             }
 
-            // Elementos del DOM
+            // Referencias a elementos del carrusel (se reutilizan en renderCarousel)
             const carouselInner = document.getElementById('modalCarouselInner');
             const carouselPrev = document.getElementById('carouselPrev');
             const carouselNext = document.getElementById('carouselNext');
             const carouselIndicadores = document.getElementById('carouselIndicadores');
 
-            // Limpiar carousel anterior, Sin esto, cada vez que abres un producto nuevo se acumularían las imágenes del anterior.
-            carouselInner.innerHTML = '';
-            carouselIndicadores.innerHTML = ''; // Limpiar indicadores / las barras
+            // -----------------------------------------------------------------
+            // renderCarousel(imgs) — Reconstruye el carrusel con un array de URLs
+            // -----------------------------------------------------------------
+            // Se llama al abrir el modal y cada vez que cambia el color seleccionado,
+            // para mostrar la imagen de la variante de ese color primero.
+            function renderCarousel(imgs) {
+                carouselInner.innerHTML = '';
+                carouselIndicadores.innerHTML = '';
 
-            if (imagenes.length === 0) { // Si no hay imagenes
-                imagenes = ['https://placehold.co/400x280?text=Sin+Imagen'];
+                const imgsFinal = imgs.length > 0 ? imgs : ['https://placehold.co/400x280?text=Sin+Imagen'];
+
+                imgsFinal.forEach((url, index) => {
+                    carouselInner.innerHTML += `
+                        <div class="carousel-item ${index === 0 ? 'active' : ''}" style="height:100%;">
+                            <img src="${url}" class="d-block w-100 h-100" style="object-fit:cover;" alt="Imagen ${index + 1}">
+                        </div>
+                    `;
+                    carouselIndicadores.innerHTML += `
+                        <button type="button" data-bs-target="#carouselProducto" data-bs-slide-to="${index}"
+                                class="${index === 0 ? 'active' : ''}" aria-current="${index === 0 ? 'true' : 'false'}">
+                        </button>
+                    `;
+                });
+
+                // Solo se muestran flechas e indicadores si hay más de 1 imagen
+                carouselPrev.style.display = imgsFinal.length > 1 ? 'block' : 'none';
+                carouselNext.style.display = imgsFinal.length > 1 ? 'block' : 'none';
+                carouselIndicadores.style.display = imgsFinal.length > 1 ? 'flex' : 'none';
+
+                // Se resetea el carrusel a la primera imagen (necesario si el usuario
+                // navegó antes de cambiar de color, y el carrusel ya estaba en otra posición)
+                const carouselEl = document.getElementById('carouselProducto');
+                const carouselInstance = bootstrap.Carousel.getOrCreateInstance(carouselEl);
+                carouselInstance.to(0);
             }
 
-            // Construir slides
-            // Recorremos el array de imagenes, index es posicion (0, 1, 2...), el primero es la imagen principal
-            // La primera imagen se agrega la clase active porque Bootstrap necesita que exactamente un slide esté activo al inicio
-            imagenes.forEach((url, index) => {
-                carouselInner.innerHTML += `
-                    <div class="carousel-item ${index === 0 ? 'active' : ''}" style="height:100%;">
-                        <img src="${url}" class="d-block w-100 h-100" style="object-fit:cover;" alt="Imagen ${index + 1}">
-                    </div>
-                `;
-                // Indicadores
-                // Por cada imagen también crea un punto indicador abajo del carousel. data-bs-slide-to le dice a Bootstrap a qué slide ir cuando se clickea ese punto
-                carouselIndicadores.innerHTML += `
-                    <button type="button" data-bs-target="#carouselProducto" data-bs-slide-to="${index}" 
-                            class="${index === 0 ? 'active' : ''}" aria-current="${index === 0 ? 'true' : 'false'}">
-                    </button>
-                `;
-            });
+            renderCarousel(imagenes);
 
-            // Mostrar controles solo si hay más de 1 imagen
-            if (imagenes.length > 1) {
-                carouselPrev.style.display = 'block';
-                carouselNext.style.display = 'block';
-                carouselIndicadores.style.display = 'flex';
-            } else {
-                carouselPrev.style.display = 'none';
-                carouselNext.style.display = 'none';
-                carouselIndicadores.style.display = 'none';
-            }
-
-            // Reiniciar el carousel de Bootstrap
-            const carouselEl = document.getElementById('carouselProducto');
-            const carouselInstance = bootstrap.Carousel.getOrCreateInstance(carouselEl);
-            carouselInstance.to(0);
-
-            // Tallas
-            let stockTallas = [];
+            // -----------------------------------------------------------------
+            // 1.4 Parsear variantes (colores + tallas + stock + precios)
+            // -----------------------------------------------------------------
+            let variantes = [];
             try {
-                const raw = this.dataset.stockTallas || '[]';
-                stockTallas = JSON.parse(raw.replace(/'/g, '"'));
-            } catch(e) {
-                console.error('Error parseando stock tallas:', e, this.dataset.stockTallas);
+                const raw = this.dataset.variantes || '[]';
+                variantes = JSON.parse(raw.replace(/'/g, '"'));
+            } catch (e) {
+                console.error('Error parseando variantes:', e, this.dataset.variantes);
             }
-            
-            // Stock
-            const stock = parseInt(this.dataset.stock) || 0;
+
+            // Referencias a elementos del selector de variantes
+            const coloresContainer = document.getElementById('colorPicker');
+            const sizePicker = document.getElementById('sizePicker');
+            const carritoActions = document.getElementById('carrito-actions');
+            const varianteSkuInput = document.getElementById('varianteSku');
             const stockIcon = document.getElementById('modalStockIcon');
             const stockText = document.getElementById('modalStockText');
-            if (stock > 0) {
-                stockIcon.style.backgroundColor = '#10b981';
-                stockText.textContent = `Disponible (${stock} unidades)`;
-                stockText.className = 'text-success fw-medium small';
-            } else {
-                stockIcon.style.backgroundColor = '#ef4444';
-                stockText.textContent = 'Agotado';
-                stockText.className = 'text-danger fw-medium small';
-            }
 
-            // --- Colores ---
-            const coloresContainer = document.getElementById('modalColores');
-            if (coloresContainer) {
-                let colores = [];
-                try {
-                    const raw = this.dataset.colores || '[]';
-                    colores = JSON.parse(raw.replace(/'/g, '"'));
-                } catch(e) {
-                    console.error('Error parseando colores:', e, this.dataset.colores);
+            // Estado del modal: qué variante y color están seleccionados
+            let varianteSeleccionada = null;
+            let colorSeleccionado = null;
+
+            // -----------------------------------------------------------------
+            // actualizarStockDisplay(variante) — Actualiza el indicador visual
+            // -----------------------------------------------------------------
+            // Muestra un círculo verde + texto si hay stock, rojo si no.
+            // Se llama cuando se selecciona una talla o cuando no hay selección.
+            function actualizarStockDisplay(variante) {
+                if (!variante) {
+                    stockIcon.style.backgroundColor = '#ef4444';
+                    stockText.textContent = 'Selecciona una variante para visualizar el producto';
+                    stockText.className = 'text-muted fw-medium small';
+                    return;
                 }
-                if (colores.length > 0) {
-                    coloresContainer.innerHTML = colores.map(c =>
-                        `<span class="d-inline-flex align-items-center gap-1 me-2 badge bg-light text-dark border fw-normal">
-                            <span style="display:inline-block;width:12px;height:12px;background:${c.hex};border-radius:50%;border:1px solid #ccc;"></span>
-                            ${c.nombre}
-                        </span>`
-                    ).join('');
+                if (variante.stock > 0) {
+                    stockIcon.style.backgroundColor = '#10b981';
+                    stockText.textContent = `Disponible (${variante.stock} unidades)`;
+                    stockText.className = 'text-success fw-medium small';
                 } else {
-                    coloresContainer.innerHTML = '<span class="text-muted small">N/A</span>';
+                    stockIcon.style.backgroundColor = '#ef4444';
+                    stockText.textContent = 'Agotado';
+                    stockText.className = 'text-danger fw-medium small';
                 }
             }
 
-            // --- SIZE PICKER: poblar tallas seleccionables ---
-            const sizePicker = document.getElementById('sizePicker'); // Optengo el contenedor donde van las tallas para agregarle los botones de talla dinamicamente
-            const carritoActions = document.getElementById('carrito-actions'); // Contenedor del botón de agregar al carrito, lo mostramos o ocultamos dependiendo si hay tallas disponibles, si no hay tallas no tiene sentido mostrar el botón de agregar al carrito porque no se podría seleccionar una talla
-            if (!sizePicker) return; // Si no encontramos el contenedor de tallas, no hacemos nada
+            // -----------------------------------------------------------------
+            // llenarSizePicker(color) — Construye los botones de talla
+            // -----------------------------------------------------------------
+            // Filtra las variantes por el color seleccionado y crea un botón
+            // tipo radio por cada talla disponible. Incluye el stock entre
+            // paréntesis para que el usuario vea disponibilidad.
+            //
+            // Auto-selección: al renderizar, selecciona automáticamente la
+            // primera variante con stock para agilizar la experiencia.
+            //
+            // Se llama:
+            //   - Al abrir el modal (con el primer color)
+            //   - Cada vez que cambia la selección de color
+            function llenarSizePicker(color) {
+                sizePicker.innerHTML = '';
 
-            sizePicker.innerHTML = ''; // Limpiamos las tallas anteriores, Sin esto, cada vez que abres un producto nuevo se acumularían las tallas del anterior.
+                const variantesFiltradas = color
+                    ? variantes.filter(v => v.color && v.color.nombre === color)
+                    : variantes;
 
-            if (stockTallas.some(t => t.stock > 0)) { // Si hay tallas con stock
-                carritoActions.style.display = 'block'; // Mostramos toda la seccion de acciones de carrito (que incluye el botón de agregar al carrito y el selector de cantidad) si hay tallas disponibles
+                if (variantesFiltradas.length === 0) return;
 
-                // Recorremos el array de tallas con stock, por cada talla creamos un botón tipo radio para que el usuario pueda seleccionar una talla, también agregamos un event listener para cambiar el estilo del botón seleccionado cuando se clickea
-                stockTallas.forEach((item, index) => {
-                    const id = `size-${item.talla}`; // Creamos un id único para el input y su label asociado, esto es necesario para que al hacer click en el label se seleccione el input radio correspondiente, usamos la talla como parte del id para asegurarnos que sea único por producto
-                    const disabled = item.stock <= 0 ? 'disabled' : ''; // Si el stock de esa talla es 0 o menos, el botón se muestra deshabilitado y con opacidad reducida
-                    const label = document.createElement('label'); // Creamos el label que actúa como botón visible para el usuario, el input radio estará oculto pero el label es lo que el usuario verá y clickeá para seleccionar la talla
-                    label.className = `btn btn-sm rounded-pill px-3 size-option ${disabled ? 'disabled opacity-50' : ''} ${index === 0 ? 'btn-primary text-white' : 'btn-outline-secondary'}`;
-                    label.setAttribute('for', id); // Asociamos el id del input radio con el label, esto hace que al hacer click en el label se seleccione el input radio correspondiente
-                    label.innerHTML = `${item.talla} <small class="ms-1 opacity-75">(${item.stock})</small>`;
+                let primerConStock = null;
 
-                    // Input radio oculto para seleccionar la talla, el name es el mismo para todos los radios para que solo se pueda seleccionar uno, el id es único para cada talla y se asocia con el label, el value es la talla que se seleccionará cuando se elija ese radio
+                variantesFiltradas.forEach(v => {
+                    const id = `size-${v.sku}`;
+                    const disabled = v.stock <= 0;
+
+                    const label = document.createElement('label');
+                    label.className = `btn btn-sm rounded-pill px-3 size-option ${disabled ? 'disabled opacity-50' : 'btn-outline-secondary'}`;
+                    label.setAttribute('for', id);
+                    label.innerHTML = `${v.talla} <small class="ms-1 opacity-75">(${v.stock})</small>`;
+
                     const input = document.createElement('input');
                     input.type = 'radio';
                     input.className = 'btn-check size-radio';
                     input.name = 'tallaSeleccionada';
                     input.id = id;
-                    input.value = item.talla;
+                    input.value = v.sku;
                     input.autocomplete = 'off';
-                    if (index === 0 && !disabled) input.checked = true; // Si es la primera talla y no esta deshabilitada, la seleccionamos por defecto
 
-                    // Click en label: actualizar estilo
-                    label.addEventListener('click', function() {
-                        if (disabled) return;
+                    // Se guarda la primera variante con stock para auto-seleccionar
+                    if (!disabled && !primerConStock) {
+                        primerConStock = v;
+                    }
+
+                    // Click en una talla: actualiza estado visual, stock y precio
+                    label.addEventListener('click', function () {
+                        if (disabled) {
+                            actualizarStockDisplay({ stock: 0 });
+                            return;
+                        }
+
+                        // Resetear estilo de todas las tallas y resaltar la seleccionada
                         document.querySelectorAll('.size-option').forEach(el => {
                             el.className = `btn btn-sm rounded-pill px-3 size-option btn-outline-secondary`;
                         });
                         this.className = `btn btn-sm rounded-pill px-3 size-option btn-primary text-white`;
+
+                        varianteSeleccionada = v;
+                        varianteSkuInput.value = v.sku;
+
+                        actualizarStockDisplay(v);
+
+                        // Si esta variante tiene precio distinto al mínimo, se muestra
+                        // con precio tachado (precio con descuento)
+                        if (v.precio && v.precio !== precioMinNum) {
+                            const el = document.getElementById('modalPrecio');
+                            el.innerHTML = `$ ${v.precio.toFixed(0)} MXN <small class="text-muted fw-normal fs-6"><s>$${precioMinNum.toFixed(0)} MXN</s></small>`;
+                        } else {
+                            document.getElementById('modalPrecio').innerHTML = `$ ${precioMinNum.toFixed(0)} MXN`;
+                        }
                     });
 
-                    // Agregamos el input radio y el label al contenedor de tallas
-                    sizePicker.appendChild(input); // con el appendChild agregamos el input radio al contenedor
+                    sizePicker.appendChild(input);
                     sizePicker.appendChild(label);
                 });
-            } else {
-                carritoActions.style.display = 'none'; // Ocultamos el botón de agregar al carrito si no hay tallas disponibles
+
+                // Auto-seleccionar la primera variante con stock
+                if (primerConStock) {
+                    const firstInput = document.getElementById(`size-${primerConStock.sku}`);
+                    if (firstInput) {
+                        firstInput.checked = true;
+                        const firstLabel = document.querySelector(`label[for="size-${primerConStock.sku}"]`);
+                        if (firstLabel) {
+                            firstLabel.className = `btn btn-sm rounded-pill px-3 size-option btn-primary text-white`;
+                        }
+                    }
+                    varianteSeleccionada = primerConStock;
+                    varianteSkuInput.value = primerConStock.sku;
+                    actualizarStockDisplay(primerConStock);
+                } else {
+                    varianteSeleccionada = null;
+                    varianteSkuInput.value = '';
+                    actualizarStockDisplay(null);
+                }
             }
 
-            // --- Botón "Agregar al canasto" ---
+            // -----------------------------------------------------------------
+            // llenarColorPicker() — Construye los botones de color
+            // -----------------------------------------------------------------
+            // Extrae los colores únicos de todas las variantes, crea un botón
+            // tipo radio por cada uno con un círculo del color + nombre.
+            //
+            // Al hacer clic en un color:
+            //   1. Se re-renderiza el carrusel con la imagen de esa variante primero
+            //   2. Se actualiza el precio si difiere del mínimo
+            //   3. Se reconstruyen los botones de talla para ese color
+            //
+            // Se llama una vez al abrir el modal, y el primer color queda
+            // pre-seleccionado.
+            function llenarColorPicker() {
+                coloresContainer.innerHTML = '';
+
+                // Extraer colores únicos usando Set para evitar duplicados
+                const coloresUnicos = [];
+                const vistos = new Set();
+
+                variantes.forEach(v => {
+                    if (v.color && !vistos.has(v.color.nombre)) {
+                        vistos.add(v.color.nombre);
+                        coloresUnicos.push(v.color);
+                    }
+                });
+
+                if (coloresUnicos.length === 0) {
+                    coloresContainer.innerHTML = '<span class="text-muted small">N/A</span>';
+                    llenarSizePicker(null);
+                    return;
+                }
+
+                coloresUnicos.forEach((color, index) => {
+                    // Se usa el nombre del color como ID (reemplazando espacios por guiones)
+                    const id = `color-${color.nombre.replace(/\s+/g, '-')}`;
+
+                    const label = document.createElement('label');
+                    label.className = `btn btn-sm rounded-pill px-3 d-inline-flex align-items-center gap-2 color-option ${index === 0 ? 'btn-primary text-white' : 'btn-outline-secondary'}`;
+                    label.setAttribute('for', id);
+                    label.innerHTML = `
+                        <span style="display:inline-block;width:14px;height:14px;background:${color.hex};border-radius:50%;border:1px solid #ccc;"></span>
+                        ${color.nombre}
+                    `;
+
+                    const input = document.createElement('input');
+                    input.type = 'radio';
+                    input.className = 'btn-check color-radio';
+                    input.name = 'colorSeleccionado';
+                    input.id = id;
+                    input.value = color.nombre;
+                    input.autocomplete = 'off';
+
+                    if (index === 0) input.checked = true;
+
+                    // Click en un color: actualizar carrusel, precio y tallas
+                    label.addEventListener('click', function () {
+                        if (colorSeleccionado === color.nombre) return;
+                        colorSeleccionado = color.nombre;
+
+                        // Resetear estilo de todos los colores y resaltar el seleccionado
+                        document.querySelectorAll('.color-option').forEach(el => {
+                            el.className = `btn btn-sm rounded-pill px-3 d-inline-flex align-items-center gap-2 color-option btn-outline-secondary`;
+                        });
+                        this.className = `btn btn-sm rounded-pill px-3 d-inline-flex align-items-center gap-2 color-option btn-primary text-white`;
+
+                        // Si la variante de este color tiene imagen propia, se muestra
+                        // primero en el carrusel, seguida de las imágenes generales
+                        const varianteConImagen = variantes.find(v =>
+                            v.color && v.color.nombre === color.nombre && v.imagen
+                        );
+                        if (varianteConImagen) {
+                            renderCarousel([varianteConImagen.imagen, ...imagenes]);
+                        } else {
+                            renderCarousel(imagenes);
+                        }
+
+                        // Si la variante de este color tiene precio distinto al mínimo,
+                        // se muestra con precio tachado
+                        const varianteConPrecio = variantes.find(v =>
+                            v.color && v.color.nombre === color.nombre && v.precio && v.precio !== precioMinNum
+                        );
+                        if (varianteConPrecio) {
+                            const el = document.getElementById('modalPrecio');
+                            el.innerHTML = `$ ${varianteConPrecio.precio.toFixed(0)} MXN <small class="text-muted fw-normal fs-6"><s>$${precioMinNum.toFixed(0)} MXN</s></small>`;
+                        } else {
+                            document.getElementById('modalPrecio').innerHTML = `$ ${precioMinNum.toFixed(0)} MXN`;
+                        }
+
+                        // Reconstruir las tallas disponibles para este color
+                        llenarSizePicker(color.nombre);
+                    });
+
+                    coloresContainer.appendChild(input);
+                    coloresContainer.appendChild(label);
+                });
+
+                // Auto-seleccionar el primer color y renderizar sus tallas + imagen
+                if (coloresUnicos.length > 0) {
+                    colorSeleccionado = coloresUnicos[0].nombre;
+                    llenarSizePicker(colorSeleccionado);
+
+                    const primerConImagen = variantes.find(v =>
+                        v.color && v.color.nombre === colorSeleccionado && v.imagen
+                    );
+                    if (primerConImagen) {
+                        renderCarousel([primerConImagen.imagen, ...imagenes]);
+                    }
+                }
+            }
+
+            llenarColorPicker();
+
+            // -----------------------------------------------------------------
+            // 1.5 Mostrar/ocultar sección de carrito según stock total
+            // -----------------------------------------------------------------
+            // Si ninguna variante tiene stock, se oculta el botón de agregar
+            const count = variantes.reduce((sum, v) => sum + v.stock, 0);
+            carritoActions.style.display = count > 0 ? 'block' : 'none';
+
+            document.getElementById('modalPrecio').innerHTML = `$ ${precioMinNum.toFixed(0)} MXN`;
+
+            // -----------------------------------------------------------------
+            // 1.6 Configurar botón "Agregar al carrito"
+            // -----------------------------------------------------------------
+            // Se clona el botón para eliminar event listeners previos (si el usuario
+            // abre el mismo modal dos veces, se acumularían listeners y se ejecutaría
+            // el click dos veces). Se reemplaza el original con la copia limpia.
             const btnAgregar = document.getElementById('btnAgregarCarrito');
             if (btnAgregar) {
-                /*
-                Quitar event listeners anteriores clonando, 
-                esto para evitar que se dupliquen los event listeners cada vez que se abre el modal con un producto diferente, 
-                sin esto, si abres un producto, luego otro, y haces click en agregar al carrito, 
-                se ejecutarían los event listeners de ambos productos acumulados, 
-                lo que causaría que se agregue el último producto varias veces al carrito dependiendo de cuántos productos hayas abierto.
-                */
                 const nuevoBtn = btnAgregar.cloneNode(true);
-                btnAgregar.parentNode.replaceChild(nuevoBtn, btnAgregar); // Reemplazamos el botón antiguo con el nuevo
+                btnAgregar.parentNode.replaceChild(nuevoBtn, btnAgregar);
 
-                // Event listener para agregar al carrito
-                nuevoBtn.addEventListener('click', function() {
-                    const selectedRadio = document.querySelector('.size-radio:checked'); // Obtenemos el input radio seleccionado
-                    if (!selectedRadio) {
-                        alert('Selecciona una talla primero.');
+                nuevoBtn.addEventListener('click', function () {
+                    const sku = varianteSkuInput.value;
+                    if (!sku) {
+                        alert('Selecciona un color y una talla primero.');
                         return;
                     }
-                    const talla = selectedRadio.value;
+
+                    const variante = variantes.find(v => v.sku === sku);
+                    if (!variante) {
+                        alert('Variante no encontrada.');
+                        return;
+                    }
+
                     const cantidad = parseInt(document.getElementById('qtyInput').value) || 1;
-                    const productoId = document.getElementById('modalProductoId').value;
-
-                    const tallaData = stockTallas.find(t => t.talla === talla); // Buscamos el stock de la talla seleccionada
-                    if (tallaData && cantidad > tallaData.stock) {
-                        alert(`Solo hay ${tallaData.stock} unidades disponibles en talla ${talla}.`);
+                    if (cantidad > variante.stock) {
+                        alert(`Solo hay ${variante.stock} unidades disponibles para esta variante.`);
                         return;
                     }
 
-                    const imagen = imagenes.length > 0 ? imagenes[0] : ''; // Si no hay imagenes, usamos la imagen principal
+                    // Se usa el precio de la variante si existe, si no el precio mínimo
+                    const precioFinal = variante.precio || precioMinNum;
+                    const imagenFinal = variante.imagen || (imagenes.length > 0 ? imagenes[0] : '');
+                    const colorNombre = variante.color ? variante.color.nombre : '';
+                    const tallaNombre = variante.talla || '';
 
-                    // Usamos la función agregarAlCarrito para agregar el producto al carrito
-                    // Con dataset es para acceder a los datos del producto desde el modal de producto, si no encuentra el dato en el dataset, usa un valor por defecto (como el título del modal o 0 para el precio)
-                    agregarAlCarrito(productoId, this.dataset.productoNombre || document.getElementById('modalTitulo').textContent, this.dataset.productoPrecio || '0', imagen, talla, cantidad);
+                    agregarAlCarrito(productoId, this.dataset.productoNombre || document.getElementById('modalTitulo').textContent, precioFinal, imagenFinal, tallaNombre, cantidad, sku, colorNombre);
 
-                    // Toast notificación
+                    // Toast de confirmación
                     const toastEl = document.getElementById('cartToast');
                     if (toastEl) {
                         document.getElementById('toastProductName').textContent =
                             this.dataset.productoNombre || document.getElementById('modalTitulo').textContent;
-                        document.getElementById('toastProductDetail').textContent =
-                            `Talla ${talla} · ${cantidad} ${cantidad === 1 ? 'unidad' : 'unidades'}`;
-                        
-                        // Creamos una instancia del toast para mostrarlo
+                        const detalle = `${colorNombre ? colorNombre + ' \u00B7 ' : ''}Talla ${tallaNombre} \u00B7 ${cantidad} ${cantidad === 1 ? 'unidad' : 'unidades'}`;
+                        document.getElementById('toastProductDetail').textContent = detalle;
                         const toast = bootstrap.Toast.getOrCreateInstance(toastEl);
                         toast.show();
                     }
 
-                    // Animación badge carrito
+                    // Animación de rebote en el badge del carrito
+                    // void badge.offsetWidth fuerza un reflow para reiniciar la animación CSS
                     const badge = document.getElementById('cart-badge');
                     if (badge) {
                         badge.classList.remove('cart-bounce');
-                        void badge.offsetWidth; // Forzar reflow para reiniciar animación
+                        void badge.offsetWidth;
                         badge.classList.add('cart-bounce');
                         setTimeout(() => badge.classList.remove('cart-bounce'), 600);
                     }
 
-                    // Feedback visual para el usuario, cambiamos el texto del botón temporalmente para indicar que se agregó al carrito, y luego lo volvemos a su estado original después de 1.5 segundos
+                    // Feedback visual: el botón muestra "Agregado ✓" por 1.5 segundos
                     const originalText = nuevoBtn.innerHTML;
-                    nuevoBtn.innerHTML = '<span class="material-symbols-outlined me-2 fs-5">check</span> Agregado ✓';
+                    nuevoBtn.innerHTML = '<span class="material-symbols-outlined me-2 fs-5">check</span> Agregado \u2713';
                     nuevoBtn.disabled = true;
                     setTimeout(() => {
                         nuevoBtn.innerHTML = originalText;
                         nuevoBtn.disabled = false;
                     }, 1500);
                 });
-                // Guardar datos del producto en el botón
+
                 nuevoBtn.dataset.productoNombre = this.dataset.titulo;
-                nuevoBtn.dataset.productoPrecio = this.dataset.precio ? this.dataset.precio.replace(/[^0-9.]/g, '') : '0';
             }
 
-            // --- Reseña ---
-            const productoId = this.dataset.productoId;
+            // -----------------------------------------------------------------
+            // 1.7 Configurar formulario de reseñas
+            // -----------------------------------------------------------------
             document.getElementById('modalProductoId').value = productoId;
-            // Aqui hacemos la accion del formulario de resena con el id del producto para guardar la resena
             document.getElementById('formResena').action = `/talcahualme/producto/${productoId}/resena/`;
 
-            // Creamos variables constantes para pasarle los modales de resena y login
             const formResena = document.getElementById('formResena');
             const loginRequerido = document.getElementById('loginRequerido');
 
-            // Mostrar el formulario de resena si el usuario esta logueado
+            // Se muestra el formulario solo si el usuario está logueado,
+            // si no se muestra el mensaje de "inicia sesión"
             if (window.USER_LOGGED_IN === true || window.USER_LOGGED_IN === 'true') {
-                console.log('MOSTRANDO formulario - Usuario logueado');
-                formResena.style.display = 'block'; // Mostramos el formulario
-                loginRequerido.style.display = 'none'; // No mostramos el mensaje
+                formResena.style.display = 'block';
+                loginRequerido.style.display = 'none';
             } else {
-                console.log('MOSTRANDO mensaje login - Usuario NO logueado');
-                formResena.style.display = 'none'; // No mostramos el formulario
-                loginRequerido.style.display = 'block'; // Mostramos el mensaje que necesita loguearse
+                formResena.style.display = 'none';
+                loginRequerido.style.display = 'block';
             }
 
-            console.log('ANTES modal - action:', formResena.action);
             formResena.action = `/talcahualme/producto/${productoId}/resena/`;
-            console.log('DESPUÉS set - action:', formResena.action);
-            console.log('FINAL - action:', formResena.action);
-
             new bootstrap.Modal(document.getElementById('modalProducto')).show();
         });
     });
 
-    // Loading state en formulario de reseña
+    // =========================================================================
+    // 2. ENVÍO DEL FORMULARIO DE RESEÑA — feedback de carga
+    // =========================================================================
+    // Se deshabilita el botón y se muestra un spinner para evitar envíos dobles
     const formResena = document.getElementById('formResena');
     if (formResena) {
-        formResena.addEventListener('submit', function() {
+        formResena.addEventListener('submit', function () {
             const btn = document.getElementById('btnResena');
             btn.disabled = true;
             btn.innerHTML = `
@@ -279,21 +534,23 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // --- Controles de cantidad (+/-) ---
+    // =========================================================================
+    // 3. CONTROLES DE CANTIDAD (+/-) — validación de rango 1-99
+    // =========================================================================
     const qtyInput = document.getElementById('qtyInput');
     const btnMinus = document.getElementById('btnQtyMinus');
     const btnPlus = document.getElementById('btnQtyPlus');
 
     if (qtyInput && btnMinus && btnPlus) {
-        btnMinus.addEventListener('click', function() {
+        btnMinus.addEventListener('click', function () {
             let val = parseInt(qtyInput.value) || 1;
             if (val > 1) qtyInput.value = val - 1;
         });
-        btnPlus.addEventListener('click', function() {
+        btnPlus.addEventListener('click', function () {
             let val = parseInt(qtyInput.value) || 1;
             if (val < 99) qtyInput.value = val + 1;
         });
-        qtyInput.addEventListener('change', function() {
+        qtyInput.addEventListener('change', function () {
             let val = parseInt(this.value) || 1;
             if (val < 1) val = 1;
             if (val > 99) val = 99;

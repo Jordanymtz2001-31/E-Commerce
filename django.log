@@ -1313,3 +1313,2034 @@ Not Found: /.well-known/appspecific/com.chrome.devtools.json
 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
 Not Found: /.well-known/appspecific/com.chrome.devtools.json
 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Internal Server Error: /admin/api/producto/
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/models/options.py", line 684, in get_field
+    return self.fields_map[field_name]
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^
+KeyError: 'rango_precios'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/contrib/admin/utils.py", line 293, in lookup_field
+    f = _get_non_gfk_field(opts, name)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/contrib/admin/utils.py", line 333, in _get_non_gfk_field
+    field = opts.get_field(name)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/models/options.py", line 686, in get_field
+    raise FieldDoesNotExist(
+        "%s has no field named '%s'" % (self.object_name, field_name)
+    )
+django.core.exceptions.FieldDoesNotExist: Producto has no field named 'rango_precios'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/mysql/base.py", line 78, in execute
+    return self.cursor.execute(query, args)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/MySQLdb/cursors.py", line 179, in execute
+    res = self._query(mogrified_query)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/MySQLdb/cursors.py", line 330, in _query
+    db.query(q)
+    ~~~~~~~~^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/MySQLdb/connections.py", line 286, in query
+    _mysql.connection.query(self, query)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+MySQLdb.OperationalError: (1054, "Unknown column 'variantes_producto.precio' in 'field list'")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/base.py", line 221, in _get_response
+    response = response.render()
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/response.py", line 114, in render
+    self.content = self.rendered_content
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/response.py", line 92, in rendered_content
+    return template.render(context, self._request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 174, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/loader_tags.py", line 160, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/loader_tags.py", line 160, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/loader_tags.py", line 66, in render
+    result = block.nodelist.render(context)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/loader_tags.py", line 66, in render
+    result = block.nodelist.render(context)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/loader_tags.py", line 66, in render
+    result = block.nodelist.render(context)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/contrib/admin/templatetags/base.py", line 47, in render
+    return super().render(context)
+           ~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/library.py", line 363, in render
+    _dict = self.func(*resolved_args, **resolved_kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/contrib/admin/templatetags/admin_list.py", line 357, in result_list
+    "results": list(results(cl)),
+               ~~~~^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/contrib/admin/templatetags/admin_list.py", line 333, in results
+    yield ResultList(None, items_for_result(cl, res, None))
+          ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/contrib/admin/templatetags/admin_list.py", line 324, in __init__
+    super().__init__(*items)
+    ~~~~~~~~~~~~~~~~^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/contrib/admin/templatetags/admin_list.py", line 221, in items_for_result
+    f, attr, value = lookup_field(field_name, result, cl.model_admin)
+                     ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/contrib/admin/utils.py", line 302, in lookup_field
+    value = attr(obj)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/admin.py", line 79, in rango_precios
+    precios = VarianteProducto.objects.filter(producto=obj, activo=True).aggregate(
+        min=Min('precio'), max=Max('precio')
+    )
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/models/query.py", line 594, in aggregate
+    return self.query.chain().get_aggregation(self.db, kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/models/sql/query.py", line 633, in get_aggregation
+    result = compiler.execute_sql(SINGLE)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/models/sql/compiler.py", line 1624, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/utils.py", line 94, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/mysql/base.py", line 78, in execute
+    return self.cursor.execute(query, args)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/MySQLdb/cursors.py", line 179, in execute
+    res = self._query(mogrified_query)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/MySQLdb/cursors.py", line 330, in _query
+    db.query(q)
+    ~~~~~~~~^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/MySQLdb/connections.py", line 286, in query
+    _mysql.connection.query(self, query)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+django.db.utils.OperationalError: (1054, "Unknown column 'variantes_producto.precio' in 'field list'")
+"GET /admin/api/producto/ HTTP/1.1" 500 536827
+Internal Server Error: /admin/api/varianteproducto/
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/mysql/base.py", line 78, in execute
+    return self.cursor.execute(query, args)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/MySQLdb/cursors.py", line 179, in execute
+    res = self._query(mogrified_query)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/MySQLdb/cursors.py", line 330, in _query
+    db.query(q)
+    ~~~~~~~~^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/MySQLdb/connections.py", line 286, in query
+    _mysql.connection.query(self, query)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+MySQLdb.OperationalError: (1054, "Unknown column 'variantes_producto.precio' in 'field list'")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/contrib/admin/options.py", line 710, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/utils/decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/utils/decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/views/decorators/cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/contrib/admin/sites.py", line 247, in inner
+    return view(request, *args, **kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/utils/decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/utils/decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/utils/decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/contrib/admin/options.py", line 2102, in changelist_view
+    media = self.media + formset.media
+                         ^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/forms/formsets.py", line 521, in media
+    if self.forms:
+       ^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ~~~~~~~~~^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/forms/formsets.py", line 207, in forms
+    for i in range(self.total_form_count())
+                   ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/forms/formsets.py", line 182, in total_form_count
+    initial_forms = self.initial_form_count()
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/forms/models.py", line 718, in initial_form_count
+    return len(self.get_queryset())
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/models/query.py", line 372, in __len__
+    self._fetch_all()
+    ~~~~~~~~~~~~~~~^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/models/query.py", line 2000, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/models/query.py", line 95, in __iter__
+    results = compiler.execute_sql(
+        chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size
+    )
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/models/sql/compiler.py", line 1624, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/utils.py", line 94, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/mysql/base.py", line 78, in execute
+    return self.cursor.execute(query, args)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/MySQLdb/cursors.py", line 179, in execute
+    res = self._query(mogrified_query)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/MySQLdb/cursors.py", line 330, in _query
+    db.query(q)
+    ~~~~~~~~^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/MySQLdb/connections.py", line 286, in query
+    _mysql.connection.query(self, query)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+django.db.utils.OperationalError: (1054, "Unknown column 'variantes_producto.precio' in 'field list'")
+"GET /admin/api/varianteproducto/ HTTP/1.1" 500 235402
+Internal Server Error: /admin/api/varianteproducto/
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/mysql/base.py", line 78, in execute
+    return self.cursor.execute(query, args)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/MySQLdb/cursors.py", line 179, in execute
+    res = self._query(mogrified_query)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/MySQLdb/cursors.py", line 330, in _query
+    db.query(q)
+    ~~~~~~~~^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/MySQLdb/connections.py", line 286, in query
+    _mysql.connection.query(self, query)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+MySQLdb.OperationalError: (1054, "Unknown column 'variantes_producto.precio' in 'field list'")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/contrib/admin/options.py", line 710, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/utils/decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/utils/decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/views/decorators/cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/contrib/admin/sites.py", line 247, in inner
+    return view(request, *args, **kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/utils/decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/utils/decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/utils/decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/contrib/admin/options.py", line 2102, in changelist_view
+    media = self.media + formset.media
+                         ^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/forms/formsets.py", line 521, in media
+    if self.forms:
+       ^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ~~~~~~~~~^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/forms/formsets.py", line 207, in forms
+    for i in range(self.total_form_count())
+                   ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/forms/formsets.py", line 182, in total_form_count
+    initial_forms = self.initial_form_count()
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/forms/models.py", line 718, in initial_form_count
+    return len(self.get_queryset())
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/models/query.py", line 372, in __len__
+    self._fetch_all()
+    ~~~~~~~~~~~~~~~^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/models/query.py", line 2000, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/models/query.py", line 95, in __iter__
+    results = compiler.execute_sql(
+        chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size
+    )
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/models/sql/compiler.py", line 1624, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/utils.py", line 94, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/mysql/base.py", line 78, in execute
+    return self.cursor.execute(query, args)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/MySQLdb/cursors.py", line 179, in execute
+    res = self._query(mogrified_query)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/MySQLdb/cursors.py", line 330, in _query
+    db.query(q)
+    ~~~~~~~~^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/MySQLdb/connections.py", line 286, in query
+    _mysql.connection.query(self, query)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+django.db.utils.OperationalError: (1054, "Unknown column 'variantes_producto.precio' in 'field list'")
+"GET /admin/api/varianteproducto/ HTTP/1.1" 500 235402
+Internal Server Error: /admin/api/producto/
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/models/options.py", line 684, in get_field
+    return self.fields_map[field_name]
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^
+KeyError: 'rango_precios'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/contrib/admin/utils.py", line 293, in lookup_field
+    f = _get_non_gfk_field(opts, name)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/contrib/admin/utils.py", line 333, in _get_non_gfk_field
+    field = opts.get_field(name)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/models/options.py", line 686, in get_field
+    raise FieldDoesNotExist(
+        "%s has no field named '%s'" % (self.object_name, field_name)
+    )
+django.core.exceptions.FieldDoesNotExist: Producto has no field named 'rango_precios'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/mysql/base.py", line 78, in execute
+    return self.cursor.execute(query, args)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/MySQLdb/cursors.py", line 179, in execute
+    res = self._query(mogrified_query)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/MySQLdb/cursors.py", line 330, in _query
+    db.query(q)
+    ~~~~~~~~^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/MySQLdb/connections.py", line 286, in query
+    _mysql.connection.query(self, query)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+MySQLdb.OperationalError: (1054, "Unknown column 'variantes_producto.precio' in 'field list'")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/base.py", line 221, in _get_response
+    response = response.render()
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/response.py", line 114, in render
+    self.content = self.rendered_content
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/response.py", line 92, in rendered_content
+    return template.render(context, self._request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 174, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/loader_tags.py", line 160, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/loader_tags.py", line 160, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/loader_tags.py", line 66, in render
+    result = block.nodelist.render(context)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/loader_tags.py", line 66, in render
+    result = block.nodelist.render(context)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/loader_tags.py", line 66, in render
+    result = block.nodelist.render(context)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/contrib/admin/templatetags/base.py", line 47, in render
+    return super().render(context)
+           ~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/library.py", line 363, in render
+    _dict = self.func(*resolved_args, **resolved_kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/contrib/admin/templatetags/admin_list.py", line 357, in result_list
+    "results": list(results(cl)),
+               ~~~~^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/contrib/admin/templatetags/admin_list.py", line 333, in results
+    yield ResultList(None, items_for_result(cl, res, None))
+          ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/contrib/admin/templatetags/admin_list.py", line 324, in __init__
+    super().__init__(*items)
+    ~~~~~~~~~~~~~~~~^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/contrib/admin/templatetags/admin_list.py", line 221, in items_for_result
+    f, attr, value = lookup_field(field_name, result, cl.model_admin)
+                     ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/contrib/admin/utils.py", line 302, in lookup_field
+    value = attr(obj)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/admin.py", line 79, in rango_precios
+    precios = VarianteProducto.objects.filter(producto=obj, activo=True).aggregate(
+        min=Min('precio'), max=Max('precio')
+    )
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/models/query.py", line 594, in aggregate
+    return self.query.chain().get_aggregation(self.db, kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/models/sql/query.py", line 633, in get_aggregation
+    result = compiler.execute_sql(SINGLE)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/models/sql/compiler.py", line 1624, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/utils.py", line 94, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/mysql/base.py", line 78, in execute
+    return self.cursor.execute(query, args)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/MySQLdb/cursors.py", line 179, in execute
+    res = self._query(mogrified_query)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/MySQLdb/cursors.py", line 330, in _query
+    db.query(q)
+    ~~~~~~~~^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/MySQLdb/connections.py", line 286, in query
+    _mysql.connection.query(self, query)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+django.db.utils.OperationalError: (1054, "Unknown column 'variantes_producto.precio' in 'field list'")
+"GET /admin/api/producto/ HTTP/1.1" 500 536837
+Internal Server Error: /admin/api/producto/
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/models/options.py", line 684, in get_field
+    return self.fields_map[field_name]
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^
+KeyError: 'rango_precios'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/contrib/admin/utils.py", line 293, in lookup_field
+    f = _get_non_gfk_field(opts, name)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/contrib/admin/utils.py", line 333, in _get_non_gfk_field
+    field = opts.get_field(name)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/models/options.py", line 686, in get_field
+    raise FieldDoesNotExist(
+        "%s has no field named '%s'" % (self.object_name, field_name)
+    )
+django.core.exceptions.FieldDoesNotExist: Producto has no field named 'rango_precios'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/mysql/base.py", line 78, in execute
+    return self.cursor.execute(query, args)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/MySQLdb/cursors.py", line 179, in execute
+    res = self._query(mogrified_query)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/MySQLdb/cursors.py", line 330, in _query
+    db.query(q)
+    ~~~~~~~~^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/MySQLdb/connections.py", line 286, in query
+    _mysql.connection.query(self, query)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+MySQLdb.OperationalError: (1054, "Unknown column 'variantes_producto.precio' in 'field list'")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/base.py", line 221, in _get_response
+    response = response.render()
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/response.py", line 114, in render
+    self.content = self.rendered_content
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/response.py", line 92, in rendered_content
+    return template.render(context, self._request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 174, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/loader_tags.py", line 160, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/loader_tags.py", line 160, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/loader_tags.py", line 66, in render
+    result = block.nodelist.render(context)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/loader_tags.py", line 66, in render
+    result = block.nodelist.render(context)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/loader_tags.py", line 66, in render
+    result = block.nodelist.render(context)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/contrib/admin/templatetags/base.py", line 47, in render
+    return super().render(context)
+           ~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/library.py", line 363, in render
+    _dict = self.func(*resolved_args, **resolved_kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/contrib/admin/templatetags/admin_list.py", line 357, in result_list
+    "results": list(results(cl)),
+               ~~~~^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/contrib/admin/templatetags/admin_list.py", line 333, in results
+    yield ResultList(None, items_for_result(cl, res, None))
+          ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/contrib/admin/templatetags/admin_list.py", line 324, in __init__
+    super().__init__(*items)
+    ~~~~~~~~~~~~~~~~^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/contrib/admin/templatetags/admin_list.py", line 221, in items_for_result
+    f, attr, value = lookup_field(field_name, result, cl.model_admin)
+                     ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/contrib/admin/utils.py", line 302, in lookup_field
+    value = attr(obj)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/admin.py", line 79, in rango_precios
+    precios = VarianteProducto.objects.filter(producto=obj, activo=True).aggregate(
+        min=Min('precio'), max=Max('precio')
+    )
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/models/query.py", line 594, in aggregate
+    return self.query.chain().get_aggregation(self.db, kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/models/sql/query.py", line 633, in get_aggregation
+    result = compiler.execute_sql(SINGLE)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/models/sql/compiler.py", line 1624, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/utils.py", line 94, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/mysql/base.py", line 78, in execute
+    return self.cursor.execute(query, args)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/MySQLdb/cursors.py", line 179, in execute
+    res = self._query(mogrified_query)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/MySQLdb/cursors.py", line 330, in _query
+    db.query(q)
+    ~~~~~~~~^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/MySQLdb/connections.py", line 286, in query
+    _mysql.connection.query(self, query)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+django.db.utils.OperationalError: (1054, "Unknown column 'variantes_producto.precio' in 'field list'")
+"GET /admin/api/producto/ HTTP/1.1" 500 536976
+Internal Server Error: /admin/api/producto/
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/models/options.py", line 684, in get_field
+    return self.fields_map[field_name]
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^
+KeyError: 'rango_precios'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/contrib/admin/utils.py", line 293, in lookup_field
+    f = _get_non_gfk_field(opts, name)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/contrib/admin/utils.py", line 333, in _get_non_gfk_field
+    field = opts.get_field(name)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/models/options.py", line 686, in get_field
+    raise FieldDoesNotExist(
+        "%s has no field named '%s'" % (self.object_name, field_name)
+    )
+django.core.exceptions.FieldDoesNotExist: Producto has no field named 'rango_precios'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/mysql/base.py", line 78, in execute
+    return self.cursor.execute(query, args)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/MySQLdb/cursors.py", line 179, in execute
+    res = self._query(mogrified_query)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/MySQLdb/cursors.py", line 330, in _query
+    db.query(q)
+    ~~~~~~~~^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/MySQLdb/connections.py", line 286, in query
+    _mysql.connection.query(self, query)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+MySQLdb.OperationalError: (1054, "Unknown column 'variantes_producto.precio' in 'field list'")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/base.py", line 221, in _get_response
+    response = response.render()
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/response.py", line 114, in render
+    self.content = self.rendered_content
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/response.py", line 92, in rendered_content
+    return template.render(context, self._request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 174, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/loader_tags.py", line 160, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/loader_tags.py", line 160, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/loader_tags.py", line 66, in render
+    result = block.nodelist.render(context)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/loader_tags.py", line 66, in render
+    result = block.nodelist.render(context)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/loader_tags.py", line 66, in render
+    result = block.nodelist.render(context)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/contrib/admin/templatetags/base.py", line 47, in render
+    return super().render(context)
+           ~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/library.py", line 363, in render
+    _dict = self.func(*resolved_args, **resolved_kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/contrib/admin/templatetags/admin_list.py", line 357, in result_list
+    "results": list(results(cl)),
+               ~~~~^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/contrib/admin/templatetags/admin_list.py", line 333, in results
+    yield ResultList(None, items_for_result(cl, res, None))
+          ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/contrib/admin/templatetags/admin_list.py", line 324, in __init__
+    super().__init__(*items)
+    ~~~~~~~~~~~~~~~~^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/contrib/admin/templatetags/admin_list.py", line 221, in items_for_result
+    f, attr, value = lookup_field(field_name, result, cl.model_admin)
+                     ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/contrib/admin/utils.py", line 302, in lookup_field
+    value = attr(obj)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/admin.py", line 79, in rango_precios
+    precios = VarianteProducto.objects.filter(producto=obj, activo=True).aggregate(
+        min=Min('precio'), max=Max('precio')
+    )
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/models/query.py", line 594, in aggregate
+    return self.query.chain().get_aggregation(self.db, kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/models/sql/query.py", line 633, in get_aggregation
+    result = compiler.execute_sql(SINGLE)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/models/sql/compiler.py", line 1624, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/utils.py", line 94, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/mysql/base.py", line 78, in execute
+    return self.cursor.execute(query, args)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/MySQLdb/cursors.py", line 179, in execute
+    res = self._query(mogrified_query)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/MySQLdb/cursors.py", line 330, in _query
+    db.query(q)
+    ~~~~~~~~^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/MySQLdb/connections.py", line 286, in query
+    _mysql.connection.query(self, query)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+django.db.utils.OperationalError: (1054, "Unknown column 'variantes_producto.precio' in 'field list'")
+"GET /admin/api/producto/ HTTP/1.1" 500 536839
+Internal Server Error: /admin/api/producto/
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/models/options.py", line 684, in get_field
+    return self.fields_map[field_name]
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^
+KeyError: 'rango_precios'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/contrib/admin/utils.py", line 293, in lookup_field
+    f = _get_non_gfk_field(opts, name)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/contrib/admin/utils.py", line 333, in _get_non_gfk_field
+    field = opts.get_field(name)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/models/options.py", line 686, in get_field
+    raise FieldDoesNotExist(
+        "%s has no field named '%s'" % (self.object_name, field_name)
+    )
+django.core.exceptions.FieldDoesNotExist: Producto has no field named 'rango_precios'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/mysql/base.py", line 78, in execute
+    return self.cursor.execute(query, args)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/MySQLdb/cursors.py", line 179, in execute
+    res = self._query(mogrified_query)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/MySQLdb/cursors.py", line 330, in _query
+    db.query(q)
+    ~~~~~~~~^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/MySQLdb/connections.py", line 286, in query
+    _mysql.connection.query(self, query)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+MySQLdb.OperationalError: (1054, "Unknown column 'variantes_producto.precio' in 'field list'")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/base.py", line 221, in _get_response
+    response = response.render()
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/response.py", line 114, in render
+    self.content = self.rendered_content
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/response.py", line 92, in rendered_content
+    return template.render(context, self._request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 174, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/loader_tags.py", line 160, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/loader_tags.py", line 160, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/loader_tags.py", line 66, in render
+    result = block.nodelist.render(context)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/loader_tags.py", line 66, in render
+    result = block.nodelist.render(context)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/loader_tags.py", line 66, in render
+    result = block.nodelist.render(context)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/contrib/admin/templatetags/base.py", line 47, in render
+    return super().render(context)
+           ~~~~~~~~~~~~~~^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/library.py", line 363, in render
+    _dict = self.func(*resolved_args, **resolved_kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/contrib/admin/templatetags/admin_list.py", line 357, in result_list
+    "results": list(results(cl)),
+               ~~~~^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/contrib/admin/templatetags/admin_list.py", line 333, in results
+    yield ResultList(None, items_for_result(cl, res, None))
+          ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/contrib/admin/templatetags/admin_list.py", line 324, in __init__
+    super().__init__(*items)
+    ~~~~~~~~~~~~~~~~^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/contrib/admin/templatetags/admin_list.py", line 221, in items_for_result
+    f, attr, value = lookup_field(field_name, result, cl.model_admin)
+                     ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/contrib/admin/utils.py", line 302, in lookup_field
+    value = attr(obj)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/admin.py", line 79, in rango_precios
+    precios = VarianteProducto.objects.filter(producto=obj, activo=True).aggregate(
+        min=Min('precio'), max=Max('precio')
+    )
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/models/query.py", line 594, in aggregate
+    return self.query.chain().get_aggregation(self.db, kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/models/sql/query.py", line 633, in get_aggregation
+    result = compiler.execute_sql(SINGLE)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/models/sql/compiler.py", line 1624, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/utils.py", line 94, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/mysql/base.py", line 78, in execute
+    return self.cursor.execute(query, args)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/MySQLdb/cursors.py", line 179, in execute
+    res = self._query(mogrified_query)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/MySQLdb/cursors.py", line 330, in _query
+    db.query(q)
+    ~~~~~~~~^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/MySQLdb/connections.py", line 286, in query
+    _mysql.connection.query(self, query)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+django.db.utils.OperationalError: (1054, "Unknown column 'variantes_producto.precio' in 'field list'")
+"GET /admin/api/producto/ HTTP/1.1" 500 536976
+Internal Server Error: /admin/api/varianteproducto/
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/mysql/base.py", line 78, in execute
+    return self.cursor.execute(query, args)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/MySQLdb/cursors.py", line 179, in execute
+    res = self._query(mogrified_query)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/MySQLdb/cursors.py", line 330, in _query
+    db.query(q)
+    ~~~~~~~~^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/MySQLdb/connections.py", line 286, in query
+    _mysql.connection.query(self, query)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+MySQLdb.OperationalError: (1054, "Unknown column 'variantes_producto.precio' in 'field list'")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/contrib/admin/options.py", line 710, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/utils/decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/utils/decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/views/decorators/cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/contrib/admin/sites.py", line 247, in inner
+    return view(request, *args, **kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/utils/decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/utils/decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/utils/decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/contrib/admin/options.py", line 2102, in changelist_view
+    media = self.media + formset.media
+                         ^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/forms/formsets.py", line 521, in media
+    if self.forms:
+       ^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ~~~~~~~~~^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/forms/formsets.py", line 207, in forms
+    for i in range(self.total_form_count())
+                   ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/forms/formsets.py", line 182, in total_form_count
+    initial_forms = self.initial_form_count()
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/forms/models.py", line 718, in initial_form_count
+    return len(self.get_queryset())
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/models/query.py", line 372, in __len__
+    self._fetch_all()
+    ~~~~~~~~~~~~~~~^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/models/query.py", line 2000, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/models/query.py", line 95, in __iter__
+    results = compiler.execute_sql(
+        chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size
+    )
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/models/sql/compiler.py", line 1624, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/utils.py", line 94, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/backends/mysql/base.py", line 78, in execute
+    return self.cursor.execute(query, args)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/MySQLdb/cursors.py", line 179, in execute
+    res = self._query(mogrified_query)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/MySQLdb/cursors.py", line 330, in _query
+    db.query(q)
+    ~~~~~~~~^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/MySQLdb/connections.py", line 286, in query
+    _mysql.connection.query(self, query)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+django.db.utils.OperationalError: (1054, "Unknown column 'variantes_producto.precio' in 'field list'")
+"GET /admin/api/varianteproducto/ HTTP/1.1" 500 235414
+Internal Server Error: /talcahualme/productList/
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/smartif.py", line 181, in translate_token
+    op = OPERATORS[token]
+         ~~~~~~~~~^^^^^^^
+KeyError: 'producto._precio_min'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 890, in __init__
+    self.literal = float(var)
+                   ~~~~~^^^^^
+ValueError: could not convert string to float: 'producto._precio_min'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 906, in __init__
+    self.literal = mark_safe(unescape_string_literal(var))
+                             ~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/utils/functional.py", line 231, in wrapper
+    return func(*args, **kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/utils/text.py", line 463, in unescape_string_literal
+    raise ValueError("Not a string literal: %r" % s)
+ValueError: Not a string literal: 'producto._precio_min'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/views.py", line 158, in productos_view
+    return render(request, 'productos.html', context)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/backends/django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/engine.py", line 186, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/loaders/cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/loaders/base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 157, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 199, in compile_nodelist
+    nodelist = parser.parse()
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 585, in parse
+    raise self.error(token, e)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 583, in parse
+    compiled_result = compile_func(self, token)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/loader_tags.py", line 307, in do_extends
+    nodelist = parser.parse()
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 585, in parse
+    raise self.error(token, e)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 583, in parse
+    compiled_result = compile_func(self, token)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/loader_tags.py", line 235, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 585, in parse
+    raise self.error(token, e)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 583, in parse
+    compiled_result = compile_func(self, token)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/defaulttags.py", line 894, in do_for
+    nodelist_loop = parser.parse(
+        (
+    ...<2 lines>...
+        )
+    )
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 585, in parse
+    raise self.error(token, e)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 583, in parse
+    compiled_result = compile_func(self, token)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/defaulttags.py", line 993, in do_if
+    condition = TemplateIfParser(parser, bits).parse()
+                ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/defaulttags.py", line 926, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/smartif.py", line 172, in __init__
+    mapped_tokens.append(self.translate_token(token))
+                         ~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/smartif.py", line 183, in translate_token
+    return self.create_var(token)
+           ~~~~~~~~~~~~~~~^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/defaulttags.py", line 929, in create_var
+    return TemplateLiteral(self.template_parser.compile_filter(value), value)
+                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 676, in compile_filter
+    return FilterExpression(token, self)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 763, in __init__
+    var_obj = Variable(var)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 911, in __init__
+    raise TemplateSyntaxError(
+    ...<2 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Template: /run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/templates/productos.html, Variables and attributes may not begin with underscores: 'producto._precio_min'
+"GET /talcahualme/productList/ HTTP/1.1" 500 345761
+Internal Server Error: /talcahualme/productList/
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/smartif.py", line 181, in translate_token
+    op = OPERATORS[token]
+         ~~~~~~~~~^^^^^^^
+KeyError: 'producto._precio_min'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 890, in __init__
+    self.literal = float(var)
+                   ~~~~~^^^^^
+ValueError: could not convert string to float: 'producto._precio_min'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 906, in __init__
+    self.literal = mark_safe(unescape_string_literal(var))
+                             ~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/utils/functional.py", line 231, in wrapper
+    return func(*args, **kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/utils/text.py", line 463, in unescape_string_literal
+    raise ValueError("Not a string literal: %r" % s)
+ValueError: Not a string literal: 'producto._precio_min'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/views.py", line 164, in productos_view
+    return render(request, 'productos.html', context)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/backends/django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/engine.py", line 186, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/loaders/cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/loaders/base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 157, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 199, in compile_nodelist
+    nodelist = parser.parse()
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 585, in parse
+    raise self.error(token, e)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 583, in parse
+    compiled_result = compile_func(self, token)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/loader_tags.py", line 307, in do_extends
+    nodelist = parser.parse()
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 585, in parse
+    raise self.error(token, e)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 583, in parse
+    compiled_result = compile_func(self, token)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/loader_tags.py", line 235, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 585, in parse
+    raise self.error(token, e)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 583, in parse
+    compiled_result = compile_func(self, token)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/defaulttags.py", line 894, in do_for
+    nodelist_loop = parser.parse(
+        (
+    ...<2 lines>...
+        )
+    )
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 585, in parse
+    raise self.error(token, e)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 583, in parse
+    compiled_result = compile_func(self, token)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/defaulttags.py", line 993, in do_if
+    condition = TemplateIfParser(parser, bits).parse()
+                ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/defaulttags.py", line 926, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/smartif.py", line 172, in __init__
+    mapped_tokens.append(self.translate_token(token))
+                         ~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/smartif.py", line 183, in translate_token
+    return self.create_var(token)
+           ~~~~~~~~~~~~~~~^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/defaulttags.py", line 929, in create_var
+    return TemplateLiteral(self.template_parser.compile_filter(value), value)
+                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 676, in compile_filter
+    return FilterExpression(token, self)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 763, in __init__
+    var_obj = Variable(var)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 911, in __init__
+    raise TemplateSyntaxError(
+    ...<2 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Template: /run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/templates/productos.html, Variables and attributes may not begin with underscores: 'producto._precio_min'
+"GET /talcahualme/productList/ HTTP/1.1" 500 346324
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 2848
+Internal Server Error: /talcahualme/productList/
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 890, in __init__
+    self.literal = float(var)
+                   ~~~~~^^^^^
+ValueError: could not convert string to float: 'producto._precio_min'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 906, in __init__
+    self.literal = mark_safe(unescape_string_literal(var))
+                             ~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/utils/functional.py", line 231, in wrapper
+    return func(*args, **kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/utils/text.py", line 463, in unescape_string_literal
+    raise ValueError("Not a string literal: %r" % s)
+ValueError: Not a string literal: 'producto._precio_min'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/views.py", line 164, in productos_view
+    return render(request, 'productos.html', context)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/backends/django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/engine.py", line 186, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/loaders/cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/loaders/base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 157, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 199, in compile_nodelist
+    nodelist = parser.parse()
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 585, in parse
+    raise self.error(token, e)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 583, in parse
+    compiled_result = compile_func(self, token)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/loader_tags.py", line 307, in do_extends
+    nodelist = parser.parse()
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 585, in parse
+    raise self.error(token, e)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 583, in parse
+    compiled_result = compile_func(self, token)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/loader_tags.py", line 235, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 585, in parse
+    raise self.error(token, e)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 583, in parse
+    compiled_result = compile_func(self, token)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/defaulttags.py", line 894, in do_for
+    nodelist_loop = parser.parse(
+        (
+    ...<2 lines>...
+        )
+    )
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 585, in parse
+    raise self.error(token, e)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 583, in parse
+    compiled_result = compile_func(self, token)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/defaulttags.py", line 1008, in do_if
+    nodelist = parser.parse(("endif",))
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 556, in parse
+    raise self.error(token, e)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 554, in parse
+    filter_expression = self.compile_filter(token.contents)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 676, in compile_filter
+    return FilterExpression(token, self)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 763, in __init__
+    var_obj = Variable(var)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 911, in __init__
+    raise TemplateSyntaxError(
+    ...<2 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Template: /run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/templates/productos.html, Variables and attributes may not begin with underscores: 'producto._precio_min'
+"GET /talcahualme/productList/ HTTP/1.1" 500 334977
+Internal Server Error: /talcahualme/productList/
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 890, in __init__
+    self.literal = float(var)
+                   ~~~~~^^^^^
+ValueError: could not convert string to float: 'producto._precio_min'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 906, in __init__
+    self.literal = mark_safe(unescape_string_literal(var))
+                             ~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/utils/functional.py", line 231, in wrapper
+    return func(*args, **kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/utils/text.py", line 463, in unescape_string_literal
+    raise ValueError("Not a string literal: %r" % s)
+ValueError: Not a string literal: 'producto._precio_min'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/views.py", line 164, in productos_view
+    return render(request, 'productos.html', context)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/backends/django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/engine.py", line 186, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/loaders/cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/loaders/base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 157, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 199, in compile_nodelist
+    nodelist = parser.parse()
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 585, in parse
+    raise self.error(token, e)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 583, in parse
+    compiled_result = compile_func(self, token)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/loader_tags.py", line 307, in do_extends
+    nodelist = parser.parse()
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 585, in parse
+    raise self.error(token, e)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 583, in parse
+    compiled_result = compile_func(self, token)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/loader_tags.py", line 235, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 585, in parse
+    raise self.error(token, e)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 583, in parse
+    compiled_result = compile_func(self, token)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/defaulttags.py", line 894, in do_for
+    nodelist_loop = parser.parse(
+        (
+    ...<2 lines>...
+        )
+    )
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 585, in parse
+    raise self.error(token, e)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 583, in parse
+    compiled_result = compile_func(self, token)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/defaulttags.py", line 1008, in do_if
+    nodelist = parser.parse(("endif",))
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 556, in parse
+    raise self.error(token, e)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 554, in parse
+    filter_expression = self.compile_filter(token.contents)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 676, in compile_filter
+    return FilterExpression(token, self)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 763, in __init__
+    var_obj = Variable(var)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 911, in __init__
+    raise TemplateSyntaxError(
+    ...<2 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Template: /run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/templates/productos.html, Variables and attributes may not begin with underscores: 'producto._precio_min'
+"GET /talcahualme/productList/ HTTP/1.1" 500 334977
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Not Found: /api/productos/
+"GET /api/productos/ HTTP/1.1" 404 2857
+Internal Server Error: /talcahualme/productList/
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/views.py", line 144, in productos_view
+    for producto in productos_filtrados:
+                    ^^^^^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/models/query.py", line 390, in __iter__
+    self._fetch_all()
+    ~~~~~~~~~~~~~~~^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/models/query.py", line 2000, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/db/models/query.py", line 135, in __iter__
+    setattr(obj, attr_name, row[col_pos])
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: property 'precio_min' of 'Producto' object has no setter
+"GET /talcahualme/productList/ HTTP/1.1" 500 96468
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 2848
+Internal Server Error: /talcahualme/productList/
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/smartif.py", line 181, in translate_token
+    op = OPERATORS[token]
+         ~~~~~~~~~^^^^^^^
+KeyError: 'producto._precio_min'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 890, in __init__
+    self.literal = float(var)
+                   ~~~~~^^^^^
+ValueError: could not convert string to float: 'producto._precio_min'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 906, in __init__
+    self.literal = mark_safe(unescape_string_literal(var))
+                             ~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/utils/functional.py", line 231, in wrapper
+    return func(*args, **kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/utils/text.py", line 463, in unescape_string_literal
+    raise ValueError("Not a string literal: %r" % s)
+ValueError: Not a string literal: 'producto._precio_min'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/views.py", line 164, in productos_view
+    return render(request, 'productos.html', context)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/backends/django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/engine.py", line 186, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/loaders/cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/loaders/base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 157, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 199, in compile_nodelist
+    nodelist = parser.parse()
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 585, in parse
+    raise self.error(token, e)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 583, in parse
+    compiled_result = compile_func(self, token)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/loader_tags.py", line 307, in do_extends
+    nodelist = parser.parse()
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 585, in parse
+    raise self.error(token, e)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 583, in parse
+    compiled_result = compile_func(self, token)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/loader_tags.py", line 235, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 585, in parse
+    raise self.error(token, e)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 583, in parse
+    compiled_result = compile_func(self, token)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/defaulttags.py", line 894, in do_for
+    nodelist_loop = parser.parse(
+        (
+    ...<2 lines>...
+        )
+    )
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 585, in parse
+    raise self.error(token, e)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 583, in parse
+    compiled_result = compile_func(self, token)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/defaulttags.py", line 993, in do_if
+    condition = TemplateIfParser(parser, bits).parse()
+                ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/defaulttags.py", line 926, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/smartif.py", line 172, in __init__
+    mapped_tokens.append(self.translate_token(token))
+                         ~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/smartif.py", line 183, in translate_token
+    return self.create_var(token)
+           ~~~~~~~~~~~~~~~^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/defaulttags.py", line 929, in create_var
+    return TemplateLiteral(self.template_parser.compile_filter(value), value)
+                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 676, in compile_filter
+    return FilterExpression(token, self)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 763, in __init__
+    var_obj = Variable(var)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/template/base.py", line 911, in __init__
+    raise TemplateSyntaxError(
+    ...<2 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Template: /run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/templates/productos.html, Variables and attributes may not begin with underscores: 'producto._precio_min'
+"GET /talcahualme/productList/ HTTP/1.1" 500 346646
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Not Found: /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg
+"GET /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg HTTP/1.1" 404 3305
+Not Found: /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg
+"GET /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg HTTP/1.1" 404 3305
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 2848
+Not Found: /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg
+"GET /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg HTTP/1.1" 404 3305
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Not Found: /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg
+"GET /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg HTTP/1.1" 404 3305
+Not Found: /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg
+"GET /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg HTTP/1.1" 404 3305
+Not Found: /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg
+"GET /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg HTTP/1.1" 404 3305
+Not Found: /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg
+"GET /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg HTTP/1.1" 404 3305
+Not Found: /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg
+"GET /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg HTTP/1.1" 404 3305
+Not Found: /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg
+"GET /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg HTTP/1.1" 404 3305
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Not Found: /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg
+"GET /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg HTTP/1.1" 404 3305
+Not Found: /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg
+"GET /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg HTTP/1.1" 404 3305
+Not Found: /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg
+"GET /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg HTTP/1.1" 404 3305
+Not Found: /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg
+"GET /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg HTTP/1.1" 404 3305
+Not Found: /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg
+"GET /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg HTTP/1.1" 404 3305
+Not Found: /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg
+"GET /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg HTTP/1.1" 404 3305
+Not Found: /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg
+"GET /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg HTTP/1.1" 404 3305
+Internal Server Error: /talcahualme/checkout/
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/views.py", line 265, in checkout_view
+    pedido = PedidoService.crear(cliente=cliente, productos=item)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/service.py", line 107, in crear
+    skus = [item['sku'] for item in productos]
+            ~~~~^^^^^^^
+KeyError: 'sku'
+"POST /talcahualme/checkout/ HTTP/1.1" 500 86516
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 2848
+Internal Server Error: /talcahualme/checkout/
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/views.py", line 265, in checkout_view
+    pedido = PedidoService.crear(cliente=cliente, productos=item)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/service.py", line 107, in crear
+    skus = [item['sku'] for item in productos]
+            ~~~~^^^^^^^
+KeyError: 'sku'
+"POST /talcahualme/checkout/ HTTP/1.1" 500 86516
+Internal Server Error: /talcahualme/checkout/
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/views.py", line 265, in checkout_view
+    pedido = PedidoService.crear(cliente=cliente, productos=item)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/service.py", line 107, in crear
+    skus = [item['sku'] for item in productos]
+            ~~~~^^^^^^^
+KeyError: 'sku'
+"POST /talcahualme/checkout/ HTTP/1.1" 500 86516
+Internal Server Error: /talcahualme/checkout/
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/views.py", line 265, in checkout_view
+    pedido = PedidoService.crear(cliente=cliente, productos=item)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/service.py", line 107, in crear
+    skus = [item['sku'] for item in productos]
+            ~~~~^^^^^^^
+KeyError: 'sku'
+"POST /talcahualme/checkout/ HTTP/1.1" 500 86516
+Internal Server Error: /talcahualme/checkout/
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/views.py", line 265, in checkout_view
+    pedido = PedidoService.crear(cliente=cliente, productos=item)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/service.py", line 107, in crear
+    skus = [item['sku'] for item in productos]
+            ~~~~^^^^^^^
+KeyError: 'sku'
+"POST /talcahualme/checkout/ HTTP/1.1" 500 86516
+Internal Server Error: /talcahualme/checkout/
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/views.py", line 265, in checkout_view
+    pedido = PedidoService.crear(cliente=cliente, productos=item)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/service.py", line 107, in crear
+    skus = [item['sku'] for item in productos]
+            ~~~~^^^^^^^
+KeyError: 'sku'
+"POST /talcahualme/checkout/ HTTP/1.1" 500 86516
+Internal Server Error: /talcahualme/checkout/
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/views.py", line 265, in checkout_view
+    pedido = PedidoService.crear(cliente=cliente, productos=item)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/service.py", line 107, in crear
+    skus = [item['sku'] for item in productos]
+            ~~~~^^^^^^^
+KeyError: 'sku'
+"POST /talcahualme/checkout/ HTTP/1.1" 500 86516
+Internal Server Error: /talcahualme/checkout/
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/views.py", line 265, in checkout_view
+    pedido = PedidoService.crear(cliente=cliente, productos=item)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/service.py", line 107, in crear
+    skus = [item['sku'] for item in productos]
+            ~~~~^^^^^^^
+KeyError: 'sku'
+"POST /talcahualme/checkout/ HTTP/1.1" 500 86516
+Internal Server Error: /talcahualme/checkout/
+Traceback (most recent call last):
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/venv/lib64/python3.14/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/views.py", line 265, in checkout_view
+    pedido = PedidoService.crear(cliente=cliente, productos=item)
+  File "/run/media/dany/DATA/JORDANY_GM/Proyectos/E-commerce/api/service.py", line 107, in crear
+    skus = [item['sku'] for item in productos]
+            ~~~~^^^^^^^
+KeyError: 'sku'
+"POST /talcahualme/checkout/ HTTP/1.1" 500 86516
+Not Found: /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg
+"GET /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg HTTP/1.1" 404 3305
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Not Found: /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg
+"GET /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg HTTP/1.1" 404 3305
+Not Found: /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg
+"GET /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg HTTP/1.1" 404 3305
+Not Found: /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg
+"GET /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg HTTP/1.1" 404 3305
+Not Found: /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg
+"GET /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg HTTP/1.1" 404 3305
+Not Found: /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg
+"GET /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg HTTP/1.1" 404 3305
+Not Found: /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg
+"GET /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg HTTP/1.1" 404 3305
+Not Found: /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg
+"GET /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg HTTP/1.1" 404 3305
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 2848
+Not Found: /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg
+"GET /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg HTTP/1.1" 404 3305
+Not Found: /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg
+"GET /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg HTTP/1.1" 404 3305
+Not Found: /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg
+"GET /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg HTTP/1.1" 404 3305
+Not Found: /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg
+"GET /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg HTTP/1.1" 404 3305
+Not Found: /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg
+"GET /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg HTTP/1.1" 404 3305
+Not Found: /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg
+"GET /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg HTTP/1.1" 404 3305
+Not Found: /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg
+"GET /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg HTTP/1.1" 404 3305
+Not Found: /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg
+"GET /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg HTTP/1.1" 404 3305
+Not Found: /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg
+"GET /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg HTTP/1.1" 404 3305
+Not Found: /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg
+"GET /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg HTTP/1.1" 404 3305
+Not Found: /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg
+"GET /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg HTTP/1.1" 404 3305
+Not Found: /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg
+"GET /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg HTTP/1.1" 404 3305
+Not Found: /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg
+"GET /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg HTTP/1.1" 404 3305
+Not Found: /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg
+"GET /media/productos/710078515_122112874425025462_2743124958483049310_n.jpg HTTP/1.1" 404 3305
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Not Found: /talcahualme/productList/fedoraproject.org/start/
+"GET /talcahualme/productList/fedoraproject.org/start/ HTTP/1.1" 404 6737
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 2848
+Not Found: /talcahualme/productList/fedoraproject.org/start/http://127.0.0.1:8000/talcahualme/productList/
+"GET /talcahualme/productList/fedoraproject.org/start/http://127.0.0.1:8000/talcahualme/productList/ HTTP/1.1" 404 6875
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959

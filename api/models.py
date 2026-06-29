@@ -7,7 +7,7 @@ from .validators import validar_tamano_imagen
 
 
 class Categoria(models.Model):
-    nombreCategoria = models.CharField(max_length=50, unique=True)
+    nombreCategoria = models.CharField(max_length=50, unique=True, null=True, blank=True)
 
     def __str__(self):
         return self.nombreCategoria
@@ -70,7 +70,7 @@ class Color(models.Model):
 
 class Producto(models.Model):
     nombre = models.CharField(max_length=50, null=False, blank=False)
-    categoria = models.ManyToManyField(Categoria, related_name='productos')
+    categoria = models.ManyToManyField(Categoria, blank=True, related_name='productos')
     tipoMateria = models.ManyToManyField(TipoMateria, related_name='productos')
     instruccionesCuidado = models.ManyToManyField(InstruccionesCuidado, related_name='productos', blank=True)
     descripcion = models.TextField()

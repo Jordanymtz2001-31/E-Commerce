@@ -4,13 +4,15 @@
 Creamos una variable global para el carrito, que se inicializa con los datos del localStorage o como un array vacío
 Cada item del carrito tendrá una estructura como:
 {
-     key: 'productoId-talla', // clave única para identificar el producto + talla
+     key: 'productoId-talla', // clave única para identificar el producto + talla (legacy)
      id: productoId,          // ID del producto
      nombre: 'Nombre del producto',
      precio: 100.00,         // Precio unitario
      imagen: 'url_imagen',   // URL de la imagen del producto
      talla: 'M',             // Talla seleccionada
-     cantidad: 2             // Cantidad seleccionada
+     cantidad: 2,            // Cantidad seleccionada
+     sku: 'PROD-ROJO-M',    // (nuevo) SKU de la variante seleccionada
+     color: 'Rojo'           // (nuevo) Nombre del color seleccionado
 }
 */
 let carrito;
@@ -29,18 +31,20 @@ try {
 console.log('carrito.js cargado — carrito inicial:', carrito);
 
 
-// FUncion para obtener la clave unica del producto + talla, esto nos ayuda a manejar productos con diferentes tallas como items separados en el carrito
-function obtenerKey(productoId, talla) {
+// Función para obtener la clave única del producto + variante, esto nos ayuda a manejar productos con diferentes variantes como items separados en el carrito
+// Si hay SKU lo usa como key; si no (legacy), usa productoId-talla
+function obtenerKey(productoId, talla, sku) {
+    if (sku) return `${productoId}-${sku}`;
     return `${productoId}-${talla}`;
 }
 
-// Función para agregar un producto al carrito, si el producto con la misma talla ya existe, simplemente aumentamos la cantidad, si no, lo agregamos como un nuevo item
-function agregarAlCarrito(productoId, nombre, precio, imagen, talla, cantidad) {
-    //if (cantidad < 1) return;
-    const key = obtenerKey(productoId, talla);
-    const existe = carrito.find(item => item.key === key); //EL find nos devuelve el item completo si lo encuentra, o undefined si no lo encuentra
+// Función para agregar un producto al carrito, si el producto con la misma variante ya existe, simplemente aumentamos la cantidad, si no, lo agregamos como un nuevo item
+// soporta sku (variante) y colorName para el nuevo sistema de variantes
+function agregarAlCarrito(productoId, nombre, precio, imagen, talla, cantidad, sku, colorName) {
+    const key = obtenerKey(productoId, talla, sku);
+    const existe = carrito.find(item => item.key === key);
 
-    console.log('agregarAlCarrito llamado', { productoId, talla, cantidad, key, precio, nombre });
+    console.log('agregarAlCarrito llamado', { productoId, talla, cantidad, key, precio, nombre, sku, color: colorName });
 
     if (existe) {
         existe.cantidad += cantidad;
@@ -155,7 +159,7 @@ function renderizarOffcanvas() {
                      class="rounded-3" style="width:70px;height:70px;object-fit:cover;">
                 <div class="flex-grow-1 min-w-0">
                     <h6 class="fw-bold mb-1 text-truncate">${item.nombre}</h6>
-                    <p class="text-muted small mb-2">Talla: <strong>${item.talla}</strong></p>
+                    <p class="text-muted small mb-2">${item.color ? `<span class="me-2">Color: <strong>${item.color}</strong></span>` : ''}Talla: <strong>${item.talla}</strong></p>
                     <div class="d-flex align-items-center gap-2">
                         <button class="btn btn-sm btn-outline-secondary rounded-circle p-1 lh-1"
                                 onclick="cambiarCantidad('${item.key}', -1)" style="width:28px;height:28px;">

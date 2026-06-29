@@ -51,10 +51,10 @@ class FiltroPorCategoria(FiltroProductoStrategy):
 
 
 class FiltroPorColor(FiltroProductoStrategy):
-    """Filtra productos por ID de color."""
+    """Filtra productos por ID de color a través de sus variantes."""
 
     def __init__(self, color_id: int):
         self.color_id = color_id
 
     def aplicar(self, queryset: QuerySet) -> QuerySet:
-        return queryset.filter(color__id=self.color_id)
+        return queryset.filter(variantes__color__id=self.color_id, variantes__activo=True).distinct()
