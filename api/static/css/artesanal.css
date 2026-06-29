@@ -340,6 +340,40 @@ html, body {
     }
 }
 
+/* Botón hamburguesa navbar móvil */
+.btn-nav-hamburger {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    transition: color 0.2s ease;
+}
+.btn-nav-hamburger:hover {
+    color: var(--primary);
+}
+
+/* Offcanvas navegación móvil */
+.nav-offcanvas-list {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 0;
+}
+.nav-offcanvas-link {
+    display: flex;
+    align-items: center;
+    padding: 0.875rem 1.5rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 1rem;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+.nav-offcanvas-link:hover {
+    background: var(--bg-alt);
+    color: var(--primary);
+}
+.nav-offcanvas-link .material-symbols-outlined {
+    font-size: 1.25rem;
+}
+
 /* Botón navbar - registro (gradiente naranja) */
 .btn-nav-registro {
     background-image: linear-gradient(to right, #e99873, #ff6708);

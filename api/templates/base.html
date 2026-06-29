@@ -26,25 +26,30 @@
 </head>
 
 <body class="bg-light min-vh-100 d-flex flex-column">
-    <!-- Navbar sticky superior igual Stitch -->
+    <!-- Navbar -->
     <nav class="navbar navbar-light bg-white shadow-sm sticky-top">
         <div class="container">
-            <!-- Logo + Links izquierda -->
+            <!-- Izquierda: hamburguesa + logo + nav escritorio -->
             <div class="d-flex align-items-center">
-                <a class="navbar-brand me-3 fw-bold fs-4" href="{% url 'tienda' %}">
-                    <!-- <img src="/static/img/logo.jpg" alt="Logo" width="40" height="40" class="me-2 rounded-3"> -->
+                <button class="btn btn-nav-hamburger d-lg-none p-2 me-1" type="button"
+                        data-bs-toggle="offcanvas" data-bs-target="#navOffcanvas"
+                        aria-label="Menú de navegación">
+                    <span class="material-symbols-outlined fs-3">menu</span>
+                </button>
+                <a class="navbar-brand fw-bold fs-4" href="{% url 'tienda' %}">
                     <img src="{% static 'img/logo.jpg' %}" alt="Logo" width="40" height="40" class="me-2 rounded-3">
                     Talcahualme
                 </a>
-                <a href="{% url 'tienda' %}"  class="btn btn-nav-login {% if current_page == '/' %}active{% endif %}">Nosotros</a>
-                <a href="{% url 'productList' %}" class="btn btn-nav-login {% if current_page == '/productList/' %}active{% endif %}">Productos</a>
-                <a href="{% url 'punto_venta' %}" class="btn btn-nav-login {% if current_page == '/punto_venta/' %}active{% endif %}">Puntos de Venta</a>
-                <a href="{% url 'eventos' %}" class="btn btn-nav-login {% if current_page == '/eventos/' %}active{% endif %}">Eventos</a>
+                <div class="d-none d-lg-flex align-items-center">
+                    <a href="{% url 'tienda' %}" class="btn btn-nav-login {% if current_page == '/' %}active{% endif %}">Nosotros</a>
+                    <a href="{% url 'productList' %}" class="btn btn-nav-login {% if current_page == '/productList/' %}active{% endif %}">Productos</a>
+                    <a href="{% url 'punto_venta' %}" class="btn btn-nav-login {% if current_page == '/punto_venta/' %}active{% endif %}">Puntos de Venta</a>
+                    <a href="{% url 'eventos' %}" class="btn btn-nav-login {% if current_page == '/eventos/' %}active{% endif %}">Eventos</a>
+                </div>
             </div>
-            
-            <!-- Usuario derecha -->
+
+            <!-- Derecha: carrito + usuario (escritorio) -->
             <div class="d-flex align-items-center gap-2">
-                <!-- Canasto de compras -->
                 <a href="#" class="btn position-relative" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCarrito"
                    aria-label="Abrir canasto de compras">
                     <span class="material-symbols-outlined fs-4">shopping_bag</span>
@@ -52,16 +57,61 @@
                           style="display:none;font-size:0.6rem;background:var(--primary);min-width:18px;height:18px;padding:2px 4px;align-items:center;justify-content:center;">0</span>
                 </a>
                 {% if user.is_authenticated %}
-                    <a href="{% url 'mis_pedidos' %}" class="btn btn-nav-login me-2">Mis Pedidos</a>
-                    <span class="me-3 fw-bold text-muted">¡Hola {{ user.username }}!</span>                      
-                    <a href="{% url 'logout' %}" type="submit" class="btn btn-nav-salir">Salir </a>
+                    <a href="{% url 'mis_pedidos' %}" class="btn btn-nav-login d-none d-lg-inline-flex me-2">Mis Pedidos</a>
+                    <span class="d-none d-lg-inline me-3 fw-bold text-muted">¡Hola {{ user.username }}!</span>
+                    <a href="{% url 'logout' %}" type="submit" class="btn btn-nav-salir d-none d-lg-inline-flex">Salir</a>
                 {% else %}
-                    <a href="{% url 'login' %}" class="btn btn-nav-login">Iniciar Sesion</a>
-                    <a href="{% url 'registro' %}" class="btn btn-nav-registro">Nueva Cuenta</a>
+                    <a href="{% url 'login' %}" class="btn btn-nav-login d-none d-lg-inline-flex">Iniciar Sesion</a>
+                    <a href="{% url 'registro' %}" class="btn btn-nav-registro d-none d-lg-inline-flex">Nueva Cuenta</a>
                 {% endif %}
             </div>
         </div>
     </nav>
+
+    <!-- Offcanvas navegación móvil -->
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="navOffcanvas" aria-label="Menú de navegación">
+        <div class="offcanvas-header border-bottom">
+            <h5 class="offcanvas-title fw-bold d-flex align-items-center">
+                <img src="{% static 'img/logo.jpg' %}" alt="Logo" width="28" height="28" class="me-2 rounded-3">
+                Talcahualme
+            </h5>
+            <button type="button" class="btn-close" aria-label="Cerrar"></button>
+        </div>
+        <div class="offcanvas-body p-0 d-flex flex-column">
+            <nav class="nav-offcanvas-list">
+                <a href="{% url 'tienda' %}" class="nav-offcanvas-link">
+                    <span class="material-symbols-outlined me-3">store</span> Nosotros
+                </a>
+                <a href="{% url 'productList' %}" class="nav-offcanvas-link">
+                    <span class="material-symbols-outlined me-3">inventory_2</span> Productos
+                </a>
+                <a href="{% url 'punto_venta' %}" class="nav-offcanvas-link">
+                    <span class="material-symbols-outlined me-3">location_on</span> Puntos de Venta
+                </a>
+                <a href="{% url 'eventos' %}" class="nav-offcanvas-link">
+                    <span class="material-symbols-outlined me-3">event</span> Eventos
+                </a>
+            </nav>
+            <div class="mt-auto border-top p-3">
+                {% if user.is_authenticated %}
+                    <p class="fw-bold mb-3 small text-muted">¡Hola {{ user.username }}!</p>
+                    <a href="{% url 'mis_pedidos' %}" class="btn btn-outline-secondary w-100 mb-2">
+                        <span class="material-symbols-outlined me-2 fs-5">inventory</span> Mis Pedidos
+                    </a>
+                    <a href="{% url 'logout' %}" class="btn btn-outline-danger w-100">
+                        <span class="material-symbols-outlined me-2 fs-5">logout</span> Cerrar Sesión
+                    </a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="btn btn-nav-login w-100 mb-2">
+                        <span class="material-symbols-outlined me-2 fs-5">login</span> Iniciar Sesión
+                    </a>
+                    <a href="{% url 'registro' %}" class="btn btn-nav-registro w-100">
+                        <span class="material-symbols-outlined me-2 fs-5">person_add</span> Nueva Cuenta
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
 
     <!-- Mensajes Django por parte del Formulario de la reseña de producto -->
     {% if messages %}
@@ -293,7 +343,7 @@
                 <span class="material-symbols-outlined me-2" style="color:var(--primary);">shopping_bag</span>
                 Mi Canasto
             </h5>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+            <button type="button" class="btn-close"></button>
         </div>
         <div class="offcanvas-body p-0 d-flex flex-column">
             <div id="cart-items" class="p-3 flex-grow-1 overflow-auto">
