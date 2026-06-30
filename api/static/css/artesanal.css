@@ -192,6 +192,14 @@ html, body {
     }
 }
 
+/* Mobile: descripción a 1 línea */
+@media (max-width: 575.98px) {
+    .descripcion-clamp {
+        -webkit-line-clamp: 1;
+        line-clamp: 1;
+    }
+}
+
 /* ──────────────────────────────────────────────────────────────────────────── */
 /* § 5. COMPONENTES - BADGES Y ETIQUETAS                                       */
 /* ──────────────────────────────────────────────────────────────────────────── */
@@ -217,6 +225,11 @@ html, body {
     background-color: #e3f2fd !important;
 }
 
+/* Tamaño extra-small para badges (fs-2-xs) */
+.fs-2-xs {
+    font-size: 0.7rem !important;
+}
+
 /* Texto innovación en hero - gradiente artesanal */
 .texto-inovacion {
     background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
@@ -228,7 +241,19 @@ html, body {
 
 /* Contenedor imagen producto */
 .imagen-container-fixed {
-    height: 280px;
+    height: 220px;
+}
+
+@media (max-width: 767.98px) {
+    .imagen-container-fixed {
+        height: 140px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .imagen-container-fixed {
+        height: 180px;
+    }
 }
 
 .imagen-zoom-suave {
@@ -238,6 +263,16 @@ html, body {
 /* Título card compacto */
 .titulo-card-compacto {
     line-height: 1.2;
+}
+
+/* Responsive: tipografía de cards en móvil */
+@media (max-width: 767.98px) {
+    .card-title {
+        font-size: 0.9rem !important;
+    }
+    .card-body .text-muted {
+        font-size: 0.8rem !important;
+    }
 }
 
 /* ELIMINADO (Fase 1): .btn-cantidad, .cantidad-control, .btn-agregar-carrito - Comentado en HTML, no se usa */
@@ -537,7 +572,7 @@ html, body {
     to { opacity: 1; transform: translateY(0); }
 }
 
-.row.g-4 > div {
+.productos-grid > div {
     animation: fadeIn 0.6s ease forwards;
 }
 
@@ -558,7 +593,44 @@ html, body {
 
 @media (max-width: 480px) {
     .span-precio {
-        font-size: 1.1rem !important;
+        font-size: 0.95rem !important;
+    }
+}
+
+/* ──────────────────────────────────────────────────────────────────────────── */
+/* § 7b. TIPOGRAFÍA RESPONSIVA (Headings, display, botones)                    */
+/* ──────────────────────────────────────────────────────────────────────────── */
+
+@media (max-width: 767.98px) {
+    h1, .h1 { font-size: 1.75rem !important; }
+    h2, .h2 { font-size: 1.35rem !important; }
+    h3, .h3 { font-size: 1.15rem !important; }
+    .display-1 { font-size: calc(1.5rem + 3vw) !important; }
+    .display-3 { font-size: calc(1.3rem + 2.5vw) !important; }
+    .display-4 { font-size: calc(1.2rem + 2vw) !important; }
+    .display-5 { font-size: calc(1.1rem + 1.8vw) !important; }
+    .btn-explorar {
+        font-size: 0.95rem !important;
+        padding: 14px 28px !important;
+        min-height: 52px;
+    }
+    .btn-explorar .material-symbols-outlined {
+        font-size: 1.25rem !important;
+    }
+}
+
+@media (max-width: 575.98px) {
+    h1, .h1 { font-size: 1.5rem !important; }
+    h2, .h2 { font-size: 1.2rem !important; }
+    h3, .h3 { font-size: 1.05rem !important; }
+    .display-1 { font-size: calc(1.3rem + 2.5vw) !important; }
+    .display-3 { font-size: calc(1.1rem + 2vw) !important; }
+    .display-4 { font-size: calc(1rem + 1.8vw) !important; }
+    .display-5 { font-size: calc(0.95rem + 1.5vw) !important; }
+    .btn-explorar {
+        font-size: 0.9rem !important;
+        padding: 12px 24px !important;
+        min-height: 46px;
     }
 }
 
@@ -567,12 +639,24 @@ html, body {
 /* ──────────────────────────────────────────────────────────────────────────── */
 
 .footer-artisanal {
-    background: var(--surface-1) !important;
-    border-top: 1px solid var(--surface-3) !important;
-    padding: 4rem 0 2rem 0 !important;
+    background: #ffffff !important;
+    border-top: 1px solid #f0ede8 !important;
+    padding: 2.5rem 0 1.5rem 0;
 }
 
-/* Dark mode (si tienes toggle) */
+.footer-artisanal .footer-section {
+    font-weight: 700;
+    font-size: 1.125rem;
+    margin-bottom: 1rem;
+    color: #181411 !important;
+}
+
+@media (max-width: 767.98px) {
+    .footer-artisanal .footer-section {
+        font-size: 1rem;
+    }
+}
+
 @media (prefers-color-scheme: dark) {
     .footer-artisanal {
         background: #1a120b !important;
@@ -580,56 +664,47 @@ html, body {
         color: #ffffff !important;
     }
     .footer-artisanal .text-muted { color: #a8a29e !important; }
-}
-
-.footer-section {
-    font-weight: 700 !important;
-    font-size: 1.125rem !important;
-    margin-bottom: 1.5rem !important;
-    color: var(--text-main) !important;
+    .footer-artisanal .footer-section { color: #e8e0d8 !important; }
+    .footer-description { color: #a8a29e !important; }
 }
 
 .footer-link {
-    color: var(--text-muted) !important;
-    text-decoration: none !important;
-    font-size: 0.9rem !important;
-    display: block !important;
-    padding: 0.5rem 0 !important;
-    transition: all 0.2s ease !important;
+    color: #897261 !important;
+    text-decoration: none;
+    font-size: 0.9rem;
+    display: block;
+    padding: 0.35rem 0;
+    transition: all 0.2s ease;
 }
 
 .footer-link .bi {
-    width: 18px !important;
-    height: 18px !important;
-    margin-right: 0.75rem !important;
-    color: var(--primary) !important;
+    width: 18px;
+    height: 18px;
+    margin-right: 0.75rem;
+    color: #ec6d13 !important;
 }
 
 .footer-link:hover {
-    color: var(--primary) !important;
-    transform: translateX(4px) !important;
+    color: #ec6d13 !important;
+    transform: translateX(4px);
 }
 
 .footer-brand {
-    display: flex !important;
-    align-items: center !important;
-    gap: 0.75rem !important;
-    margin-bottom: 1.5rem !important;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
 }
 
 .footer-brand-icon {
-    font-size: 2.5rem !important;
-    color: var(--primary) !important; /* Naranja */
+    font-size: 2.5rem;
+    color: #ec6d13 !important;
 }
 
 .footer-description {
     color: #6b7280 !important;
-    font-size: 0.875rem !important;
-    line-height: 1.6 !important;
-}
-
-@media (prefers-color-scheme: dark) {
-    .footer-description { color: #a8a29e !important; }
+    font-size: 0.875rem;
+    line-height: 1.6;
 }
 
 /* ──────────────────────────────────────────────────────────────────────────── */
@@ -1160,7 +1235,7 @@ html, body {
 }
 
 .registro-marca {
-  font-size: 12px;
+  font-size: 0.75rem;
   letter-spacing: 0.1em;
   color: rgba(255,255,255,0.7);
   margin-bottom: 8px;
@@ -1189,7 +1264,7 @@ html, body {
 .registro-badge {
   background: rgba(255,255,255,0.15);
   color: #fff;
-  font-size: 12px;
+  font-size: 0.75rem;
   padding: 4px 14px;
   border-radius: 20px;
   border: 1px solid rgba(255,255,255,0.3);
@@ -1324,7 +1399,7 @@ html, body {
 
 .login-footer {
   text-align: center;
-  font-size: 11px;
+  font-size: 0.7rem;
   color: #adb5bd;
   margin-top: 1.5rem;
   margin-bottom: 0;
@@ -1350,7 +1425,7 @@ html, body {
   display: inline-block;
   background: rgba(255,255,255,0.2);
   color: #fff;
-  font-size: 11px;
+  font-size: 0.7rem;
   padding: 4px 14px;
   border-radius: 20px;
   border: 1px solid rgba(255,255,255,0.3);
@@ -1413,7 +1488,7 @@ html, body {
     right: 12px;
     background: #f28135;
     color: #fff;
-    font-size: 11px;
+    font-size: 0.7rem;
     padding: 4px 12px;
     border-radius: 20px;
 }
@@ -1530,7 +1605,7 @@ html, body {
 }
 
 .evento-seccion-badge {
-    font-size: 11px;
+    font-size: 0.7rem;
     font-weight: 700;
     padding: 4px 14px;
     border-radius: 20px;
@@ -1551,7 +1626,7 @@ html, body {
 .evento-badge-proximo {
     background: #f28135;
     color: #fff;
-    font-size: 11px;
+    font-size: 0.7rem;
     border-radius: 20px;
     padding: 4px 12px;
 }
@@ -1559,7 +1634,7 @@ html, body {
 .evento-badge-pasado {
     background: #e9ecef;
     color: #6c757d;
-    font-size: 11px;
+    font-size: 0.7rem;
     border-radius: 20px;
     padding: 4px 12px;
 }
@@ -1577,7 +1652,7 @@ html, body {
     border: 1px solid #e9ecef;
     border-radius: 20px;
     padding: 4px 12px;
-    font-size: 12px;
+    font-size: 0.75rem;
 }
 
 /* ──────────────────────────────────────────────────────────────────────────── */
