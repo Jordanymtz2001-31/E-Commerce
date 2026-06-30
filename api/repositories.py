@@ -94,7 +94,7 @@ class PedidoRepository:
             Pedido.objects
             .filter(cliente=cliente)
             .prefetch_related(
-                Prefetch('detalles', queryset=DetallePedido.objects.select_related('producto', 'Talla')),
+                Prefetch('detalles', queryset=DetallePedido.objects.select_related('producto', 'talla', 'variante__color')),
             )
             .order_by('-creado')
         )
@@ -105,7 +105,7 @@ class PedidoRepository:
         """
         
         qs = Pedido.objects.prefetch_related(
-            Prefetch('detalles', queryset=DetallePedido.objects.select_related('producto', 'Talla', 'variante')),
+            Prefetch('detalles', queryset=DetallePedido.objects.select_related('producto', 'talla', 'variante__color')),
         ).filter(cliente=cliente)
         return get_object_or_404(qs, pk=pk)
 

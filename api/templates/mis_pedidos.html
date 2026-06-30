@@ -32,7 +32,15 @@
                 <div class="d-flex align-items-center gap-3 mb-2 pb-2 border-bottom border-light">
                     <div class="flex-grow-1">
                         <span class="fw-semibold">{{ detalle.producto.nombre }}</span>
-                        <small class="text-muted ms-2">Talla: {{ detalle.Talla.nombreTalla }} × {{ detalle.cantidad }}</small>
+                        <small class="text-muted ms-2">
+                            {% if detalle.variante and detalle.variante.color %}
+                            <span class="d-inline-flex align-items-center gap-1 me-1">
+                                <span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:{{ detalle.variante.color.codigo_hex }};border:1px solid #ddd;"></span>
+                                {{ detalle.variante.color.nombre }},
+                            </span>
+                            {% endif %}
+                            Talla: {{ detalle.talla.nombreTalla }} × {{ detalle.cantidad }}
+                        </small>
                     </div>
                     <span class="fw-semibold">${{ detalle.precio_unitario|floatformat:0 }}</span>
                 </div>

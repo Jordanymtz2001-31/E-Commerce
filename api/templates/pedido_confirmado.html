@@ -34,8 +34,23 @@
                     <hr>
                     <h6 class="fw-bold mb-3">Detalle</h6>
                     {% for detalle in pedido.detalles.all %}
-                    <div class="d-flex justify-content-between mb-2">
-                        <span>{{ detalle.producto.nombre }} <small class="text-muted">({{ detalle.Talla.nombreTalla }}) × {{ detalle.cantidad }}</small></span>
+                    <div class="d-flex align-items-center gap-3 mb-2">
+                        {% if detalle.variante and detalle.variante.imagen %}
+                        <img src="{{ detalle.variante.imagen.url }}" alt="{{ detalle.producto.nombre }}"
+                             style="width:60px;height:60px;object-fit:cover;border-radius:8px;flex-shrink:0;">
+                        {% endif %}
+                        <div class="flex-grow-1">
+                            <span class="fw-semibold">{{ detalle.producto.nombre }}</span>
+                            <small class="text-muted d-block">
+                                {% if detalle.variante and detalle.variante.color %}
+                                <span class="d-inline-flex align-items-center gap-1 me-1">
+                                    <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:{{ detalle.variante.color.codigo_hex }};border:1px solid #ddd;"></span>
+                                    {{ detalle.variante.color.nombre }},
+                                </span>
+                                {% endif %}
+                                Talla: {{ detalle.talla.nombreTalla }} × {{ detalle.cantidad }}
+                            </small>
+                        </div>
                         <span class="fw-semibold">${{ detalle.precio_unitario|floatformat:0 }}</span>
                     </div>
                     {% endfor %}

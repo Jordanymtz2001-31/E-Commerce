@@ -99,6 +99,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ecommerce.wsgi.application'
 
+# Mapear tags de mensajes Django a clases Bootstrap
+from django.contrib.messages import constants as messages
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger',
+}
+
 # Para cualquier vista con @login_required, si el usuario no está autenticado, lo redirige a esta URL (la vista de login)
 LOGIN_URL = '/talcahualme/login/'
 # Database
