@@ -4,6 +4,25 @@ from django.db import migrations
 from django.db.models import Min
 
 
+CREATE_VARIANTES_PRODUCTO_TABLE = """
+CREATE TABLE IF NOT EXISTS `variantes_producto` (
+    `id` bigint AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    `precio` decimal(10, 2) NOT NULL,
+    `stock` integer unsigned NOT NULL,
+    `imagen` varchar(100) NULL,
+    `sku` varchar(100) NOT NULL UNIQUE,
+    `activo` bool NOT NULL,
+    `color_id` bigint NULL,
+    `producto_id` bigint NOT NULL,
+    `talla_id` bigint NULL,
+    CONSTRAINT `variantes_producto_color_id_fk_colores_id` FOREIGN KEY (`color_id`) REFERENCES `colores` (`id`) ON DELETE SET NULL,
+    CONSTRAINT `variantes_producto_producto_id_fk_productos_id` FOREIGN KEY (`producto_id`) REFERENCES `productos` (`id`) ON DELETE CASCADE,
+    CONSTRAINT `variantes_producto_talla_id_fk_tallas_id` FOREIGN KEY (`talla_id`) REFERENCES `tallas` (`id`) ON DELETE SET NULL,
+    UNIQUE KEY `variantes_producto_producto_id_color_id_talla_id_uniq` (`producto_id`, `color_id`, `talla_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+"""
+
+
 def set_precio_base_from_variants(apps, schema_editor):
     Producto = apps.get_model('api', 'Producto')
     VarianteProducto = apps.get_model('api', 'VarianteProducto')
@@ -24,5 +43,9 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+        migrations.RunSQL(
+            CREATE_VARIANTES_PRODUCTO_TABLE,
+            reverse_sql=migrations.RunSQL.noop,
+        ),
         migrations.RunPython(set_precio_base_from_variants, migrations.RunPython.noop),
     ]

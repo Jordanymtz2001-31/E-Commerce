@@ -3,6 +3,11 @@
 from django.db import migrations, models
 
 
+def set_default_precio_base(apps, schema_editor):
+    Producto = apps.get_model('api', 'Producto')
+    Producto.objects.filter(precio_base__isnull=True).update(precio_base=0)
+
+
 class Migration(migrations.Migration):
 
     dependencies = [
@@ -10,6 +15,7 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+        migrations.RunPython(set_default_precio_base, migrations.RunPython.noop),
         migrations.AlterField(
             model_name='producto',
             name='precio_base',
