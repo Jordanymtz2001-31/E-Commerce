@@ -4,23 +4,26 @@ from django.db import migrations
 from django.db.models import Min
 
 
-CREATE_VARIANTES_PRODUCTO_TABLE = """
-CREATE TABLE IF NOT EXISTS `variantes_producto` (
-    `id` bigint AUTO_INCREMENT NOT NULL PRIMARY KEY,
-    `precio` decimal(10, 2) NOT NULL,
-    `stock` integer unsigned NOT NULL,
-    `imagen` varchar(100) NULL,
-    `sku` varchar(100) NOT NULL UNIQUE,
-    `activo` bool NOT NULL,
-    `color_id` bigint NULL,
-    `producto_id` bigint NOT NULL,
-    `talla_id` bigint NULL,
-    CONSTRAINT `variantes_producto_color_id_fk_colores_id` FOREIGN KEY (`color_id`) REFERENCES `colores` (`id`) ON DELETE SET NULL,
-    CONSTRAINT `variantes_producto_producto_id_fk_productos_id` FOREIGN KEY (`producto_id`) REFERENCES `productos` (`id`) ON DELETE CASCADE,
-    CONSTRAINT `variantes_producto_talla_id_fk_tallas_id` FOREIGN KEY (`talla_id`) REFERENCES `tallas` (`id`) ON DELETE SET NULL,
-    UNIQUE KEY `variantes_producto_producto_id_color_id_talla_id_uniq` (`producto_id`, `color_id`, `talla_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-"""
+def create_missing_tables(apps, schema_editor):
+    connection = schema_editor.connection
+    existing_tables = connection.introspection.table_names()
+
+    models_in_dependency_order = [
+        'Categoria', 'Talla', 'TipoMateria', 'InstruccionesCuidado',
+        'Color', 'Producto', 'Cliente', 'PuntoVenta', 'Colaborador',
+        'Evento', 'ImagenProducto', 'VarianteProducto', 'Resena',
+        'Pedido', 'FotoEvento', 'DetallePedido',
+    ]
+
+    for model_name in models_in_dependency_order:
+        model = apps.get_model('api', model_name)
+        table_name = model._meta.db_table
+        if table_name not in existing_tables:
+            try:
+                with connection.constraint_checks_disabled():
+                    schema_editor.create_model(model)
+            except Exception:
+                pass
 
 
 def set_precio_base_from_variants(apps, schema_editor):
@@ -38,14 +41,13 @@ def set_precio_base_from_variants(apps, schema_editor):
 
 class Migration(migrations.Migration):
 
+    atomic = False
+
     dependencies = [
         ('api', '0006_add_precio_base_to_producto'),
     ]
 
     operations = [
-        migrations.RunSQL(
-            CREATE_VARIANTES_PRODUCTO_TABLE,
-            reverse_sql=migrations.RunSQL.noop,
-        ),
+        migrations.RunPython(create_missing_tables, migrations.RunPython.noop),
         migrations.RunPython(set_precio_base_from_variants, migrations.RunPython.noop),
     ]
