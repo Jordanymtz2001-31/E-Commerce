@@ -50,7 +50,7 @@ function agregarAlCarrito(productoId, nombre, precio, imagen, talla, cantidad, s
         existe.cantidad += cantidad;
     } else {
         // Si el producto no existe en el carrito, lo agregamos como un nuevo item
-        carrito.push({ key, id: productoId, nombre, precio: parseFloat(precio), imagen, talla, cantidad });
+        carrito.push({ key, id: productoId, nombre, precio: parseFloat(precio), imagen, talla, cantidad, sku, color: colorName });
     }
 
     // Guardamos el carrito actualizado en el localStorage y actualizamos la interfaz del carrito

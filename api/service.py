@@ -102,9 +102,13 @@ class PedidoService:
         """
         with transaction.atomic():
             # --- FASE 1: Recopilar todos los IDs y skus ---
-            producto_ids = [item['id'] for item in productos]
+            try:
+                # Verificamos que todos los IDs sean enteros
+                producto_ids = [int(item['id']) for item in productos]
+            except (ValueError, TypeError):
+                raise ValueError("ID de producto no válido en el carrito.")
             tallas = [item['talla'] for item in productos]
-            skus = [item['sku'] for item in productos]
+            skus = [item.get('sku') for item in productos] # Con get obtenemos None si no encuentra el sku
 
             # --- FASE 2: Cargar todo en 3 consultas masivas ---
             # Creamos diccionarios en memoria con los IDs/skus/tallas de los items
@@ -136,7 +140,11 @@ class PedidoService:
             for item in productos:
                 
                 # Ahora accedemos directamente a los diccionarios en memoria
-                producto_obj = productos_map.get(item['id'])
+                try:
+                    item_id = int(item['id'])
+                except (ValueError, TypeError):
+                    raise ValueError(f"ID de producto '{item['id']}' no válido.")
+                producto_obj = productos_map.get(item_id)
                 if producto_obj is None:
                     raise Producto.DoesNotExist(
                         f"Producto con ID {item['id']} no encontrado."
