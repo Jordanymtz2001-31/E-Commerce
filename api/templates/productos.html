@@ -71,8 +71,9 @@
             <div class="card h-100 card-hover border-0 shadow-sm rounded-4 overflow-hidden position-relative">
                 <!-- Imagen con zoom hover -->
                 <div class="position-relative overflow-hidden imagen-container-fixed">
-                    {% if producto.imagenes.all %}
-                    <img src="{{ producto.imagenes.first.imagenes.url }}" 
+                    {% with primera_imagen=producto.imagenes.first %}
+                    {% if primera_imagen and primera_imagen.imagenes %}
+                    <img src="{{ primera_imagen.imagenes.url }}" 
                         class="card-img-top w-100 h-100 object-fit-cover imagen-zoom-suave"
                         alt="{{ producto.nombre }}">
                     {% elif producto.variantes_data.0.imagen %} <!-- Si no hay imagenes, se muestra la primera variante --> 
@@ -83,6 +84,7 @@
                     <img src="https://via.placeholder.com/400x280?text=Sin+Imagen" 
                          class="card-img-top w-100 h-100 object-fit-cover">
                     {% endif %}
+                    {% endwith %}
                     
                     <!-- Badge lana -->
                     {% if producto.categoria.all|length > 0 %}
@@ -113,7 +115,7 @@
                     </p>
                     <button class="btn btn-light text-muted w-100 fw-bold mt-auto modal-trigger"
                     data-producto-id="{{ producto.id }}"
-                    data-imagenes="[{% if producto.imagenes.all %}{% for img in producto.imagenes.all %}'{{ img.imagenes.url }}'{% if not forloop.last %},{% endif %}{% endfor %}{% elif producto.variantes_data.0.imagen %}'{{ producto.variantes_data.0.imagen }}'{% endif %}]"
+                    data-imagenes="[{% if producto.imagenes.all %}{% for img in producto.imagenes.all %}{% if img.imagenes %}'{{ img.imagenes.url }}'{% if not forloop.last %},{% endif %}{% endif %}{% endfor %}{% elif producto.variantes_data.0.imagen %}'{{ producto.variantes_data.0.imagen }}'{% endif %}]"
                     data-titulo="{{ producto.nombre }}"
                     data-precio-min="{{ producto.precio_min|floatformat:0 }}"
                     data-precio-min-num="{{ producto.precio_min|floatformat:2 }}"
