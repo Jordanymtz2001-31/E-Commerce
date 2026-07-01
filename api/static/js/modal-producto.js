@@ -92,7 +92,22 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('modalTitulo').textContent = this.dataset.titulo;
             document.getElementById('modalCategoria').textContent = this.dataset.categoria || 'Sin categoría';
             document.getElementById('modalMateriales').textContent = this.dataset.materiales || 'N/A';
-            document.getElementById('modalCuidados').textContent = this.dataset.cuidados || 'N/A';
+
+            // Cuidados: dividir por ||| y crear un badge individual por cada instrucción
+            const cuidadosContainer = document.getElementById('modalCuidadosContainer');
+            const cuidadosRaw = this.dataset.cuidados || '';
+            cuidadosContainer.innerHTML = '';
+            if (cuidadosRaw) {
+                cuidadosRaw.split('|||').forEach(c => {
+                    if (c.trim()) {
+                        const badge = document.createElement('span');
+                        badge.className = 'badge badge-cuidado me-1 mb-1';
+                        badge.textContent = c.trim();
+                        cuidadosContainer.appendChild(badge);
+                    }
+                });
+            }
+
             document.getElementById('modalDescripcion').textContent = this.dataset.descripcion || '';
 
             // -----------------------------------------------------------------

@@ -179,10 +179,7 @@ html, body {
     background: transparent;
 }
 
-/* Imagen con zoom hover */
-.card-img-hover {
-    transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
+
 
 /* Truncado de texto (line-clamp) */
 .descripcion-clamp {
@@ -266,8 +263,22 @@ html, body {
     }
 }
 
-.imagen-zoom-suave {
-    transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+/* Slideshow automático en cards del catálogo */
+.producto-card-slideshow {
+    position: relative;
+    width: 100%;
+}
+.producto-card-slideshow img {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.7s ease;
+}
+.producto-card-slideshow img.img-active {
+    opacity: 1;
 }
 
 /* Título card compacto */
@@ -807,6 +818,15 @@ html, body {
 #modalProducto .producto-detalles h3,
 #modalProducto .producto-detalles p {
     margin-bottom: 1rem;
+}
+
+/* Descripción del producto con mejor legibilidad */
+#modalDescripcion {
+    line-height: 1.6;
+    font-size: 0.95rem;
+    max-height: 200px;
+    overflow-y: auto;
+    padding-right: 0.5rem;
 }
 
 #modalProducto .detalles-chips {

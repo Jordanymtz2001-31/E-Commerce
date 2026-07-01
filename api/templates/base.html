@@ -243,7 +243,8 @@
                         </div>
                     </div>
                     <p class="mb-2"><strong>Material:</strong> <span id="modalMateriales" class="badge badge-material ms-1"></span></p>
-                    <p class="mb-2"><strong>Cuidado:</strong> <span id="modalCuidados" class="badge badge-cuidado ms-1"></span></p>
+                    <p class="mb-2"><strong>Cuidado:</strong></p>
+                    <div id="modalCuidadosContainer" class="d-flex flex-wrap gap-1 mb-3"></div>
                     <!-- SELECTOR DE COLOR (interactivo) -->
                     <p class="mb-2"><strong>Color:</strong></p>
                     <div id="colorPicker" class="d-flex gap-2 flex-wrap mb-3">
@@ -400,6 +401,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- Aqui llamamos a los js -->
+    <script src="{% static 'js/slideshow.js' %}?v=1"></script>
      <script src="{% static 'js/carrito.js' %}"></script>
     <script src="{% static 'js/modal-producto.js' %}?v=2"></script>
 </body>

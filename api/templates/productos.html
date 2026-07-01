@@ -69,20 +69,24 @@
         {% for producto in productos %}
         <div class="col-6 col-xl-3 col-lg-4 col-md-6">
             <div class="card h-100 card-hover border-0 shadow-sm rounded-4 overflow-hidden position-relative">
-                <!-- Imagen con zoom hover -->
-                <div class="position-relative overflow-hidden imagen-container-fixed">
-                    {% with primera_imagen=producto.imagenes.first %}
-                    {% if primera_imagen and primera_imagen.imagenes %}
-                    <img src="{{ primera_imagen.imagenes.url }}" 
-                        class="card-img-top w-100 h-100 object-fit-cover imagen-zoom-suave"
-                        alt="{{ producto.nombre }}">
-                    {% elif producto.variantes_data.0.imagen %} <!-- Si no hay imagenes, se muestra la primera variante --> 
+                <!-- Imagen con slideshow automático -->
+                <div class="position-relative overflow-hidden imagen-container-fixed producto-card-slideshow">
+                    {% with all_images=producto.imagenes.all %}
+                    {% if all_images %}
+                        {% for img in all_images %}
+                        <img src="{{ img.imagenes.url }}" 
+                             class="card-img-top w-100 h-100 object-fit-cover {% if forloop.first %}img-active{% endif %}"
+                             alt="{{ producto.nombre }}"
+                             {% if not forloop.first %}loading="lazy"{% endif %}>
+                        {% endfor %}
+                    {% elif producto.variantes_data.0.imagen %}
                     <img src="{{ producto.variantes_data.0.imagen }}" 
-                        class="card-img-top w-100 h-100 object-fit-cover imagen-zoom-suave"
-                        alt="{{ producto.nombre }}">
+                         class="card-img-top w-100 h-100 object-fit-cover img-active"
+                         alt="{{ producto.nombre }}">
                     {% else %}
                     <img src="https://via.placeholder.com/400x280?text=Sin+Imagen" 
-                         class="card-img-top w-100 h-100 object-fit-cover">
+                         class="card-img-top w-100 h-100 object-fit-cover img-active"
+                         alt="{{ producto.nombre }}">
                     {% endif %}
                     {% endwith %}
                     
@@ -122,8 +126,8 @@
                     data-precio-base="{{ producto.precio_base|floatformat:2 }}"
                     data-categoria="{% for cat in producto.categoria.all %}{{ cat.nombreCategoria }}{% if not forloop.last %}, {% endif %}{% endfor %}"
                     data-materiales="{% for m in producto.tipoMateria.all %}{{ m.nombreTipoMateria }}{% if not forloop.last %}, {% endif %}{% endfor %}"
-                    data-cuidados="{% for c in producto.instruccionesCuidado.all %}{{ c.nombre }}{% if not forloop.last %} | {% endif %}{% endfor %}"
-                    data-descripcion="{{ producto.descripcion|truncatewords:20 }}"
+                    data-cuidados="{% for c in producto.instruccionesCuidado.all %}{{ c.nombre }}{% if not forloop.last %}|||{% endif %}{% endfor %}"
+                    data-descripcion="{{ producto.descripcion|truncatewords:100 }}"
                     data-variantes="[{% for v in producto.variantes_data %}{'sku':'{{ v.sku }}','color':{% if v.color %}{'nombre':'{{ v.color.nombre }}','hex':'{{ v.color.hex }}'}{% else %}null{% endif %},'talla':'{{ v.talla }}','stock':{{ v.stock }},'precio':{{ v.precio }},'imagen':{% if v.imagen %}'{{ v.imagen }}'{% else %}null{% endif %}}{% if not forloop.last %},{% endif %}{% endfor %}]"
                     >
                         Ver Detalles
