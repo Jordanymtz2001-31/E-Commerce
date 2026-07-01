@@ -1723,3 +1723,49 @@ html, body {
         width: 100vw;
     }
 }
+
+/* ──────────────────────────────────────────────────────────────────────────── */
+/* § 16. PAGINACIÓN ARTESANAL                                                   */
+/* ──────────────────────────────────────────────────────────────────────────── */
+
+/* 
+ * Paginación del catálogo de productos.
+ * Estilo naranja artesanal que mantiene la coherencia visual con la marca.
+ * Los controles de página aparecen cuando hay más de 20 productos.
+ */
+.pagination-artesanal .page-link {
+    color: var(--primary);
+    border: 1px solid var(--surface-3);
+    border-radius: 8px;
+    margin: 0 2px;
+    padding: 0.5rem 0.85rem;
+    transition: all 0.2s ease;
+    font-weight: 500;
+}
+
+.pagination-artesanal .page-link:hover {
+    background: rgba(236, 109, 19, 0.08);
+    border-color: var(--primary);
+    color: var(--primary-dark);
+}
+
+.pagination-artesanal .active .page-link {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: #fff !important;
+}
+
+.pagination-artesanal .disabled .page-link {
+    color: var(--text-muted);
+    border-color: var(--surface-3);
+    background: transparent;
+    opacity: 0.5;
+}
+
+@media (max-width: 480px) {
+    .pagination-artesanal .page-link {
+        padding: 0.4rem 0.65rem;
+        font-size: 0.85rem;
+        margin: 0 1px;
+    }
+}

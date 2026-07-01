@@ -301,7 +301,9 @@ JAZZMIN_UI_TWEAKS = {
         "info": "btn-info",             # botones informativos
         "warning": "btn-warning",       # botones de advertencia
         "danger": "btn-danger",         # botones de eliminar
-        "success": "btn-success",       # botones de éxito
+        "success": "btn-success",         # botones de éxito
     }
 }
+
+VERSION = "1.1.2"
 

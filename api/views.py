@@ -10,6 +10,7 @@ from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 from django.conf import settings
+from django.core.paginator import Paginator # Para la paginación
 
 from .forms import RegistroForm
 from .models import Categoria, Cliente, Producto, Pedido, Talla, Color
@@ -82,6 +83,9 @@ def tienda_view(request):
 
 
 def productos_por_categoria(request, categoria_id):
+    """
+    Lista productos por categoría con paginación de 20 por página.
+    """
     categoria_seleccionada = get_object_or_404(Categoria, id=categoria_id)
 
     repo = ProductoRepository()
@@ -90,7 +94,13 @@ def productos_por_categoria(request, categoria_id):
     productos = repo.obtener_por_categoria(categoria_id=categoria_id)
     categorias = categoria_repo.listar_todas()
 
-    for producto in productos:
+    # Paginación: 20 productos por página
+    paginator = Paginator(productos, 20)
+    page_number = request.GET.get('page') # Obtiene el parámetro 'page' de la URL para la paginación
+    page_obj = paginator.get_page(page_number) # Obtiene la página actual
+
+    # Asignar variantes_data solo a los productos de la página actual
+    for producto in page_obj:
         
         # Creamos una lista comprehension, esto se trabaja de otra forma    
         # 1 .Creamos el atributo dinamico(variantes_data) en el objeto producto como auxiliar
@@ -110,10 +120,24 @@ def productos_por_categoria(request, categoria_id):
             for v in producto.variantes.all()
         ]
 
+    """
+    Query string base para preservar filtros en paginación
+    
+    Es decir que si el usuario navega entre las paginas, se conservan los filtros 
+    de categoria y color, esto con el fin de no perder la seleccion de categoria y color.
+    De lo contrario cargaria todos los productos de la tienda.
+    """
+    query_params = request.GET.copy()  # Crea una copia de los parámetros de la solicitud (categoria, color, page)
+    if 'page' in query_params:
+        del query_params['page']
+    base_query_string = query_params.urlencode()
+
     context = {
-        'productos': productos,
+        'productos': page_obj,
+        'page_obj': page_obj,
         'categorias': categorias,
         'categoria_seleccionada': categoria_seleccionada,
+        'base_query_string': base_query_string,
     }
     return render(request, 'productos.html', context)
 
@@ -122,6 +146,9 @@ def productos_view(request):
     Usa ProductoRepository para el acceso a datos y FiltroProductoStrategy
     para el filtro por categoría. Esto permite agregar nuevos filtros sin
     modificar esta vista (OCP).
+
+    Paginación: 20 productos por página. Los filtros (?categoria, ?color)
+    se conservan al navegar entre páginas (?page=N).
     """
     repo = ProductoRepository()
     categoria_repo = CategoriaRepository()
@@ -148,7 +175,13 @@ def productos_view(request):
 
     productos_filtrados = strategy.aplicar(productos)
 
-    for producto in productos_filtrados:
+    # Paginación: 20 productos por página
+    paginator = Paginator(productos_filtrados, 20)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    # Asignar variantes_data solo a los productos de la página actual
+    for producto in page_obj:
         producto.variantes_data = [
             {
                 'sku': v.sku,
@@ -161,12 +194,26 @@ def productos_view(request):
             for v in producto.variantes.all()
         ]
 
+    """
+    Query string base para preservar filtros en paginación
+    
+    Es decir que si el usuario navega entre las paginas, se conservan los filtros 
+    de categoria y color, esto con el fin de no perder la seleccion de categoria y color.
+    De lo contrario cargaria todos los productos de la tienda.
+    """
+    query_params = request.GET.copy()
+    if 'page' in query_params:
+        del query_params['page']
+    base_query_string = query_params.urlencode()
+
     context = {
-        'productos': productos_filtrados,
+        'productos': page_obj,
+        'page_obj': page_obj,
         'categorias': categorias,
         'colores': colores,
         'categoria_seleccionada': categoria_seleccionada,
         'color_seleccionado': color_seleccionado,
+        'base_query_string': base_query_string,
     }
     return render(request, 'productos.html', context)
 

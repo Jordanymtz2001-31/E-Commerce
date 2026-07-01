@@ -148,5 +148,72 @@
         </div>
         {% endfor %}
     </div>
+
+    <!-- Paginación: 20 productos por página con navegación Bootstrap -->
+    {% if page_obj.paginator.num_pages > 1 %}
+    <nav aria-label="Navegación de catálogo" class="mt-5">
+        <ul class="pagination justify-content-center pagination-artesanal">
+            <!-- Anterior, has_previo es para saber si hay una página anterior -->
+            {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?{% if base_query_string %}{{ base_query_string }}&{% endif %}page={{ page_obj.previous_page_number }}#catalogo" aria-label="Anterior">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <!-- Páginas alrededor de la actual -->
+            {% else %}
+            <li class="page-item disabled">
+                <span class="page-link" aria-hidden="true">&laquo;</span>
+            </li>
+            {% endif %}
+
+            <!-- Primera página (si no está cerca del inicio) -->
+            {% if page_obj.number > 3 %}
+            <li class="page-item">
+                <a class="page-link" href="?{% if base_query_string %}{{ base_query_string }}&{% endif %}page=1#catalogo">1</a>
+            </li>
+            {% if page_obj.number > 4 %}
+            <li class="page-item disabled"><span class="page-link">…</span></li>
+            {% endif %}
+            {% endif %}
+
+            <!-- Páginas alrededor de la actual -->
+            {% for num in page_obj.paginator.page_range %}
+                {% if num >= page_obj.number|add:'-2' and num <= page_obj.number|add:'2' %}
+                    {% if num == page_obj.number %}
+                    <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+                    {% else %}
+                    <li class="page-item">
+                        <a class="page-link" href="?{% if base_query_string %}{{ base_query_string }}&{% endif %}page={{ num }}#catalogo">{{ num }}</a>
+                    </li>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+
+            <!-- Última página (si no está cerca del final) -->
+            {% if page_obj.number < page_obj.paginator.num_pages|add:'-2' %}
+                {% if page_obj.number < page_obj.paginator.num_pages|add:'-3' %}
+                <li class="page-item disabled"><span class="page-link">…</span></li>
+                {% endif %}
+            <li class="page-item">
+                <a class="page-link" href="?{% if base_query_string %}{{ base_query_string }}&{% endif %}page={{ page_obj.paginator.num_pages }}#catalogo">{{ page_obj.paginator.num_pages }}</a>
+            </li>
+            {% endif %}
+
+            <!-- Siguiente -->
+            {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?{% if base_query_string %}{{ base_query_string }}&{% endif %}page={{ page_obj.next_page_number }}#catalogo" aria-label="Siguiente">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <span class="page-link" aria-hidden="true">&raquo;</span>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% endif %}
 </div>
 {% endblock %}
