@@ -233,7 +233,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     const disabled = v.stock <= 0;
 
                     const label = document.createElement('label');
-                    label.className = `btn btn-sm rounded-pill px-3 size-option ${disabled ? 'disabled opacity-50' : 'btn-outline-secondary'}`;
+                    label.className = `btn btn-sm rounded-pill px-3 size-option ${disabled ? 'disabled opacity-50' : 'btn-outline-brand'}`;
                     label.setAttribute('for', id);
                     label.innerHTML = `${v.talla} <small class="ms-1 opacity-75">(${v.stock})</small>`;
 
@@ -260,9 +260,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
                         // Resetear estilo de todas las tallas y resaltar la seleccionada
                         document.querySelectorAll('.size-option').forEach(el => {
-                            el.className = `btn btn-sm rounded-pill px-3 size-option btn-outline-secondary`;
+                            el.className = `btn btn-sm rounded-pill px-3 size-option btn-outline-brand`;
                         });
-                        this.className = `btn btn-sm rounded-pill px-3 size-option btn-primary text-white`;
+                        this.className = `btn btn-sm rounded-pill px-3 size-option btn-brand`;
 
                         varianteSeleccionada = v;
                         varianteSkuInput.value = v.sku;
@@ -295,7 +295,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         firstInput.checked = true;
                         const firstLabel = document.querySelector(`label[for="size-${primerConStock.sku}"]`);
                         if (firstLabel) {
-                            firstLabel.className = `btn btn-sm rounded-pill px-3 size-option btn-primary text-white`;
+                            firstLabel.className = `btn btn-sm rounded-pill px-3 size-option btn-brand`;
                         }
                     }
                     varianteSeleccionada = primerConStock;
@@ -364,7 +364,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     const id = `color-${color.nombre.replace(/\s+/g, '-')}`;
 
                     const label = document.createElement('label');
-                    label.className = `btn btn-sm rounded-pill px-3 d-inline-flex align-items-center gap-2 color-option ${index === 0 ? 'btn-primary text-white' : 'btn-outline-secondary'}`;
+                    label.className = `btn btn-sm rounded-pill px-3 d-inline-flex align-items-center gap-2 color-option ${index === 0 ? 'btn-brand' : 'btn-outline-brand'}`;
                     label.setAttribute('for', id);
                     label.innerHTML = `
                         <span style="display:inline-block;width:14px;height:14px;background:${color.hex};border-radius:50%;border:1px solid #ccc;"></span>
@@ -388,9 +388,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
                         // Resetear estilo de todos los colores y resaltar el seleccionado
                         document.querySelectorAll('.color-option').forEach(el => {
-                            el.className = `btn btn-sm rounded-pill px-3 d-inline-flex align-items-center gap-2 color-option btn-outline-secondary`;
+                            el.className = `btn btn-sm rounded-pill px-3 d-inline-flex align-items-center gap-2 color-option btn-outline-brand`;
                         });
-                        this.className = `btn btn-sm rounded-pill px-3 d-inline-flex align-items-center gap-2 color-option btn-primary text-white`;
+                        this.className = `btn btn-sm rounded-pill px-3 d-inline-flex align-items-center gap-2 color-option btn-brand`;
 
                         // Si la variante de este color tiene imagen propia, se muestra
                         // solo esa imagen en el carrusel (sin las imágenes generales)

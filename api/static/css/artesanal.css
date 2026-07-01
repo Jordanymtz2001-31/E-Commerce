@@ -161,13 +161,23 @@ html, body {
     transform: translateY(-4px);
 }
 
-/* Chips scroll (ocultado en todos los navegadores) */
+/* Chips scroll con scrollbar naranja sutil */
 .chips-scroll {
     overflow-x: auto;
-    scrollbar-width: none;
     -ms-overflow-style: none;
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary) transparent;
 }
-.chips-scroll::-webkit-scrollbar { display: none; }
+.chips-scroll::-webkit-scrollbar {
+    height: 4px;
+}
+.chips-scroll::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 4px;
+}
+.chips-scroll::-webkit-scrollbar-track {
+    background: transparent;
+}
 
 /* Imagen con zoom hover */
 .card-img-hover {
@@ -441,6 +451,39 @@ html, body {
         border-radius: 15px;
     }
 } 
+
+/* ──────────────────────────────────────────────────────────────────────────── */
+/* § 6b. BOTONES DE MARCA (Selector color/talla en modal)                      */
+/* ──────────────────────────────────────────────────────────────────────────── */
+
+/* 
+ * Reemplazan btn-primary (azul) y btn-outline-secondary (gris) en los
+ * selectores de color y talla dentro del modal de producto.
+ * Mantienen la identidad naranja artesanal del sistema.
+ */
+.btn-brand {
+    background: var(--primary) !important;
+    border: 1px solid var(--primary) !important;
+    color: #fff !important;
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-brand:hover {
+    background: var(--primary-dark) !important;
+    border-color: var(--primary-dark) !important;
+    color: #fff !important;
+}
+
+.btn-outline-brand {
+    background: transparent !important;
+    border: 1px solid var(--primary) !important;
+    color: var(--primary) !important;
+}
+
+.btn-outline-brand:hover {
+    background: rgba(236, 109, 19, 0.08) !important;
+    color: var(--primary-dark) !important;
+}
 
 /* ──────────────────────────────────────────────────────────────────────────── */
 /* § 7. PÁGINA PRODUCTOS - HERO Y FILTROS                                     */
