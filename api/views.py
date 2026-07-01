@@ -8,6 +8,13 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
+
+
+def _safe_url(image_field):
+    try:
+        return image_field.url if image_field else None
+    except (ValueError, AttributeError):
+        return None
 from django.http import HttpResponse
 from django.conf import settings
 from django.core.paginator import Paginator # Para la paginación
@@ -113,7 +120,7 @@ def productos_por_categoria(request, categoria_id):
                 'talla': v.talla.nombreTalla if v.talla else None,
                 'stock': v.stock,
                 'precio': float(v.precio),
-                'imagen': v.imagen.url if v.imagen else None,
+                'imagen': _safe_url(v.imagen),
             }
             
             # 3. Definimos la condicion y indicamos de donde tomar la informacion
@@ -127,7 +134,7 @@ def productos_por_categoria(request, categoria_id):
     de categoria y color, esto con el fin de no perder la seleccion de categoria y color.
     De lo contrario cargaria todos los productos de la tienda.
     """
-    query_params = request.GET.copy()  # Crea una copia de los parámetros de la solicitud (categoria, color, page)
+    query_params = request.GET.copy()
     if 'page' in query_params:
         del query_params['page']
     base_query_string = query_params.urlencode()
@@ -189,7 +196,7 @@ def productos_view(request):
                 'talla': v.talla.nombreTalla if v.talla else None,
                 'stock': v.stock,
                 'precio': float(v.precio),
-                'imagen': v.imagen.url if v.imagen else None,
+                'imagen': _safe_url(v.imagen),
             }
             for v in producto.variantes.all()
         ]

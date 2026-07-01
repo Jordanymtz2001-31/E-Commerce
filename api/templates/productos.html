@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
+{% load static %}
+{% load imagen_tags %}
 {% block title %}Productos - Talcahualme{% endblock %}
 
 {% block content %}
@@ -74,7 +76,7 @@
                     {% with all_images=producto.imagenes.all %}
                     {% if all_images %}
                         {% for img in all_images %}
-                        <img src="{{ img.imagenes.url }}" 
+                        <img src="{{ img.imagenes|safe_url:'https://via.placeholder.com/400x280?text=Sin+Imagen' }}" 
                              class="card-img-top w-100 h-100 object-fit-cover {% if forloop.first %}img-active{% endif %}"
                              alt="{{ producto.nombre }}"
                              {% if not forloop.first %}loading="lazy"{% endif %}>
@@ -119,7 +121,7 @@
                     </p>
                     <button class="btn btn-light text-muted w-100 fw-bold mt-auto modal-trigger"
                     data-producto-id="{{ producto.id }}"
-                    data-imagenes="[{% if producto.imagenes.all %}{% for img in producto.imagenes.all %}{% if img.imagenes %}'{{ img.imagenes.url }}'{% if not forloop.last %},{% endif %}{% endif %}{% endfor %}{% elif producto.variantes_data.0.imagen %}'{{ producto.variantes_data.0.imagen }}'{% endif %}]"
+                    data-imagenes="[{% if producto.imagenes.all %}{% for img in producto.imagenes.all %}{% if img.imagenes %}'{{ img.imagenes|safe_url }}'{% if not forloop.last %},{% endif %}{% endif %}{% endfor %}{% elif producto.variantes_data.0.imagen %}'{{ producto.variantes_data.0.imagen }}'{% endif %}]"
                     data-titulo="{{ producto.nombre }}"
                     data-precio-min="{{ producto.precio_min|floatformat:0 }}"
                     data-precio-min-num="{{ producto.precio_min|floatformat:2 }}"
