@@ -4626,3 +4626,5 @@ Traceback (most recent call last):
     ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
 django.db.utils.OperationalError: (1054, "Unknown column 'variantes_producto.imagen' in 'field list'")
 "GET /talcahualme/productList/ HTTP/1.1" 500 226841
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2959

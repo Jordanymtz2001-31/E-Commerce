@@ -11,10 +11,22 @@ from django.views.decorators.csrf import csrf_exempt
 
 
 def _safe_url(image_field):
+    """
+    Versión Python del filtro safe_url.
+    
+    Retorna la URL de un ImageField si el archivo existe en disco, o None si
+    el campo está vacío o el archivo físico no existe. Evita ValueError al
+    acceder a .url cuando la imagen se perdió entre entornos (local vs Seenode).
+    
+    -- SI la imagen existe --> retorna la URL de la imagen
+    -- SI no existe --> captura la excepción y retorna None
+    -- SI el campo está vacío --> retorna None
+    """
     try:
         return image_field.url if image_field else None
     except (ValueError, AttributeError):
         return None
+    
 from django.http import HttpResponse
 from django.conf import settings
 from django.core.paginator import Paginator # Para la paginación
@@ -120,6 +132,8 @@ def productos_por_categoria(request, categoria_id):
                 'talla': v.talla.nombreTalla if v.talla else None,
                 'stock': v.stock,
                 'precio': float(v.precio),
+                # _safe_url evita ValueError si el archivo de imagen
+                # no existe en disco (ej: en Seenode). Retorna None.
                 'imagen': _safe_url(v.imagen),
             }
             
@@ -148,8 +162,10 @@ def productos_por_categoria(request, categoria_id):
     }
     return render(request, 'productos.html', context)
 
+
 def productos_view(request):
     """
+    Vista principal del catálogo de productos.
     Usa ProductoRepository para el acceso a datos y FiltroProductoStrategy
     para el filtro por categoría. Esto permite agregar nuevos filtros sin
     modificar esta vista (OCP).
@@ -196,6 +212,8 @@ def productos_view(request):
                 'talla': v.talla.nombreTalla if v.talla else None,
                 'stock': v.stock,
                 'precio': float(v.precio),
+                # _safe_url evita ValueError si el archivo de imagen
+                # no existe en disco (ej: en Seenode). Retorna None.
                 'imagen': _safe_url(v.imagen),
             }
             for v in producto.variantes.all()
@@ -203,8 +221,8 @@ def productos_view(request):
 
     """
     Query string base para preservar filtros en paginación
-    
-    Es decir que si el usuario navega entre las paginas, se conservan los filtros 
+
+    Es decir que si el usuario navega entre las paginas, se conservan los filtros
     de categoria y color, esto con el fin de no perder la seleccion de categoria y color.
     De lo contrario cargaria todos los productos de la tienda.
     """

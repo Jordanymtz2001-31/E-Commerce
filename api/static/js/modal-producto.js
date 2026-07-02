@@ -266,7 +266,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
 
                     // Click en una talla: actualiza estado visual, stock y precio
-                    label.addEventListener('click', function () {
+                    label.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        input.checked = true;
                         if (disabled) {
                             actualizarStockDisplay({ stock: 0 });
                             document.getElementById('btnAgregarCarrito').disabled = true;
@@ -397,7 +399,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     if (index === 0) input.checked = true;
 
                     // Click en un color: actualizar carrusel, precio y tallas
-                    label.addEventListener('click', function () {
+                    label.addEventListener('click', function (e) {
+                        e.preventDefault(); // Prevenir el comportamiento predeterminado del enlace
+                        input.checked = true; // Hacer que el input se marque como seleccionado
                         if (colorSeleccionado === color.nombre) return;
                         colorSeleccionado = color.nombre;
 
